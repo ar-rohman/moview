@@ -1,6 +1,6 @@
 <template>
     <header
-        class="sticky top-0 flex justify-between gap-x-10 items-center bg-white py-3 px-4 sm:px-10">
+        class="sticky top-0 flex justify-between gap-x-10 items-center bg-white h-[60px] px-4 sm:px-10 border-b">
         <div class="flex items-center">
             <img src="../assets/images/logo.png" alt="moview" class="h-10 w-10" />
             <p class="font-bold text-red-500 text-xl tracking-tighter ml-4">MOVIEW</p>
