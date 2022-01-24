@@ -23,14 +23,14 @@
 import { toRefs, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import {
-    tvOutline,
-    tv,
-    videoOutline,
-    video,
-    bookmarkOutline,
-    bookmark,
-    infoOutline,
-    info,
+    tvOutlineIcon,
+    tvIcon,
+    videoOutlineIcon,
+    videoIcon,
+    bookmarkOutlineIcon,
+    bookmarkIcon,
+    infoOutlineIcon,
+    infoIcon,
 } from './icon';
 
 export default {
@@ -39,26 +39,26 @@ export default {
         const menu = reactive({
             menuList: [
                 {
-                    icon: tvOutline,
-                    activeIcon: tv,
+                    icon: videoOutlineIcon,
+                    activeIcon: videoIcon,
                     to: '/',
                     label: 'Movies',
                 },
                 {
-                    icon: videoOutline,
-                    activeIcon: video,
+                    icon: tvOutlineIcon,
+                    activeIcon: tvIcon,
                     to: '/tv-show',
                     label: 'TV Shows',
                 },
                 {
-                    icon: bookmarkOutline,
-                    activeIcon: bookmark,
+                    icon: bookmarkOutlineIcon,
+                    activeIcon: bookmarkIcon,
                     to: '/watchlist',
                     label: 'Watchlist',
                 },
                 {
-                    icon: infoOutline,
-                    activeIcon: info,
+                    icon: infoOutlineIcon,
+                    activeIcon: infoIcon,
                     to: '/about',
                     label: 'About',
                 },

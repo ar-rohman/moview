@@ -13,6 +13,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "tv-show" */ '@/views/TVShowPage.vue'),
     },
     {
+        path: '/search',
+        name: 'Search',
+        component: () => import(/* webpackChunkName: "search" */ '@/views/SearchPage.vue'),
+    },
+    {
         path: '/watchlist',
         name: 'Watchlist',
         component: () => import(/* webpackChunkName: "watchlist" */ '@/views/WatchlistPage.vue'),
