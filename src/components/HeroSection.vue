@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex sm:justify-end">
                         <button
-                            class="bg-red-500 rounded-xl p-3 flex shadow-md hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-red-500 focus:ring-1"
+                            class="bg-red-500 rounded-xl p-3 flex shadow-md hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                             title="Add to watchlist">
                             <div class="w-6 h-6" v-html="bookmarkOutlineIcon"></div>
                         </button>

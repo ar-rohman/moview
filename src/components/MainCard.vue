@@ -1,11 +1,11 @@
 <template>
     <div
-        class="flex gap-2 flex-col shadow-md rounded-md w-40 zmin-w-min cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500"
+        class="flex gap-2 flex-col zborder zshadow-lg overflow-hidden rounded-md w-40 zw-full zmax-w-max cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500"
         tabindex="0"
         @click="goToDetail(id)">
         <img
             :src="image"
-            class="h-40 w-full rounded-t-md object-contain object-center"
+            class="h-64 zw-80 w-full rounded-xl zobject-contain object-cover object-center z-m-px"
             :alt="title" />
         <div class="p-2 flex flex-col gap-2">
             <div class="line-clamp-2 font-semibold">{{ title }}</div>
