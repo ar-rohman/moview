@@ -7,7 +7,7 @@
             <div class="h-6 w-6" v-html="chevronLeftIcon"></div>
         </button>
         <div ref="carousel" class="flex overflow-x-auto no-scrollbar">
-            <div class="flex gap-4">
+            <div class="flex gap-4 m-[3px]">
                 <slot></slot>
             </div>
         </div>
