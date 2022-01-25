@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import CardItem from '../components/CardItem.vue';
+import CardItem from '../components/MainCard.vue';
 export default {
     components: { CardItem },
 };
