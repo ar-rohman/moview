@@ -1,6 +1,11 @@
 <template>
     <div class="my-10">
-        <div class="font-semibold mb-4 md:text-lg">{{ title }}</div>
+        <div class="flex justify-between mb-3">
+            <div class="font-semibold md:text-lg">{{ title }}</div>
+            <router-link :to="seeMoreLink" class="self-end text-red-400 hover:text-red-600"
+                >See more</router-link
+            >
+        </div>
         <carousel-card>
             <template v-for="item in data" :key="item.id">
                 <MainCard
@@ -50,6 +55,10 @@ export default {
                 return [];
             },
             require: true,
+        },
+        seeMoreLink: {
+            type: String,
+            default: '#',
         },
     },
     setup() {

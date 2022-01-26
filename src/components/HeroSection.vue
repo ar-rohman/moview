@@ -7,7 +7,7 @@
         <div class="absolute inset-4 text-white flex items-end sm:w-1/2 lg:w-1/3">
             <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
                 <div
-                    class="py-4 px-6 flex sm:flex-col items-center sm:items-end justify-between gap-6">
+                    class="py-4 px-6 flex sm:flex-col zitems-center zsm:items-end justify-between gap-6">
                     <div class="md:text-lg lg:text-2xl lg:font-semibold">
                         Deadpool: From Comics to Screen... to Screen
                     </div>

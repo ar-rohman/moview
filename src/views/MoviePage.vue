@@ -1,74 +1,87 @@
 <template>
-    <div class="flex flex-col md:flex-row gap-20">
+    <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
         <div class="w-full md:w-2/3 lg:w-3/4">
             <HeroSection />
-            <div class="flex my-8 gap-4">
-                <template v-for="i in 8" :key="i">
-                    <button
-                        class="px-4 py-2 rounded-2xl border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2">
-                        Action
+            <div class="mt-10">
+                <carousel-card>
+                    <div class="flex gap-x-4">
+                        <template v-for="i in 13" :key="i">
+                            <button
+                                class="px-4 py-2 rounded-2xl border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2">
+                                Action
+                            </button>
+                        </template>
+                    </div>
+                </carousel-card>
+            </div>
+            <ListCarousel title="Now Playing" :data="data" see-more-link="#" />
+            <ListCarousel title="Upcoming Movies" :data="data" see-more-link="#" />
+            <ListCarousel title="Trending Movies" :data="data" see-more-link="#" />
+        </div>
+        <div class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-10">
+            <div>
+                <div class="font-semibold mb-2">Popular Movies</div>
+                <div class="flex flex-col zmd:flex-row gap-3">
+                    <template v-for="item in sidebarData" :key="item.id">
+                        <SidebarCard
+                            :id="item.id"
+                            :title="item.title"
+                            :image="item.image"
+                            :vote-average="item.vote_average" />
+                    </template>
+                </div>
+                <div class="mt-2">
+                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
+                        See more
                     </button>
-                </template>
+                </div>
             </div>
-            <ListCarousel title="Popular Movie" image-size="w300" :data="data" />
-            <ListCarousel title="Popular Movie" image-size="w300" :data="data" />
-            <ListCarousel title="Popular Movie" image-size="w300" :data="data" />
-            <div class="flex my-10 gap-4 overflow-x-auto">
-                <MainCard
-                    v-for="i in 3"
-                    id="12"
-                    :key="i"
-                    title="Deadpool: From Comics to Screen... to Screen"
-                    image="https://image.tmdb.org/t/p/w780//5orGVWEYNBafPsukkGxHLQRXFZQ.jpg"
-                    vote-average="4.5"
-                    vote-count="1209" />
+            <div>
+                <div class="font-semibold mb-2">Top Rated Movies</div>
+                <div class="flex flex-col zmd:flex-row gap-3">
+                    <template v-for="item in sidebarData" :key="item.id">
+                        <SidebarCard
+                            :id="item.id"
+                            :title="item.title"
+                            :image="item.image"
+                            :vote-average="item.vote_average" />
+                    </template>
+                </div>
+                <div class="mt-2">
+                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
+                        See more
+                    </button>
+                </div>
             </div>
-
-            <div class="flex my-10 gap-4 overflow-x-auto">
-                <MainCard
-                    v-for="i in 6"
-                    id="12"
-                    :key="i"
-                    title="Deadpool: From Comics to Screen... to Screen"
-                    image="https://image.tmdb.org/t/p/w780//5orGVWEYNBafPsukkGxHLQRXFZQ.jpg"
-                    vote-average="4.5"
-                    vote-count="1209" />
-            </div>
-
-            <div class="flex my-10 gap-4 overflow-x-auto">
-                <MainCard
-                    v-for="i in 6"
-                    id="12"
-                    :key="i"
-                    title="Deadpool: From Comics to Screen... to Screen"
-                    image="https://image.tmdb.org/t/p/w780//5orGVWEYNBafPsukkGxHLQRXFZQ.jpg"
-                    vote-average="4.5"
-                    vote-count="1209" />
+            <div>
+                <div class="font-semibold mb-2">Popular Artists</div>
+                <div class="flex flex-col zmd:flex-row gap-3">
+                    <template v-for="item in sidebarData" :key="item.id">
+                        <SidebarCard
+                            :id="item.id"
+                            :title="item.title"
+                            :image="item.image"
+                            :vote-average="item.vote_average" />
+                    </template>
+                </div>
+                <div class="mt-2">
+                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
+                        See more
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-4">
-            <!-- assdssdsdsd -->
-            <SidebarCard
-                v-for="i in 6"
-                id="12"
-                :key="i"
-                title="Deadpool: From Comics to Screen... to Screen"
-                image="https://image.tmdb.org/t/p/w780//5orGVWEYNBafPsukkGxHLQRXFZQ.jpg"
-                vote-average="4.5" />
-        </div>
-        <!-- <div class="bg-blue-300 w-full md:w-1/3 md:ml-5">
-        </div> -->
     </div>
 </template>
 
 <script>
 import HeroSection from '../components/HeroSection.vue';
 import SidebarCard from '../components/SidebarCard.vue';
-import MainCard from '../components/MainCard.vue';
+import CarouselCard from '../components/CarouselCard.vue';
 import ListCarousel from '../components/ListCarousel.vue';
 
 export default {
-    components: { HeroSection, SidebarCard, MainCard, ListCarousel },
+    components: { HeroSection, SidebarCard, ListCarousel, CarouselCard },
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
 
@@ -422,6 +435,60 @@ export default {
             },
         ];
 
+        const sidebarCard = [
+            {
+                adult: false,
+                backdrop_path: '/tutaKitJJIaqZPyMz7rxrhb4Yxm.jpg',
+                genre_ids: [35, 16, 10751, 10402],
+                id: 438695,
+                original_language: 'en',
+                original_title: 'Sing 2',
+                overview:
+                    'Buster and his new cast now have their sights set on debuting a new show at the Crystal Tower Theater in glamorous Redshore City. But with no connections, he and his singers must sneak into the Crystal Entertainment offices, run by the ruthless wolf mogul Jimmy Crystal, where the gang pitches the ridiculous idea of casting the lion rock legend Clay Calloway in their show. Buster must embark on a quest to find the now-isolated Clay and persuade him to return to the stage.',
+                popularity: 4053.564,
+                poster_path: '/aWeKITRFbbwY8txG5uCj4rMCfSP.jpg',
+                release_date: '2021-12-01',
+                title: 'Sing 2',
+                video: false,
+                vote_average: 8.3,
+                vote_count: 1335,
+            },
+            {
+                adult: false,
+                backdrop_path: '/o76ZDm8PS9791XiuieNB93UZcRV.jpg',
+                genre_ids: [27, 28, 878],
+                id: 460458,
+                original_language: 'en',
+                original_title: 'Resident Evil: Welcome to Raccoon City',
+                overview:
+                    'Once the booming home of pharmaceutical giant Umbrella Corporation, Raccoon City is now a dying Midwestern town. The company’s exodus left the city a wasteland…with great evil brewing below the surface. When that evil is unleashed, the townspeople are forever…changed…and a small group of survivors must work together to uncover the truth behind Umbrella and make it through the night.',
+                popularity: 4076.337,
+                poster_path: '/7uRbWOXxpWDMtnsd2PF3clu65jc.jpg',
+                release_date: '2021-11-24',
+                title: 'Resident Evil: Welcome to Raccoon City',
+                video: false,
+                vote_average: 6.1,
+                vote_count: 1014,
+            },
+            {
+                adult: false,
+                backdrop_path: '/usaZV7KB6Man9Rm9TyDAeQf7uVD.jpg',
+                genre_ids: [27, 9648, 53],
+                id: 646385,
+                original_language: 'en',
+                original_title: 'Scream',
+                overview:
+                    'Twenty-five years after a streak of brutal murders shocked the quiet town of Woodsboro, a new killer has donned the Ghostface mask and begins targeting a group of teenagers to resurrect secrets from the town’s deadly past.',
+                popularity: 661.652,
+                poster_path: '/kZNHR1upJKF3eTzdgl5V8s8a4C3.jpg',
+                release_date: '2022-01-12',
+                title: 'Scream',
+                video: false,
+                vote_average: 7.2,
+                vote_count: 319,
+            },
+        ];
+
         const data = results.map((item) => {
             const imageExist = item.poster_path || item.backdrop_path;
             return {
@@ -435,8 +502,24 @@ export default {
             };
         });
 
+        const sidebarData = sidebarCard
+            .map((item) => {
+                const imageExist = item.poster_path || item.backdrop_path;
+                return {
+                    id: item.id,
+                    image: imageExist
+                        ? `${imageBaseUrl}w500${imageExist}`
+                        : 'https://via.placeholder.com/192x256.png?text=Dummy Image',
+                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    vote_average: item.vote_average,
+                    vote_count: item.vote_count,
+                };
+            })
+            .slice(-3);
+
         return {
             data,
+            sidebarData,
         };
     },
 };
