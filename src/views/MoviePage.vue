@@ -10,9 +10,9 @@
                     </button>
                 </template>
             </div>
-            <ListCarousel title="Popular Movie" image-size="w300" :data="results" />
-            <ListCarousel title="Popular Movie" image-size="w300" :data="results" />
-            <ListCarousel title="Popular Movie" image-size="w300" :data="results" />
+            <ListCarousel title="Popular Movie" image-size="w300" :data="data" />
+            <ListCarousel title="Popular Movie" image-size="w300" :data="data" />
+            <ListCarousel title="Popular Movie" image-size="w300" :data="data" />
             <div class="flex my-10 gap-4 overflow-x-auto">
                 <MainCard
                     v-for="i in 3"
@@ -70,6 +70,11 @@ import ListCarousel from '../components/ListCarousel.vue';
 export default {
     components: { HeroSection, SidebarCard, MainCard, ListCarousel },
     setup() {
+        const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
+
+        const isLetter = (string) => {
+            return string.toLowerCase() != string.toUpperCase();
+        };
         const results = [
             {
                 adult: false,
@@ -81,7 +86,8 @@ export default {
                 overview:
                     'Raj is a rich, carefree, happy-go-lucky second generation NRI. Simran is the daughter of Chaudhary Baldev Singh, who in spite of being an NRI is very strict about adherence to Indian values. Simran has left for India to be married to her childhood fiancé. Raj leaves for India with a mission at his hands, to claim his lady love under the noses of her whole family. Thus begins a saga.',
                 popularity: 29.662,
-                poster_path: '/2CAL2433ZeIihfX1Hb2139CX0pW.jpg',
+                // poster_path: '/2CAL2433ZeIihfX1Hb2139CX0pW.jpg',
+                poster_path: '',
                 release_date: '1995-10-20',
                 title: 'Dilwale Dulhania Le Jayenge',
                 video: false,
@@ -90,7 +96,8 @@ export default {
             },
             {
                 adult: false,
-                backdrop_path: '/iNh3BivHyg5sQRPP1KOkzguEX0H.jpg',
+                // backdrop_path: '/iNh3BivHyg5sQRPP1KOkzguEX0H.jpg',
+                backdrop_path: '',
                 genre_ids: [18, 80],
                 id: 278,
                 original_language: 'en',
@@ -107,7 +114,8 @@ export default {
             },
             {
                 adult: false,
-                backdrop_path: '/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg',
+                // backdrop_path: '/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg',
+                backdrop_path: '',
                 genre_ids: [18, 80],
                 id: 238,
                 original_language: 'en',
@@ -115,7 +123,8 @@ export default {
                 overview:
                     'Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.',
                 popularity: 80.019,
-                poster_path: '/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg',
+                // poster_path: '/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg',
+                poster_path: '',
                 release_date: '1972-03-14',
                 title: 'The Godfather',
                 video: false,
@@ -413,8 +422,21 @@ export default {
             },
         ];
 
+        const data = results.map((item) => {
+            const imageExist = item.poster_path || item.backdrop_path;
+            return {
+                id: item.id,
+                image: imageExist
+                    ? `${imageBaseUrl}w500${imageExist}`
+                    : 'https://via.placeholder.com/192x256.png?text=Dummy Image',
+                title: isLetter(item.original_title) ? item.original_title : item.title,
+                vote_average: item.vote_average,
+                vote_count: item.vote_count,
+            };
+        });
+
         return {
-            results,
+            data,
         };
     },
 };

@@ -6,7 +6,7 @@
                 <MainCard
                     :id="item.id"
                     :title="item.title"
-                    :image="`${imageBaseUrl}${imageSize}${item.poster_path}`"
+                    :image="item.image"
                     :vote-average="item.vote_average"
                     :vote-count="item.vote_count" />
             </template>
@@ -25,25 +25,25 @@ export default {
             type: String,
             default: null,
         },
-        imageSize: {
-            type: String,
-            default: 'w500',
-            validator(value) {
-                return [
-                    'w45',
-                    'w92',
-                    'w154',
-                    'w185',
-                    'w300',
-                    'w342',
-                    'w500',
-                    'w780',
-                    'w1280',
-                    'h632',
-                    'original',
-                ].includes(value);
-            },
-        },
+        // imageSize: {
+        //     type: String,
+        //     default: 'w500',
+        //     validator(value) {
+        //         return [
+        //             'w45',
+        //             'w92',
+        //             'w154',
+        //             'w185',
+        //             'w300',
+        //             'w342',
+        //             'w500',
+        //             'w780',
+        //             'w1280',
+        //             'h632',
+        //             'original',
+        //         ].includes(value);
+        //     },
+        // },
         data: {
             type: Array,
             default() {
@@ -53,8 +53,8 @@ export default {
         },
     },
     setup() {
-        const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
-        return { imageBaseUrl };
+        // const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
+        // return { imageBaseUrl };
     },
 };
 </script>

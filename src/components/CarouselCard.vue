@@ -2,7 +2,7 @@
     <div class="relative">
         <button
             v-if="showArrowLeft"
-            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block"
+            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer z-20 absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block"
             @click="scrollTo('left')">
             <div class="h-6 w-6" v-html="chevronLeftIcon"></div>
         </button>
