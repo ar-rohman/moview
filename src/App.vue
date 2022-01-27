@@ -9,9 +9,15 @@
 </template>
 
 <script>
+import { useRoute } from 'vue-router';
 import HeaderSection from './components/HeaderSection.vue';
 
 export default {
     components: { HeaderSection },
+    setup() {
+        const route = useRoute();
+        console.log(route);
+        return {};
+    },
 };
 </script>
