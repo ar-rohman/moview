@@ -13,6 +13,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "tv-show" */ '@/views/TVShowPage.vue'),
     },
     {
+        path: '/detail/:id',
+        name: 'Detail',
+        component: () => import(/* webpackChunkName: "detail" */ '@/views/MovieDetail.vue'),
+    },
+    {
         path: '/search',
         name: 'Search',
         component: () => import(/* webpackChunkName: "search" */ '@/views/SearchPage.vue'),
