@@ -1,0 +1,40 @@
+<template>
+    <div v-if="isScroll" class="flex justify-end w-full max-w-screen-xl fixed bottom-4">
+        <button
+            class="flex justify-center items-center bg-red-500 rounded-full p-3 mx-8 sm:mx-20 text-white hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            @click="toTop">
+            <div v-html="arrowUpIcon"></div>
+        </button>
+    </div>
+</template>
+
+<script>
+import { onMounted, onUnmounted, ref } from 'vue';
+import { arrowUpIcon } from './icon';
+
+export default {
+    setup() {
+        const isScroll = ref(false);
+
+        const toTop = () => {
+            window.scroll({
+                top: 0,
+                behavior: 'smooth',
+            });
+        };
+        onMounted(() => window.addEventListener('scroll', scrolling));
+        onUnmounted(() => window.removeEventListener('scroll', scrolling));
+        const scrolling = () => {
+            const bodyScroll = document.body.scrollTop;
+            const htmlScroll = document.documentElement.scrollTop;
+            const screenHeight = screen.height;
+            if (bodyScroll > screenHeight || htmlScroll > screenHeight) {
+                isScroll.value = true;
+            } else {
+                isScroll.value = false;
+            }
+        };
+        return { isScroll, toTop, arrowUpIcon };
+    },
+};
+</script>

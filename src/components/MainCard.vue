@@ -1,6 +1,7 @@
 <template>
     <div
-        class="flex gap-2 flex-col rounded-3xl w-[192px] cursor-pointer focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-red-400 relative"
+        class="flex gap-2 flex-col rounded-3xl cursor-pointer focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-red-400 relative"
+        :class="cardWidth"
         tabindex="0"
         @click="goToDetail(id)">
         <img
@@ -52,6 +53,10 @@ export default {
             type: [String, Number],
             default: '',
             required: true,
+        },
+        cardWidth: {
+            type: String,
+            default: 'w-[192px]',
         },
     },
     setup() {
