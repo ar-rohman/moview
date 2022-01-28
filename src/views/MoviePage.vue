@@ -1,7 +1,8 @@
 <template>
     <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
         <div class="w-full md:w-2/3 lg:w-3/4">
-            <HeroSection :data="latestMovie.value" />
+            <!-- <HeroSection :data="latestMovie.value" /> -->
+            <BaseCarousel :data="releaseMovie.result" pagination navigation />
             <div class="mt-10">
                 <carousel-card>
                     <div class="flex gap-x-4">
@@ -78,13 +79,20 @@
 import API from '../services/API';
 import { onMounted, reactive } from 'vue';
 import { isLetter } from '../utils/stringManipulation';
-import HeroSection from '../components/HeroSection.vue';
+// import HeroSection from '../components/HeroSection.vue';
+import BaseCarousel from '../components/carousel/BaseCarousel.vue';
 import SidebarCard from '../components/SidebarCard.vue';
 import CarouselCard from '../components/CarouselCard.vue';
 import ListCarousel from '../components/ListCarousel.vue';
 
 export default {
-    components: { HeroSection, SidebarCard, ListCarousel, CarouselCard },
+    components: {
+        BaseCarousel,
+        // HeroSection,
+        SidebarCard,
+        ListCarousel,
+        CarouselCard,
+    },
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
         const latestMovie = reactive({});
@@ -96,7 +104,7 @@ export default {
         const topRatedMovie = reactive({});
         const freeToWatch = reactive({});
 
-        // primary_release_date.gte=2021-12-28 hero
+        const releaseMovie = reactive({});
 
         const isImageExist = (firstImage, secondImage) => {
             if (firstImage) {
@@ -113,6 +121,25 @@ export default {
             data.title = isLetter(data.original_title) ? data.original_title : data.title;
             data.image = isImageExist(data.backdrop_path, data.poster_path);
             latestMovie.value = data;
+        };
+        const getReleaseMovie = async () => {
+            const param = {
+                include_adult: false,
+                'primary_release_date.gte': '2021-12-28',
+            };
+            const result = await API.apiClient('discover/movie', param);
+
+            const { results } = result.data;
+            const data = results.map((item) => {
+                return {
+                    id: item.id,
+                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    vote_count: item.vote_count,
+                    vote_average: item.vote_average,
+                };
+            });
+            releaseMovie.result = data.slice(-5);
         };
 
         const getMovieGenre = async () => {
@@ -207,6 +234,7 @@ export default {
             });
             freeToWatch.result = data.slice(-3);
         };
+        onMounted(getReleaseMovie);
         onMounted(getLatestMovie);
         onMounted(getMovieGenre);
         onMounted(getTrendingMovie);
@@ -217,6 +245,7 @@ export default {
         onMounted(getFreeToWatch);
 
         return {
+            releaseMovie,
             latestMovie,
             movieGenre,
             trendingMovie,
