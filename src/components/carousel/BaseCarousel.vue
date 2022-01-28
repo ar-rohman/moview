@@ -24,16 +24,6 @@
                 @next="next"></carousel-navigation>
         </div>
     </div>
-    <!-- <div class="flex gap-4 overflow-hidden">
-        <img
-            src="https://via.placeholder.com/1280x256.png?text=Carousel+test+image+satu"
-            alt="img 1"
-            class="rounded-xl" />
-        <img
-            src="https://via.placeholder.com/1280x256/0000FF?text=Carousel+test+image+satu"
-            alt="img 1"
-            class="rounded-xl" />
-    </div> -->
 </template>
 
 <script>
@@ -52,11 +42,6 @@ export default {
             },
             require: true,
         },
-        // slides: {
-        //     // slide
-        //     type: Array,
-        //     required: true,
-        // },
         navigation: {
             type: Boolean,
             default: false,

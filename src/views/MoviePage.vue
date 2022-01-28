@@ -134,7 +134,7 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist(item.backdrop_path, item.poster_path),
                     vote_count: item.vote_count,
                     vote_average: item.vote_average,
                 };

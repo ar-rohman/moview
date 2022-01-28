@@ -2,9 +2,10 @@
     <transition :name="transitionEffect">
         <div
             v-show="currentSlide === index"
-            class="absolute inset-0"
+            class="absolute inset-0 cursor-pointer"
             @mouseenter="$emit('mouseenter')"
-            @mouseout="$emit('mouseout')">
+            @mouseout="$emit('mouseout')"
+            @click="goTo">
             <img :src="slide" class="h-80 w-full object-center object-cover" />
             <div class="absolute inset-8 text-white flex items-end sm:w-1/2">
                 <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
@@ -21,6 +22,7 @@
 
 <script>
 import { computed, inject, toRefs } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     props: {
@@ -33,7 +35,6 @@ export default {
             default: null,
         },
         slide: {
-            // slide
             type: String,
             required: true,
         },
@@ -48,13 +49,21 @@ export default {
     },
     emits: ['mouseenter', 'mouseout'],
     setup(props) {
-        const { direction } = toRefs(props);
+        const router = useRouter();
+        const { direction, id } = toRefs(props);
         const currentSlide = inject('currentSlide');
         const transitionEffect = computed(() =>
             direction.value === 'right' ? 'slide-out' : 'slide-in'
         );
 
-        return { transitionEffect, currentSlide };
+        const goTo = () => {
+            router.push({
+                name: 'Detail',
+                params: { id: id.value },
+            });
+        };
+
+        return { goTo, transitionEffect, currentSlide };
     },
 };
 </script>
