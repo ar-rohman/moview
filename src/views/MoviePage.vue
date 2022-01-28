@@ -14,9 +14,9 @@
                     </div>
                 </carousel-card>
             </div>
+            <ListCarousel title="Trending" :data="trendingMovie.result" see-more-link="#" />
             <ListCarousel title="Now Playing" :data="nowPlaying.result" see-more-link="#" />
             <ListCarousel title="Upcoming Movies" :data="upcomingMovie.result" see-more-link="#" />
-            <ListCarousel title="Discover Movies" :data="discoverMovie.result" see-more-link="#" />
         </div>
         <div class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-10">
             <div>
@@ -88,13 +88,15 @@ export default {
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
         const latestMovie = reactive({});
+        const trendingMovie = reactive({});
         const movieGenre = reactive({});
         const nowPlaying = reactive({});
         const upcomingMovie = reactive({});
-        const discoverMovie = reactive({});
         const popularMovie = reactive({});
         const topRatedMovie = reactive({});
         const freeToWatch = reactive({});
+
+        // primary_release_date.gte=2021-12-28 hero
 
         const isImageExist = (firstImage, secondImage) => {
             if (firstImage) {
@@ -118,7 +120,20 @@ export default {
             const { data } = result;
             movieGenre.genres = data.genres;
         };
-
+        const getTrendingMovie = async () => {
+            const result = await API.apiClient('trending/movie/day');
+            const { results } = result.data;
+            const data = results.map((item) => {
+                return {
+                    id: item.id,
+                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    vote_count: item.vote_count,
+                    vote_average: item.vote_average,
+                };
+            });
+            trendingMovie.result = data;
+        };
         const getNowPlaying = async () => {
             const result = await API.apiClient('movie/now_playing');
             const { results } = result.data;
@@ -147,24 +162,7 @@ export default {
             });
             upcomingMovie.result = data;
         };
-        const getDiscoverMovie = async () => {
-            const param = {
-                include_adult: false,
-                with_original_language: 'id',
-            };
-            const result = await API.apiClient('discover/movie', param);
-            const { results } = result.data;
-            const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
-                };
-            });
-            discoverMovie.result = data;
-        };
+
         const getPopularMovie = async () => {
             const result = await API.apiClient('movie/popular');
             const { results } = result.data;
@@ -211,9 +209,9 @@ export default {
         };
         onMounted(getLatestMovie);
         onMounted(getMovieGenre);
+        onMounted(getTrendingMovie);
         onMounted(getNowPlaying);
         onMounted(getUpcomingMovie);
-        onMounted(getDiscoverMovie);
         onMounted(getPopularMovie);
         onMounted(getTopRatedMovie);
         onMounted(getFreeToWatch);
@@ -221,9 +219,9 @@ export default {
         return {
             latestMovie,
             movieGenre,
+            trendingMovie,
             nowPlaying,
             upcomingMovie,
-            discoverMovie, //
             popularMovie,
             topRatedMovie,
             freeToWatch,
