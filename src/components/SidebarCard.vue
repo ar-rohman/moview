@@ -12,7 +12,7 @@
                 <div class="line-clamp-2 font-medium lg:font-semibold">
                     {{ title }}
                 </div>
-                <div class="line-clamp-1 text-gray-600">Action Action Action Action</div>
+                <div class="line-clamp-1 text-gray-600">Action Action</div>
             </div>
             <div class="flex items-center">
                 <div class="w-4 h-4 lg:h-5 lg:w-5 text-yellow-500" v-html="starIcon"></div>

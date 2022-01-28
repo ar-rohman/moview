@@ -51,10 +51,10 @@ export default {
                 showArrowLeft.value = false;
                 showArrowRight.value = true;
             }
-            if (clientWidth >= maxWidth) {
-                showArrowLeft.value = false;
-                showArrowRight.value = false;
-            }
+            // if (clientWidth >= maxWidth) {
+            //     showArrowLeft.value = false;
+            //     showArrowRight.value = false;
+            // }
             element.scroll({
                 left,
                 behavior: 'smooth',
