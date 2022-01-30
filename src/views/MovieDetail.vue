@@ -81,7 +81,9 @@
                     <div class="">
                         {{ movieDetail.result.overview }}
                     </div>
-                    <div class="font-semibold mt-10 mb-2">Reviews</div>
+                    <!-- {{ review.result }} -->
+                    <UserReview :data="review.result" />
+                    <!-- <div class="font-semibold mt-10 mb-2">Reviews</div>
                     <div class="flex flex-col gap-y-8">
                         <div v-for="item in review.result" :key="item.id" class="">
                             <div class="flex gap-4">
@@ -89,25 +91,29 @@
                                     :src="item.avatar"
                                     :alt="item.name"
                                     class="h-[35px] w-[35px] min-w-[35px] rounded-full object-cover object-center" />
-                                <div class="w-full flex justify-between">
-                                    <div class="">
-                                        <div class="font-semibold text-sm">{{ item.name }}</div>
-                                        <div class="text-sm text-gray-500">6 day ago</div>
-                                    </div>
-                                    <div class="self-end flex gap-x-0.5">
-                                        <div
-                                            class="h-5 w-5 text-yellow-400"
-                                            v-html="starIcon"></div>
-                                        <div
-                                            class="h-5 w-5 text-yellow-400"
-                                            v-html="starIcon"></div>
-                                        <div
-                                            class="h-5 w-5 text-yellow-400"
-                                            v-html="starIcon"></div>
-                                        <div
-                                            class="h-5 w-5 text-yellow-400"
-                                            v-html="starHalfIcon"></div>
-                                        <div class="h-5 w-5 text-slate-300" v-html="starIcon"></div>
+                                <div>
+                                    <div class="font-semibold text-sm">{{ item.name }}</div>
+                                    <div class="flex gap-x-6 items-center">
+                                        <div class="zself-end flex gap-x-0.5">
+                                            <div
+                                                class="h-4 w-4 text-yellow-400"
+                                                v-html="starIcon"></div>
+                                            <div
+                                                class="h-4 w-4 text-yellow-400"
+                                                v-html="starIcon"></div>
+                                            <div
+                                                class="h-4 w-4 text-yellow-400"
+                                                v-html="starIcon"></div>
+                                            <div
+                                                class="h-4 w-4 text-yellow-400"
+                                                v-html="starHalfIcon"></div>
+                                            <div
+                                                class="h-4 w-4 text-slate-300"
+                                                v-html="starIcon"></div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            {{ timeFromNow(item.created_at) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +121,7 @@
                                 {{ item.content }}
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="w-full lg:w-1/3">
                     <div class="font-semibold mb-4">Cast</div>
@@ -167,10 +173,11 @@
     <ListCarousel title="More like this" :data="similarMovie.result" see-more-link="#" />
 </template>
 <script>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import API from '../services/API';
 import { isLetter } from '../utils/stringManipulation';
+import { timeFromNow } from '../utils/date';
 import {
     arrowBackIcon,
     starIcon,
@@ -181,9 +188,10 @@ import {
 } from '../components/icon';
 import ListCarousel from '../components/ListCarousel.vue';
 import SidebarCard from '../components/SidebarCard.vue';
+import UserReview from '../components/UserReview.vue';
 
 export default {
-    components: { ListCarousel, SidebarCard },
+    components: { ListCarousel, SidebarCard, UserReview },
     setup() {
         const router = useRouter();
         const route = useRoute();
@@ -194,6 +202,9 @@ export default {
         const similarMovie = reactive({});
         const castMovie = reactive({});
         const review = reactive({});
+        // const twoStar = ref(null);
+        // const oneStar = ref(null);
+        // const zeroStar = ref(null);
 
         const isImageExist = (firstImage, secondImage) => {
             if (firstImage) {
@@ -275,6 +286,16 @@ export default {
                 return false;
             }
         };
+        const starCalculation = (starCount) => {
+            const twoStar = Math.floor(starCount / 2);
+            const oneStar = starCount % 2;
+            const zeroStar = 5 - (twoStar + oneStar);
+            return {
+                two_star: twoStar,
+                one_star: oneStar,
+                zero_star: zeroStar,
+            };
+        };
         const getReview = async () => {
             const result = await API.apiClient(`movie/${route.params.id}/reviews`);
             const { results } = result.data;
@@ -288,9 +309,10 @@ export default {
                     rating: item.author_details.rating,
                     content: item.content,
                     created_at: item.created_at,
+                    star: starCalculation(item.author_details.rating),
                 };
             });
-            review.result = data;
+            review.result = data.reverse();
         };
         onMounted(getMovieDetail);
         onMounted(getRecomendation);
@@ -304,6 +326,7 @@ export default {
             similarMovie,
             castMovie,
             review,
+            timeFromNow,
             arrowBackIcon,
             starIcon,
             starHalfIcon,
