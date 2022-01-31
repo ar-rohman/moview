@@ -159,7 +159,7 @@ export default {
                     vote_average: item.vote_average,
                 };
             });
-            releaseMovie.result = data.slice(-5);
+            releaseMovie.result = data.slice(0, 5);
         };
 
         const getMovieGenre = async () => {
@@ -221,7 +221,7 @@ export default {
                     vote_average: item.vote_average,
                 };
             });
-            popularMovie.result = data.slice(-3);
+            popularMovie.result = data.slice(0, 3);
         };
         const getTopRatedMovie = async () => {
             const result = await API.apiClient('movie/top_rated');
@@ -234,7 +234,7 @@ export default {
                     vote_average: item.vote_average,
                 };
             });
-            topRatedMovie.result = data.slice(-3);
+            topRatedMovie.result = data.slice(0, 3);
         };
         const getFreeToWatch = async () => {
             const param = {
@@ -252,7 +252,7 @@ export default {
                     vote_average: item.vote_average,
                 };
             });
-            freeToWatch.result = data.slice(-3);
+            freeToWatch.result = data.slice(0, 3);
         };
         const gotoMovieGenre = (name, id) => {
             const genreName = name.replace(/ /g, '-').toLowerCase();
