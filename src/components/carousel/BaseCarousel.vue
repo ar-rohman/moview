@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center">
+    <div class="flex justify-center relative">
         <div class="relative h-80 w-full overflow-hidden rounded-xl sm:rounded-3xl">
             <carousel-pagination
                 v-if="pagination"
@@ -18,11 +18,8 @@
                     @mouseenter="stopSlideTimer"
                     @mouseout="startSlideTimer"></carousel-slide>
             </div>
-            <carousel-navigation
-                v-if="navigation"
-                @prev="previous"
-                @next="next"></carousel-navigation>
         </div>
+        <carousel-navigation v-if="navigation" @prev="previous" @next="next"></carousel-navigation>
     </div>
 </template>
 

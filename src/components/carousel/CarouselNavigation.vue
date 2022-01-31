@@ -1,11 +1,11 @@
 <template>
     <button
-        class="bg-white p-2 rounded-full text-gray-700 cursor-pointer absolute top-1/2 left-2 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block"
+        class="bg-white p-2 border shadow-md rounded-full text-gray-700 cursor-pointer absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block"
         @click="$emit('prev')">
         <div class="h-6 w-6" v-html="chevronLeftIcon"></div>
     </button>
     <button
-        class="bg-white p-2 rounded-full text-gray-700 cursor-pointer absolute top-1/2 right-2 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block"
+        class="bg-white p-2 border shadow-md rounded-full text-gray-700 cursor-pointer absolute top-1/2 -right-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block"
         @click="$emit('next')">
         <div class="h-6 w-6" v-html="chevronRightIcon"></div>
     </button>
