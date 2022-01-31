@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
-        <div class="w-full md:w-2/3 lg:w-3/4">
+        <div class="w-full md:w-2/3">
             <!-- <HeroSection :data="latestMovie.value" /> -->
             <BaseCarousel :data="releaseMovie.result" pagination navigation />
             <div class="mt-10">
@@ -30,64 +30,19 @@
                 :data="upcomingMovie.result"
                 see-more-link="/movie/upcoming" />
         </div>
-        <div class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-10">
-            <div>
-                <div class="font-semibold mb-2">Popular Movies</div>
-                <div class="flex flex-col zmd:flex-row gap-3">
-                    <template v-for="item in popularMovie.result" :key="item.id">
-                        <SidebarCard
-                            :id="item.id"
-                            :title="item.title"
-                            :image="item.image"
-                            :vote-average="item.vote_average" />
-                    </template>
-                </div>
-                <div class="mt-2 w-full">
-                    <router-link to="/movie/popular">
-                        <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                            See more
-                        </button>
-                    </router-link>
-                </div>
-            </div>
-            <div>
-                <div class="font-semibold mb-2">Top Rated Movies</div>
-                <div class="flex flex-col zmd:flex-row gap-3">
-                    <template v-for="item in topRatedMovie.result" :key="item.id">
-                        <SidebarCard
-                            :id="item.id"
-                            :title="item.title"
-                            :image="item.image"
-                            :vote-average="item.vote_average" />
-                    </template>
-                </div>
-                <div class="mt-2">
-                    <router-link to="/movie/top-rated">
-                        <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                            See more
-                        </button>
-                    </router-link>
-                </div>
-            </div>
-            <div>
-                <div class="font-semibold mb-2">Free To Watch</div>
-                <div class="flex flex-col zmd:flex-row gap-3">
-                    <template v-for="item in freeToWatch.result" :key="item.id">
-                        <SidebarCard
-                            :id="item.id"
-                            :title="item.title"
-                            :image="item.image"
-                            :vote-average="item.vote_average" />
-                    </template>
-                </div>
-                <div class="mt-2">
-                    <router-link to="/movie/free">
-                        <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                            See more
-                        </button>
-                    </router-link>
-                </div>
-            </div>
+        <div class="w-full md:w-1/3 flex flex-col gap-10">
+            <SidebarList
+                :data="popularMovie.result"
+                title="Popular Movies"
+                see-more-link="/movie/popular" />
+            <SidebarList
+                :data="topRatedMovie.result"
+                title="Top Rated Movies"
+                see-more-link="/movie/top-rated" />
+            <SidebarList
+                :data="freeToWatch.result"
+                title="Free To Watch"
+                see-more-link="/movie/free" />
         </div>
     </div>
 </template>
@@ -99,17 +54,19 @@ import { useRoute, useRouter } from 'vue-router';
 import { isLetter } from '../utils/stringManipulation';
 // import HeroSection from '../components/HeroSection.vue';
 import BaseCarousel from '../components/carousel/BaseCarousel.vue';
-import SidebarCard from '../components/SidebarCard.vue';
+// import SidebarCard from '../components/SidebarCard.vue';
 import CarouselCard from '../components/CarouselCard.vue';
 import ListCarousel from '../components/ListCarousel.vue';
+import SidebarList from '../components/SidebarList.vue';
 
 export default {
     components: {
         BaseCarousel,
         // HeroSection,
-        SidebarCard,
+        // SidebarCard,
         ListCarousel,
         CarouselCard,
+        SidebarList,
     },
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
