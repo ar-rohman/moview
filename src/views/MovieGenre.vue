@@ -6,6 +6,7 @@
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import InfinityScroll from '@/components/InfinityScroll.vue';
+import { titleCase } from '../utils/stringManipulation';
 
 export default {
     components: {
@@ -16,7 +17,8 @@ export default {
         const pageTitle = ref(null);
         const query = { with_genres: '' };
         const state = reactive({ query });
-        pageTitle.value = `${route.params.genre} Movies`;
+        const title = route.params.genre.replace(/-/g, ' ');
+        pageTitle.value = `${titleCase(title)} Movies`;
         state.query = { with_genres: route.params.id };
         return { pageTitle, state };
     },

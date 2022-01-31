@@ -9,7 +9,8 @@
                         <button
                             v-for="genre in movieGenre.genres"
                             :key="genre.id"
-                            class="px-4 py-2 rounded-2xl whitespace-nowrap border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2">
+                            class="px-4 py-2 rounded-2xl whitespace-nowrap border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2"
+                            @click="gotoMovieGenre(genre.name, genre.id)">
                             {{ genre.name }}
                         </button>
                     </div>
@@ -18,9 +19,16 @@
             <ListCarousel
                 title="Trending"
                 :data="trendingMovie.result"
-                see-more-link="/movie-list/trending/movie/day" />
-            <ListCarousel title="Now Playing" :data="nowPlaying.result" see-more-link="#" />
-            <ListCarousel title="Upcoming Movies" :data="upcomingMovie.result" see-more-link="#" />
+                see-more-link="/movie/trending"
+                page-title="Trending Movie" />
+            <ListCarousel
+                title="Now Playing"
+                :data="nowPlaying.result"
+                see-more-link="/movie/now-playing" />
+            <ListCarousel
+                title="Upcoming Movies"
+                :data="upcomingMovie.result"
+                see-more-link="/movie/upcoming" />
         </div>
         <div class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-10">
             <div>
@@ -34,10 +42,12 @@
                             :vote-average="item.vote_average" />
                     </template>
                 </div>
-                <div class="mt-2">
-                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                        See more
-                    </button>
+                <div class="mt-2 w-full">
+                    <router-link to="/movie/popular">
+                        <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
+                            See more
+                        </button>
+                    </router-link>
                 </div>
             </div>
             <div>
@@ -52,9 +62,11 @@
                     </template>
                 </div>
                 <div class="mt-2">
-                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                        See more
-                    </button>
+                    <router-link to="/movie/top-rated">
+                        <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
+                            See more
+                        </button>
+                    </router-link>
                 </div>
             </div>
             <div>
@@ -69,9 +81,11 @@
                     </template>
                 </div>
                 <div class="mt-2">
-                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                        See more
-                    </button>
+                    <router-link to="/movie/free">
+                        <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
+                            See more
+                        </button>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -81,6 +95,7 @@
 <script>
 import API from '../services/API';
 import { onMounted, reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { isLetter } from '../utils/stringManipulation';
 // import HeroSection from '../components/HeroSection.vue';
 import BaseCarousel from '../components/carousel/BaseCarousel.vue';
@@ -108,6 +123,8 @@ export default {
         const freeToWatch = reactive({});
 
         const releaseMovie = reactive({});
+        const router = useRouter();
+        const route = useRoute();
 
         const isImageExist = (firstImage, secondImage) => {
             if (firstImage) {
@@ -237,6 +254,10 @@ export default {
             });
             freeToWatch.result = data.slice(-3);
         };
+        const gotoMovieGenre = (name, id) => {
+            const genreName = name.replace(/ /g, '-').toLowerCase();
+            router.push({ path: `/movie/genre/${genreName}/${id}` });
+        };
         onMounted(getReleaseMovie);
         onMounted(getLatestMovie);
         onMounted(getMovieGenre);
@@ -257,6 +278,7 @@ export default {
             popularMovie,
             topRatedMovie,
             freeToWatch,
+            gotoMovieGenre,
         };
     },
 };
