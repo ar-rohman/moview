@@ -15,7 +15,10 @@
                     </div>
                 </carousel-card>
             </div>
-            <ListCarousel title="Trending" :data="trendingMovie.result" see-more-link="#" />
+            <ListCarousel
+                title="Trending"
+                :data="trendingMovie.result"
+                see-more-link="/movie-list/trending/movie/day" />
             <ListCarousel title="Now Playing" :data="nowPlaying.result" see-more-link="#" />
             <ListCarousel title="Upcoming Movies" :data="upcomingMovie.result" see-more-link="#" />
         </div>

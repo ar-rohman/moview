@@ -22,6 +22,7 @@
 <script>
 import MainCard from './MainCard.vue';
 import CarouselCard from './CarouselCard.vue';
+import { toRef, toRefs } from 'vue';
 
 export default {
     components: { MainCard, CarouselCard },
@@ -60,10 +61,6 @@ export default {
             type: String,
             default: '#',
         },
-    },
-    setup() {
-        // const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
-        // return { imageBaseUrl };
     },
 };
 </script>
