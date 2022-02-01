@@ -50,12 +50,15 @@
 import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { isLetter } from '../utils/stringManipulation';
+import { isLetter } from '@/utils/stringManipulation';
+import { isImageExist } from '@/utils/image';
+import defaults from '@/utils/defaults';
 import { getCountryCodeByUserIP } from '@/services/CountryService';
-import BaseCarousel from '../components/carousel/BaseCarousel.vue';
-import CarouselCard from '../components/CarouselCard.vue';
-import ListCarousel from '../components/ListCarousel.vue';
-import SidebarList from '../components/SidebarList.vue';
+import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
+import CarouselCard from '@/components/CarouselCard.vue';
+import ListCarousel from '@/components/ListCarousel.vue';
+import SidebarList from '@/components/SidebarList.vue';
+import posterImage from '@/assets/images/poster.png';
 
 export default {
     components: {
@@ -75,16 +78,6 @@ export default {
         const freeToWatch = reactive({});
         const releaseMovie = reactive({});
         const router = useRouter();
-
-        const isImageExist = (firstImage, secondImage) => {
-            if (firstImage) {
-                return `${imageBaseUrl}original${firstImage}`;
-            } else if (secondImage) {
-                return `${imageBaseUrl}original${secondImage}`;
-            } else {
-                return 'https://via.placeholder.com/1280x320/a83244/808080?text=Dummy Image';
-            }
-        };
 
         const getReleaseMovie = async () => {
             let today = new Date();
@@ -122,7 +115,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSize,
+                    }),
                     vote_count: item.vote_count,
                     vote_average: item.vote_average,
                 };
@@ -137,7 +135,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSize,
+                    }),
                     vote_count: item.vote_count,
                     vote_average: item.vote_average,
                 };
@@ -152,7 +155,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSize,
+                    }),
                     vote_count: item.vote_count,
                     vote_average: item.vote_average,
                 };
@@ -167,7 +175,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSmallSize,
+                    }),
                     vote_average: item.vote_average,
                 };
             });
@@ -181,7 +194,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSmallSize,
+                    }),
                     vote_average: item.vote_average,
                 };
             });
@@ -200,7 +218,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSmallSize,
+                    }),
                     vote_average: item.vote_average,
                 };
             });

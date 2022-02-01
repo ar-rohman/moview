@@ -88,7 +88,7 @@
                                 <img
                                     :src="item.image"
                                     :alt="item.name"
-                                    class="h-[50px] w-[50px] min-w-[50px] rounded-full object-cover object-center" />
+                                    class="h-[45px] w-[45px] min-w-[45px] rounded-full object-cover object-center" />
                                 <div
                                     class="flex flex-col flex-wrap items-center lg:items-start w-[80px] lg:w-full">
                                     <div class="line-clamp-1 text-xs lg:text-base font-semibold">
@@ -130,11 +130,13 @@
     <ListCarousel title="More like this" :data="similarMovie.result" see-more-link="#" />
 </template>
 <script>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import API from '../services/API';
-import { isLetter } from '../utils/stringManipulation';
-import { timeFromNow } from '../utils/date';
+import API from '@/services/API';
+import { isLetter } from '@/utils/stringManipulation';
+import { timeFromNow } from '@/utils/date';
+import { isImageExist } from '../utils/image';
+import defaults from '../utils/defaults';
 import {
     arrowBackIcon,
     starHalfIcon,
@@ -142,37 +144,26 @@ import {
     clockOutlineIcon,
     calendarOutlineIcon,
 } from '../components/icon';
-import ListCarousel from '../components/ListCarousel.vue';
-import SidebarCard from '../components/SidebarCard.vue';
-import UserReview from '../components/UserReview.vue';
-import RatingCount from '../components/RatingCount.vue';
-import background from '../assets/images/background.png';
+import ListCarousel from '@/components/ListCarousel.vue';
+import SidebarCard from '@/components/SidebarCard.vue';
+import UserReview from '@/components/UserReview.vue';
+import RatingCount from '@/components/RatingCount.vue';
+import backdropImage from '@/assets/images/backdrop.png';
+import posterImage from '@/assets/images/poster.png';
+import avatarImage from '@/assets/images/avatar.svg';
 
 export default {
     components: { ListCarousel, SidebarCard, UserReview, RatingCount },
     setup() {
         const router = useRouter();
         const route = useRoute();
-        const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
         const result = {};
         const movieDetail = reactive({ result });
         const recomendation = reactive({});
         const similarMovie = reactive({});
         const castMovie = reactive({});
         const review = reactive({});
-        // const twoStar = ref(null);
-        // const oneStar = ref(null);
-        // const zeroStar = ref(null);
 
-        const isImageExist = (firstImage, secondImage) => {
-            if (firstImage) {
-                return `${imageBaseUrl}original${firstImage}`;
-            } else if (secondImage) {
-                return `${imageBaseUrl}original${secondImage}`;
-            } else {
-                return 'https://via.placeholder.com/1280x320/a83244/808080?text=Dummy Image';
-            }
-        };
         const getMovieDetail = async () => {
             const result = await API.apiClient(`movie/${route.params.id}`);
             const { data } = result;
@@ -180,12 +171,18 @@ export default {
                 id: data.id,
                 title: isLetter(data.original_title) ? data.original_title : data.title,
                 original_title: data.original_title === data.title ? '' : data.original_title,
-                backdrop: data.backdrop_path
-                    ? `${imageBaseUrl}original${data.backdrop_path}`
-                    : background, // 'https://via.placeholder.com/1280x320/a83244/808080',
-                poster: data.poster_path
-                    ? `${imageBaseUrl}original${data.poster_path}`
-                    : background, // 'https://via.placeholder.com/96x128/a83244/808080',
+                backdrop: isImageExist({
+                    firstImage: data.backdrop_path,
+                    secondImage: data.poster_path,
+                    thirdImage: backdropImage,
+                    imageSize: defaults.backdropSize,
+                }),
+                poster: isImageExist({
+                    firstImage: data.poster_path,
+                    secondImage: data.backdrop_path,
+                    thirdImage: posterImage,
+                    imageSize: defaults.posterMediumSize,
+                }),
                 overview: data.overview,
                 genres: data.genres,
                 release: data.release_date ? data.release_date.split('-')[0] : '',
@@ -202,7 +199,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSmallSize,
+                    }),
                     vote_count: item.vote_count,
                     vote_average: Number.parseFloat(item.vote_average).toFixed(1),
                 };
@@ -216,7 +218,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.posterSize,
+                    }),
                     vote_count: item.vote_count,
                     vote_average: Number.parseFloat(item.vote_average).toFixed(1),
                 };
@@ -231,7 +238,12 @@ export default {
                     id: item.id,
                     name: isLetter(item.original_name) ? item.original_name : item.name,
                     character: item.character,
-                    image: isImageExist(item.profile_path, ''),
+                    image: isImageExist({
+                        firstImage: item.profile_path,
+                        secondImage: null,
+                        thirdImage: posterImage,
+                        imageSize: defaults.profileSize,
+                    }),
                 };
             });
             castMovie.result = data.slice(0, 5);
@@ -263,7 +275,12 @@ export default {
                     name: item.author_details.name || item.author_details.username,
                     avatar: checkIfImageFromExternalLink(item.author_details.avatar_path)
                         ? item.author_details.avatar_path.substring(1)
-                        : isImageExist(item.author_details.avatar_path, ''),
+                        : isImageExist({
+                              firstImage: item.author_details.avatar_path,
+                              secondImage: null,
+                              thirdImage: avatarImage,
+                              imageSize: defaults.profileSize,
+                          }),
                     rating: item.author_details.rating,
                     content: item.content,
                     created_at: item.created_at,
