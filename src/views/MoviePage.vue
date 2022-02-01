@@ -1,7 +1,6 @@
 <template>
     <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
         <div class="w-full md:w-2/3">
-            <!-- <HeroSection :data="latestMovie.value" /> -->
             <BaseCarousel :data="releaseMovie.result" pagination navigation />
             <div class="mt-10">
                 <carousel-card>
@@ -48,14 +47,11 @@
 </template>
 
 <script>
-import API from '../services/API';
 import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { isLetter } from '../utils/stringManipulation';
-// import HeroSection from '../components/HeroSection.vue';
 import BaseCarousel from '../components/carousel/BaseCarousel.vue';
-// import SidebarCard from '../components/SidebarCard.vue';
 import CarouselCard from '../components/CarouselCard.vue';
 import ListCarousel from '../components/ListCarousel.vue';
 import SidebarList from '../components/SidebarList.vue';
@@ -63,15 +59,12 @@ import SidebarList from '../components/SidebarList.vue';
 export default {
     components: {
         BaseCarousel,
-        // HeroSection,
-        // SidebarCard,
         ListCarousel,
         CarouselCard,
         SidebarList,
     },
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
-        // const latestMovie = reactive({});
         const trendingMovie = reactive({});
         const movieGenre = reactive({});
         const nowPlaying = reactive({});
@@ -79,10 +72,8 @@ export default {
         const popularMovie = reactive({});
         const topRatedMovie = reactive({});
         const freeToWatch = reactive({});
-
         const releaseMovie = reactive({});
         const router = useRouter();
-        const route = useRoute();
 
         const isImageExist = (firstImage, secondImage) => {
             if (firstImage) {
@@ -93,25 +84,18 @@ export default {
                 return 'https://via.placeholder.com/1280x320/a83244/808080?text=Dummy Image';
             }
         };
-        // const getLatestMovie = async () => {
-        //     const result = await API.apiClient('movie/latest');
-        //     const { data } = result;
-        //     data.title = isLetter(data.original_title) ? data.original_title : data.title;
-        //     data.image = isImageExist(data.backdrop_path, data.poster_path);
-        //     latestMovie.value = data;
-        // };
+
         const getReleaseMovie = async () => {
-            const todayDate = new Date();
-            const oneWeekAgoDate = new Date(Date.now() - 604800000); // 7*24*60*60*1000
-            const today = todayDate.toISOString().split('T')[0];
-            const oneWeekAgo = oneWeekAgoDate.toISOString().split('T')[0];
+            let today = new Date();
+            today = today.toISOString().split('T')[0];
+            let oneWeekAgo = new Date(Date.now() - 604800000); // 7*24*60*60*1000
+            oneWeekAgo = oneWeekAgo.toISOString().split('T')[0];
             const param = {
                 include_adult: false,
                 'primary_release_date.gte': oneWeekAgo,
                 'primary_release_date.lte': today,
             };
             const result = await MovieService.getDiscover(param);
-
             const { results } = result.data;
             let data = results.filter((item) => item.backdrop_path !== null);
             data = data.map((item) => {
@@ -129,6 +113,7 @@ export default {
             const { data } = result;
             movieGenre.genres = data.genres;
         };
+
         const getTrendingMovie = async () => {
             const result = await MovieService.getTrendingByDay();
             const { results } = result.data;
@@ -143,6 +128,7 @@ export default {
             });
             trendingMovie.result = data;
         };
+
         const getNowPlaying = async () => {
             const result = await MovieService.getNowPlaying();
             const { results } = result.data;
@@ -157,6 +143,7 @@ export default {
             });
             nowPlaying.result = data;
         };
+
         const getUpcomingMovie = async () => {
             const result = await MovieService.getUpcoming();
             const { results } = result.data;
@@ -185,6 +172,7 @@ export default {
             });
             popularMovie.result = data.slice(0, 3);
         };
+
         const getTopRatedMovie = async () => {
             const result = await MovieService.getTopRated();
             const { results } = result.data;
@@ -198,10 +186,11 @@ export default {
             });
             topRatedMovie.result = data.slice(0, 3);
         };
+
         const getFreeToWatch = async () => {
             const param = {
                 include_adult: false,
-                watch_region: 'ID',
+                watch_region: 'ID', // TODO
                 with_watch_monetization_types: 'free',
             };
             const result = await MovieService.getDiscover(param);
@@ -216,12 +205,13 @@ export default {
             });
             freeToWatch.result = data.slice(0, 3);
         };
+
         const gotoMovieGenre = (name, id) => {
             const genreName = name.replace(/ /g, '-').toLowerCase();
             router.push({ path: `/movie/genre/${genreName}/${id}` });
         };
+
         onMounted(getReleaseMovie);
-        // onMounted(getLatestMovie);
         onMounted(getMovieGenre);
         onMounted(getTrendingMovie);
         onMounted(getNowPlaying);
@@ -232,7 +222,6 @@ export default {
 
         return {
             releaseMovie,
-            // latestMovie,
             movieGenre,
             trendingMovie,
             nowPlaying,
