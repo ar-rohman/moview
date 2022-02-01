@@ -51,6 +51,7 @@ import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { isLetter } from '../utils/stringManipulation';
+import { getCountryCodeByUserIP } from '@/services/CountryService';
 import BaseCarousel from '../components/carousel/BaseCarousel.vue';
 import CarouselCard from '../components/CarouselCard.vue';
 import ListCarousel from '../components/ListCarousel.vue';
@@ -190,7 +191,7 @@ export default {
         const getFreeToWatch = async () => {
             const param = {
                 include_adult: false,
-                watch_region: 'ID', // TODO
+                watch_region: await getCountryCodeByUserIP(),
                 with_watch_monetization_types: 'free',
             };
             const result = await MovieService.getDiscover(param);
