@@ -49,7 +49,7 @@
 <script>
 import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { isLetter } from '../utils/stringManipulation';
 import BaseCarousel from '../components/carousel/BaseCarousel.vue';
 import CarouselCard from '../components/CarouselCard.vue';
