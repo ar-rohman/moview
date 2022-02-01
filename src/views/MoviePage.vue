@@ -49,6 +49,7 @@
 
 <script>
 import API from '../services/API';
+import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { isLetter } from '../utils/stringManipulation';
@@ -70,7 +71,7 @@ export default {
     },
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
-        const latestMovie = reactive({});
+        // const latestMovie = reactive({});
         const trendingMovie = reactive({});
         const movieGenre = reactive({});
         const nowPlaying = reactive({});
@@ -92,40 +93,44 @@ export default {
                 return 'https://via.placeholder.com/1280x320/a83244/808080?text=Dummy Image';
             }
         };
-        const getLatestMovie = async () => {
-            const result = await API.apiClient('movie/latest');
-            const { data } = result;
-            data.title = isLetter(data.original_title) ? data.original_title : data.title;
-            data.image = isImageExist(data.backdrop_path, data.poster_path);
-            latestMovie.value = data;
-        };
+        // const getLatestMovie = async () => {
+        //     const result = await API.apiClient('movie/latest');
+        //     const { data } = result;
+        //     data.title = isLetter(data.original_title) ? data.original_title : data.title;
+        //     data.image = isImageExist(data.backdrop_path, data.poster_path);
+        //     latestMovie.value = data;
+        // };
         const getReleaseMovie = async () => {
+            const todayDate = new Date();
+            const oneWeekAgoDate = new Date(Date.now() - 604800000); // 7*24*60*60*1000
+            const today = todayDate.toISOString().split('T')[0];
+            const oneWeekAgo = oneWeekAgoDate.toISOString().split('T')[0];
             const param = {
                 include_adult: false,
-                'primary_release_date.gte': '2021-12-28',
+                'primary_release_date.gte': oneWeekAgo,
+                'primary_release_date.lte': today,
             };
-            const result = await API.apiClient('discover/movie', param);
+            const result = await MovieService.getDiscover(param);
 
             const { results } = result.data;
-            const data = results.map((item) => {
+            let data = results.filter((item) => item.backdrop_path !== null);
+            data = data.map((item) => {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.backdrop_path, item.poster_path),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
+                    image: `${imageBaseUrl}original${item.backdrop_path}`,
                 };
             });
             releaseMovie.result = data.slice(0, 5);
         };
 
         const getMovieGenre = async () => {
-            const result = await API.apiClient('genre/movie/list');
+            const result = await MovieService.getGenre();
             const { data } = result;
             movieGenre.genres = data.genres;
         };
         const getTrendingMovie = async () => {
-            const result = await API.apiClient('trending/movie/day');
+            const result = await MovieService.getTrendingByDay();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -139,7 +144,7 @@ export default {
             trendingMovie.result = data;
         };
         const getNowPlaying = async () => {
-            const result = await API.apiClient('movie/now_playing');
+            const result = await MovieService.getNowPlaying();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -153,7 +158,7 @@ export default {
             nowPlaying.result = data;
         };
         const getUpcomingMovie = async () => {
-            const result = await API.apiClient('movie/upcoming');
+            const result = await MovieService.getUpcoming();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -168,7 +173,7 @@ export default {
         };
 
         const getPopularMovie = async () => {
-            const result = await API.apiClient('movie/popular');
+            const result = await MovieService.getPopular();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -181,7 +186,7 @@ export default {
             popularMovie.result = data.slice(0, 3);
         };
         const getTopRatedMovie = async () => {
-            const result = await API.apiClient('movie/top_rated');
+            const result = await MovieService.getTopRated();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -199,7 +204,7 @@ export default {
                 watch_region: 'ID',
                 with_watch_monetization_types: 'free',
             };
-            const result = await API.apiClient('discover/movie', param);
+            const result = await MovieService.getDiscover(param);
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -216,7 +221,7 @@ export default {
             router.push({ path: `/movie/genre/${genreName}/${id}` });
         };
         onMounted(getReleaseMovie);
-        onMounted(getLatestMovie);
+        // onMounted(getLatestMovie);
         onMounted(getMovieGenre);
         onMounted(getTrendingMovie);
         onMounted(getNowPlaying);
@@ -227,7 +232,7 @@ export default {
 
         return {
             releaseMovie,
-            latestMovie,
+            // latestMovie,
             movieGenre,
             trendingMovie,
             nowPlaying,
