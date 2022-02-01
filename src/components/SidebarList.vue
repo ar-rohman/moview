@@ -11,8 +11,10 @@
             </template>
         </div>
         <div class="mt-2">
-            <router-link :to="seeMoreLink">
-                <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">See more</button>
+            <router-link
+                :to="seeMoreLink"
+                class="block text-center bg-red-500 rounded-xl text-white px-6 py-2 w-full hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2">
+                See more
             </router-link>
         </div>
     </section>

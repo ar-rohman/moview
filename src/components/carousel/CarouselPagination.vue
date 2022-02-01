@@ -3,7 +3,7 @@
         <button
             v-for="(item, index) in total"
             :key="index"
-            class="w-2 h-2 bg-white opacity-50 m-1 rounded-full cursor-pointer"
+            class="w-2 h-2 bg-white opacity-50 m-1 rounded-full cursor-pointer hover:bg-red-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
             :class="{ 'opacity-100': currentIndex === index }"
             @click="$emit('switch', index)"></button>
     </div>
