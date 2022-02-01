@@ -12,12 +12,7 @@
             <div
                 class="backdrop-blur-sm bg-black/30 rounded-3xl w-full text-white py-3 px-4 flex flex-col gap-2">
                 <div class="line-clamp-2 font-semibold">{{ title }}</div>
-                <div class="flex items-center">
-                    <div class="h-5 w-5 text-yellow-500" v-html="starIcon"></div>
-                    <p class="ml-1 text-sm text-gray-100">
-                        {{ voteAverage }} | {{ voteCount }} Reviews
-                    </p>
-                </div>
+                <RatingCount :vote-average="voteAverage" :vote-count="voteCount" />
             </div>
         </div>
     </div>
@@ -25,9 +20,10 @@
 
 <script>
 import { useRouter } from 'vue-router';
-import { starIcon } from './icon';
+import RatingCount from './RatingCount.vue';
 
 export default {
+    components: { RatingCount },
     props: {
         id: {
             type: [String, Number],
@@ -70,7 +66,6 @@ export default {
 
         return {
             goToDetail,
-            starIcon,
         };
     },
 };

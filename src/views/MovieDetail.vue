@@ -15,13 +15,10 @@
                         <div class="font-semibold">{{ movieDetail.result.title }}</div>
                     </div>
                     <div class="flex justify-between px-4 sm:px-10 pb-4">
-                        <div class="flex items-center font-semibold">
-                            <div class="h-5 w-5 text-yellow-500" v-html="starIcon"></div>
-                            <p class="ml-1 text-sm ztext-gray-100">
-                                {{ movieDetail.result.vote_average }} |
-                                {{ movieDetail.result.vote_count }} Reviews
-                            </p>
-                        </div>
+                        <RatingCount
+                            text-class="text-sm font-semibold text-gray-700"
+                            :vote-average="movieDetail.result.vote_average"
+                            :vote-count="movieDetail.result.vote_count" />
                         <div class="flex gap-x-4 sm:gap-x-8 items-center">
                             <div
                                 v-if="movieDetail.result.adult"
@@ -81,47 +78,7 @@
                     <div class="">
                         {{ movieDetail.result.overview }}
                     </div>
-                    <!-- {{ review.result }} -->
                     <UserReview :data="review.result" />
-                    <!-- <div class="font-semibold mt-10 mb-2">Reviews</div>
-                    <div class="flex flex-col gap-y-8">
-                        <div v-for="item in review.result" :key="item.id" class="">
-                            <div class="flex gap-4">
-                                <img
-                                    :src="item.avatar"
-                                    :alt="item.name"
-                                    class="h-[35px] w-[35px] min-w-[35px] rounded-full object-cover object-center" />
-                                <div>
-                                    <div class="font-semibold text-sm">{{ item.name }}</div>
-                                    <div class="flex gap-x-6 items-center">
-                                        <div class="zself-end flex gap-x-0.5">
-                                            <div
-                                                class="h-4 w-4 text-yellow-400"
-                                                v-html="starIcon"></div>
-                                            <div
-                                                class="h-4 w-4 text-yellow-400"
-                                                v-html="starIcon"></div>
-                                            <div
-                                                class="h-4 w-4 text-yellow-400"
-                                                v-html="starIcon"></div>
-                                            <div
-                                                class="h-4 w-4 text-yellow-400"
-                                                v-html="starHalfIcon"></div>
-                                            <div
-                                                class="h-4 w-4 text-slate-300"
-                                                v-html="starIcon"></div>
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            {{ timeFromNow(item.created_at) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-2 line-clamp-3 text-gray-500 text-sm">
-                                {{ item.content }}
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="w-full lg:w-1/3">
                     <div class="font-semibold mb-4">Cast</div>
@@ -180,7 +137,6 @@ import { isLetter } from '../utils/stringManipulation';
 import { timeFromNow } from '../utils/date';
 import {
     arrowBackIcon,
-    starIcon,
     starHalfIcon,
     bookmarkOutlineIcon,
     clockOutlineIcon,
@@ -189,9 +145,11 @@ import {
 import ListCarousel from '../components/ListCarousel.vue';
 import SidebarCard from '../components/SidebarCard.vue';
 import UserReview from '../components/UserReview.vue';
+import RatingCount from '../components/RatingCount.vue';
+import background from '../assets/images/background.png';
 
 export default {
-    components: { ListCarousel, SidebarCard, UserReview },
+    components: { ListCarousel, SidebarCard, UserReview, RatingCount },
     setup() {
         const router = useRouter();
         const route = useRoute();
@@ -224,10 +182,10 @@ export default {
                 original_title: data.original_title === data.title ? '' : data.original_title,
                 backdrop: data.backdrop_path
                     ? `${imageBaseUrl}original${data.backdrop_path}`
-                    : 'https://via.placeholder.com/1280x320/a83244/808080',
+                    : background, // 'https://via.placeholder.com/1280x320/a83244/808080',
                 poster: data.poster_path
                     ? `${imageBaseUrl}original${data.poster_path}`
-                    : 'https://via.placeholder.com/96x128/a83244/808080',
+                    : background, // 'https://via.placeholder.com/96x128/a83244/808080',
                 overview: data.overview,
                 genres: data.genres,
                 release: data.release_date ? data.release_date.split('-')[0] : '',
@@ -328,7 +286,6 @@ export default {
             review,
             timeFromNow,
             arrowBackIcon,
-            starIcon,
             starHalfIcon,
             bookmarkOutlineIcon,
             clockOutlineIcon,
