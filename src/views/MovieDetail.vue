@@ -43,7 +43,7 @@
                     :src="movieDetail.result.poster"
                     :alt="movieDetail.result.title"
                     class="h-[128px] w-[96px] rounded-3xl object-cover object-center" />
-                <div class="flex flex-col gap-4 zjustify-between">
+                <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-y-2">
                         <div class="font-semibold sm:font-bold sm:text-xl">
                             {{ movieDetail.result.title }}
@@ -122,7 +122,7 @@
         :see-more-link="`/movie/similar/${movieDetail.result.id}`" />
 </template>
 <script>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
 import { isLetter } from '@/utils/stringManipulation';
@@ -285,6 +285,19 @@ export default {
             const genreName = name.replace(/ /g, '-').toLowerCase();
             router.push({ path: `/movie/genre/${genreName}/${id}` });
         };
+        const fetchData = () => {
+            console.log(route.params.id);
+            getMovieDetail();
+            getRecomendation();
+            getSimilarMovie();
+            getCast();
+            getReview();
+        };
+
+        watch(
+            () => route.params.id,
+            () => fetchData()
+        );
 
         onMounted(getMovieDetail);
         onMounted(getRecomendation);
