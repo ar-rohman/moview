@@ -114,7 +114,10 @@
                 :see-more-link="`/movie/recommendation/${movieDetail.result.id}`" />
         </div>
     </div>
-    <ListCarousel title="More like this" :data="similarMovie.result" see-more-link="#" />
+    <ListCarousel
+        title="More like this"
+        :data="similarMovie.result"
+        :see-more-link="`/movie/similar/${movieDetail.result.id}`" />
 </template>
 <script>
 import { onMounted, reactive } from 'vue';
@@ -200,7 +203,7 @@ export default {
             recomendation.result = data.slice(0, 3);
         };
         const getSimilarMovie = async () => {
-            const result = await API.apiClient(`movie/${route.params.id}/similar`);
+            const result = await MovieService.getSimilar(route.params.id);
             const { results } = result.data;
             const data = results.map((item) => {
                 return {

@@ -61,6 +61,12 @@ const routes = [
         meta: { pageName: 'Recommendation Movies', isShowHeader: false },
     },
     {
+        path: '/movie/similar/:id',
+        name: 'similar-movie',
+        component: () => import(/* webpackChunkName: "similar-movie" */ '@/views/SimilarMovie.vue'),
+        meta: { pageName: 'Similar Movies', isShowHeader: false },
+    },
+    {
         path: '/movie/free',
         name: 'free-movie',
         component: () => import(/* webpackChunkName: "top-rated-movie" */ '@/views/FreeMovie.vue'),

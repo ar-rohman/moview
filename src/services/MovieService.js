@@ -22,6 +22,9 @@ export default {
     getRecommendation(id, param = null) {
         return API.apiClient(`movie/${id}/recommendations`, param);
     },
+    getSimilar(id, param = null) {
+        return API.apiClient(`movie/${id}/similar`, param);
+    },
     getGenre(param = null) {
         return API.apiClient('genre/movie/list', param);
     },
