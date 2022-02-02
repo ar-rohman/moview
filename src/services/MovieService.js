@@ -1,6 +1,9 @@
 import API from './API';
 
 export default {
+    getDetail(id, param = null) {
+        return API.apiClient(`movie/${id}`, param);
+    },
     getDiscover(param = null) {
         return API.apiClient('discover/movie', param);
     },
@@ -24,6 +27,12 @@ export default {
     },
     getSimilar(id, param = null) {
         return API.apiClient(`movie/${id}/similar`, param);
+    },
+    getCredit(id, param = null) {
+        return API.apiClient(`movie/${id}/credits`, param);
+    },
+    getReview(id, param = null) {
+        return API.apiClient(`movie/${id}/reviews`, param);
     },
     getGenre(param = null) {
         return API.apiClient('genre/movie/list', param);

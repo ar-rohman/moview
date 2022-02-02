@@ -156,7 +156,7 @@ export default {
         const review = reactive({});
 
         const getMovieDetail = async () => {
-            const result = await API.apiClient(`movie/${route.params.id}`);
+            const result = await MovieService.getDetail(route.params.id);
             const { data } = result;
             movieDetail.result = {
                 id: data.id,
@@ -222,7 +222,7 @@ export default {
             similarMovie.result = data;
         };
         const getCast = async () => {
-            const result = await API.apiClient(`movie/${route.params.id}/credits`);
+            const result = await MovieService.getCredit(route.params.id);
             const { cast } = result.data;
             const data = cast.map((item) => {
                 return {
@@ -258,7 +258,7 @@ export default {
             };
         };
         const getReview = async () => {
-            const result = await API.apiClient(`movie/${route.params.id}/reviews`);
+            const result = await MovieService.getReview(route.params.id);
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
