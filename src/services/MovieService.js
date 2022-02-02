@@ -19,6 +19,9 @@ export default {
     getTopRated(param = null) {
         return API.apiClient('movie/top_rated', param);
     },
+    getRecommendation(id, param = null) {
+        return API.apiClient(`movie/${id}/recommendations`, param);
+    },
     getGenre(param = null) {
         return API.apiClient('genre/movie/list', param);
     },

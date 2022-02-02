@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="flex flex-col md:flex-row gap-10 lg:gap-20 mt-10">
-        <div class="w-full md:w-2/3 lg:w-3/4 zbg-blue-400">
+        <div class="w-full md:w-2/3">
             <div class="flex gap-4">
                 <img
                     :src="movieDetail.result.poster"
@@ -107,24 +107,11 @@
                 </div>
             </div>
         </div>
-        <div class="w-full md:w-1/3 lg:w-1/4">
-            <div>
-                <div class="font-semibold mb-2">Recommendations</div>
-                <div class="flex flex-col zmd:flex-row gap-3">
-                    <template v-for="item in recomendation.result" :key="item.id">
-                        <SidebarCard
-                            :id="item.id"
-                            :title="item.title"
-                            :image="item.image"
-                            :vote-average="item.vote_average" />
-                    </template>
-                </div>
-                <div class="mt-2">
-                    <button class="bg-red-500 rounded-xl text-white px-6 py-2 w-full">
-                        See more
-                    </button>
-                </div>
-            </div>
+        <div class="w-full md:w-1/3">
+            <SidebarList
+                :data="recomendation.result"
+                title="Recommendations"
+                :see-more-link="`/movie/recommendation/${movieDetail.result.id}`" />
         </div>
     </div>
     <ListCarousel title="More like this" :data="similarMovie.result" see-more-link="#" />
@@ -133,6 +120,7 @@
 import { onMounted, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import API from '@/services/API';
+import MovieService from '@/services/MovieService';
 import { isLetter } from '@/utils/stringManipulation';
 import { timeFromNow } from '@/utils/date';
 import { isImageExist } from '../utils/image';
@@ -145,15 +133,15 @@ import {
     calendarOutlineIcon,
 } from '../components/icon';
 import ListCarousel from '@/components/ListCarousel.vue';
-import SidebarCard from '@/components/SidebarCard.vue';
 import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
+import SidebarList from '../components/SidebarList.vue';
 import backdropImage from '@/assets/images/backdrop.png';
 import posterImage from '@/assets/images/poster.png';
 import avatarImage from '@/assets/images/avatar.svg';
 
 export default {
-    components: { ListCarousel, SidebarCard, UserReview, RatingCount },
+    components: { ListCarousel, SidebarList, UserReview, RatingCount },
     setup() {
         const router = useRouter();
         const route = useRoute();
@@ -193,7 +181,7 @@ export default {
             };
         };
         const getRecomendation = async () => {
-            const result = await API.apiClient(`movie/${route.params.id}/recommendations`);
+            const result = await MovieService.getRecommendation(route.params.id);
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
