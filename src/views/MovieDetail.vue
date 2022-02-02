@@ -131,7 +131,6 @@ import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
 import {
     arrowBackIcon,
-    starHalfIcon,
     bookmarkOutlineIcon,
     clockOutlineIcon,
     calendarOutlineIcon,
@@ -198,7 +197,7 @@ export default {
                         imageSize: defaults.posterSmallSize,
                     }),
                     vote_count: item.vote_count,
-                    vote_average: Number.parseFloat(item.vote_average).toFixed(1),
+                    vote_average: item.vote_average,
                 };
             });
             recomendation.result = data.slice(0, 3);
@@ -217,7 +216,7 @@ export default {
                         imageSize: defaults.posterSize,
                     }),
                     vote_count: item.vote_count,
-                    vote_average: Number.parseFloat(item.vote_average).toFixed(1),
+                    vote_average: item.vote_average,
                 };
             });
             similarMovie.result = data;
@@ -301,7 +300,6 @@ export default {
             review,
             timeFromNow,
             arrowBackIcon,
-            starHalfIcon,
             bookmarkOutlineIcon,
             clockOutlineIcon,
             calendarOutlineIcon,
