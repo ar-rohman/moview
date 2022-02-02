@@ -73,13 +73,13 @@
             </div>
             <div class="flex flex-col lg:flex-row gap-10 mt-6">
                 <div class="w-full lg:w-2/3">
-                    <div v-if="movieDetail.result.original_title" class="text-sm">
+                    <div v-if="movieDetail.result.original_title" class="text-sm mb-4">
                         Original title: {{ movieDetail.result.original_title }}
                     </div>
-                    <div class="mt-4 font-semibold mb-2">Overview</div>
-                    <div class="">
+                    <div class="font-semibold mb-2">Overview</div>
+                    <p>
                         {{ movieDetail.result.overview }}
-                    </div>
+                    </p>
                     <UserReview :data="review.result" />
                 </div>
                 <div class="w-full lg:w-1/3">
@@ -286,7 +286,6 @@ export default {
             router.push({ path: `/movie/genre/${genreName}/${id}` });
         };
         const fetchData = () => {
-            console.log(route.params.id);
             getMovieDetail();
             getRecomendation();
             getSimilarMovie();
@@ -296,7 +295,9 @@ export default {
 
         watch(
             () => route.params.id,
-            () => fetchData()
+            (newId) => {
+                if (newId) fetchData();
+            }
         );
 
         onMounted(getMovieDetail);
