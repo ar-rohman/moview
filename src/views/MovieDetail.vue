@@ -1,12 +1,12 @@
 <template>
-    <div class="relative -mt-4">
+    <div class="relative -mt-4 -mx-4 sm:-mx-10">
         <img
             :src="movieDetail.result.backdrop"
             :alt="movieDetail.result.title"
-            class="rounded-3xl h-80 w-full object-cover object-center" />
-        <div class="absolute -inset-px">
+            class="h-80 w-full object-cover object-center" />
+        <div class="absolute inset-0">
             <div class="bg-gradient-to-b from-white/20 to-white w-full h-full">
-                <div class="h-full flex flex-col justify-between p-4 ztext-white">
+                <div class="h-full flex flex-col justify-between p-4 sm:px-10">
                     <div class="flex gap-x-4 text-black">
                         <button
                             class="h-6 w-6"
@@ -14,7 +14,7 @@
                             v-html="arrowBackIcon"></button>
                         <div class="font-semibold">{{ movieDetail.result.title }}</div>
                     </div>
-                    <div class="flex justify-between px-4 sm:px-10 pb-4">
+                    <div class="flex justify-between pb-4">
                         <RatingCount
                             text-class="text-sm font-semibold text-gray-700"
                             :vote-average="movieDetail.result.vote_average"
@@ -43,7 +43,7 @@
                     :src="movieDetail.result.poster"
                     :alt="movieDetail.result.title"
                     class="h-[128px] w-[96px] rounded-3xl object-cover object-center" />
-                <div class="flex flex-col gap-4 justify-between">
+                <div class="flex flex-col gap-4 zjustify-between">
                     <div class="flex flex-col gap-y-2">
                         <div class="font-semibold sm:font-bold sm:text-xl">
                             {{ movieDetail.result.title }}
@@ -56,25 +56,27 @@
                             </div>
                             <div class="pl-2 flex gap-x-2 items-center">
                                 <div class="h-5 w-5" v-html="clockOutlineIcon"></div>
-                                {{ movieDetail.result.runtime }}
+                                {{ movieDetail.result.runtime }} mins
                             </div>
                         </div>
                     </div>
                     <div class="flex gap-2 flex-wrap">
                         <template v-for="item in movieDetail.result.genres" :key="item.id">
-                            <div class="px-4 py-1 border rounded-full text-sm font-semibold">
+                            <button
+                                class="px-4 py-1 border rounded-full text-sm font-semibold hover:border-red-500 hover:text-red-500 focus:text-white focus:bg-red-500 focus:border-none focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+                                @click="gotoMovieGenre(item.name, item.id)">
                                 {{ item.name }}
-                            </div>
+                            </button>
                         </template>
-                    </div>
-                    <div v-if="movieDetail.result.original_title" class="text-sm zhidden sm:block">
-                        Original title: {{ movieDetail.result.original_title }}
                     </div>
                 </div>
             </div>
             <div class="flex flex-col lg:flex-row gap-10 mt-6">
                 <div class="w-full lg:w-2/3">
-                    <div class="font-semibold mb-2">Overview</div>
+                    <div v-if="movieDetail.result.original_title" class="text-sm">
+                        Original title: {{ movieDetail.result.original_title }}
+                    </div>
+                    <div class="mt-4 font-semibold mb-2">Overview</div>
                     <div class="">
                         {{ movieDetail.result.overview }}
                     </div>
@@ -122,23 +124,22 @@
 <script>
 import { onMounted, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import API from '@/services/API';
 import MovieService from '@/services/MovieService';
 import { isLetter } from '@/utils/stringManipulation';
 import { timeFromNow } from '@/utils/date';
-import { isImageExist } from '../utils/image';
-import defaults from '../utils/defaults';
+import { isImageExist } from '@/utils/image';
+import defaults from '@/utils/defaults';
 import {
     arrowBackIcon,
     starHalfIcon,
     bookmarkOutlineIcon,
     clockOutlineIcon,
     calendarOutlineIcon,
-} from '../components/icon';
+} from '@/components/icon';
 import ListCarousel from '@/components/ListCarousel.vue';
 import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
-import SidebarList from '../components/SidebarList.vue';
+import SidebarList from '@/components/SidebarList.vue';
 import backdropImage from '@/assets/images/backdrop.png';
 import posterImage from '@/assets/images/poster.png';
 import avatarImage from '@/assets/images/avatar.svg';
@@ -232,7 +233,7 @@ export default {
                     image: isImageExist({
                         firstImage: item.profile_path,
                         secondImage: null,
-                        thirdImage: posterImage,
+                        thirdImage: avatarImage,
                         imageSize: defaults.profileSize,
                     }),
                 };
@@ -280,6 +281,12 @@ export default {
             });
             review.result = data.reverse();
         };
+
+        const gotoMovieGenre = (name, id) => {
+            const genreName = name.replace(/ /g, '-').toLowerCase();
+            router.push({ path: `/movie/genre/${genreName}/${id}` });
+        };
+
         onMounted(getMovieDetail);
         onMounted(getRecomendation);
         onMounted(getSimilarMovie);
@@ -298,6 +305,7 @@ export default {
             bookmarkOutlineIcon,
             clockOutlineIcon,
             calendarOutlineIcon,
+            gotoMovieGenre,
         };
     },
 };
