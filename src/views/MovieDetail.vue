@@ -125,7 +125,7 @@
 import { onMounted, reactive, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
-import { isLetter } from '@/utils/stringManipulation';
+import { isLetter } from '@/utils/string';
 import { timeFromNow } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';

@@ -50,7 +50,7 @@
 import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { isLetter } from '@/utils/stringManipulation';
+import { isLetter } from '@/utils/string';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
 import { getCountryCodeByUserIP } from '@/services/CountryService';

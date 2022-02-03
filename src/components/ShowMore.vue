@@ -12,7 +12,7 @@
 
 <script>
 import { onMounted, ref, toRefs } from 'vue';
-import { turncateString } from '@/utils/stringManipulation';
+import { turncateString } from '@/utils/string';
 
 export default {
     props: {

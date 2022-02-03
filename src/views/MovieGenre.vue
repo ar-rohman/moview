@@ -6,7 +6,7 @@
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import InfinityScroll from '@/components/InfinityScroll.vue';
-import { titleCase } from '../utils/stringManipulation';
+import { titleCase } from '../utils/string';
 
 export default {
     components: {

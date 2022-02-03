@@ -19,7 +19,7 @@
 // import { useRoute } from 'vue-router';
 import { onMounted, onUnmounted, watch, reactive, ref, toRefs } from 'vue';
 import API from '../services/API';
-import { isLetter } from '../utils/stringManipulation';
+import { isLetter } from '../utils/string';
 import MainCard from '../components/MainCard.vue';
 import BackToTop from '../components/BackToTop.vue';
 
