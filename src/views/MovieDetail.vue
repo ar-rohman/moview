@@ -196,8 +196,8 @@ export default {
                         thirdImage: posterImage,
                         imageSize: defaults.posterSmallSize,
                     }),
-                    vote_count: item.vote_count,
                     vote_average: item.vote_average,
+                    genre_id: item.genre_ids,
                 };
             });
             recomendation.result = data.slice(0, 3);

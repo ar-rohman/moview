@@ -50,6 +50,7 @@
 import MovieService from '@/services/MovieService';
 import { onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useGenreStore } from '@/stores';
 import { isLetter } from '@/utils/string';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
@@ -78,6 +79,7 @@ export default {
         const freeToWatch = reactive({});
         const releaseMovie = reactive({});
         const router = useRouter();
+        const genreStore = useGenreStore();
 
         const getReleaseMovie = async () => {
             let today = new Date();
@@ -103,9 +105,14 @@ export default {
         };
 
         const getMovieGenre = async () => {
-            const result = await MovieService.getGenre();
-            const { data } = result;
-            movieGenre.genres = data.genres;
+            if (genreStore.movieGenre) {
+                movieGenre.genres = genreStore.movieGenre;
+            } else {
+                const result = await MovieService.getGenre();
+                const { data } = result;
+                movieGenre.genres = data.genres;
+                genreStore.movieGenre = data.genres;
+            }
         };
 
         const getTrendingMovie = async () => {
@@ -182,6 +189,7 @@ export default {
                         imageSize: defaults.posterSmallSize,
                     }),
                     vote_average: item.vote_average,
+                    genre_id: item.genre_ids,
                 };
             });
             popularMovie.result = data.slice(0, 3);
@@ -201,6 +209,7 @@ export default {
                         imageSize: defaults.posterSmallSize,
                     }),
                     vote_average: item.vote_average,
+                    genre_id: item.genre_ids,
                 };
             });
             topRatedMovie.result = data.slice(0, 3);
@@ -225,6 +234,7 @@ export default {
                         imageSize: defaults.posterSmallSize,
                     }),
                     vote_average: item.vote_average,
+                    genre_id: item.genre_ids,
                 };
             });
             freeToWatch.result = data.slice(0, 3);

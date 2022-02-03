@@ -1,14 +1,15 @@
 <template>
     <section>
         <div class="font-semibold mb-2">{{ title }}</div>
-        <template v-if="data.length > 0">
+        <template v-if="data.length">
             <div class="flex flex-col sm:flex-row md:flex-col gap-3">
                 <template v-for="item in data" :key="item.id">
                     <SidebarCard
                         :id="item.id"
                         :title="item.title"
                         :image="item.image"
-                        :vote-average="item.vote_average" />
+                        :vote-average="item.vote_average"
+                        :genre-id="item.genre_id" />
                 </template>
             </div>
             <div class="mt-2">

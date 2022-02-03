@@ -12,7 +12,7 @@
                 <div class="line-clamp-2 font-semibold">
                     {{ title }}
                 </div>
-                <div class="line-clamp-1 text-gray-600">Action Action</div>
+                <div class="text-gray-600">{{ getGenre(genreId.slice(0, 2)) }}</div>
             </div>
             <RatingCount
                 :vote-average="voteAverage"
@@ -24,6 +24,7 @@
 
 <script>
 import { useRouter } from 'vue-router';
+import { useGenreStore } from '@/stores';
 import RatingCount from './RatingCount.vue';
 
 export default {
@@ -49,9 +50,25 @@ export default {
             default: '',
             required: true,
         },
+        genreId: {
+            type: Array,
+            default() {
+                return [];
+            },
+        },
     },
     setup() {
         const router = useRouter();
+        const genreStore = useGenreStore();
+
+        const getGenre = (ids) => {
+            const genreName = [];
+            for (const id of ids) {
+                genreName.push(genreStore.getMovieGenreById(id).name);
+            }
+            return genreName.join(', ');
+        };
+
         const goToDetail = (id) => {
             router.push({
                 name: 'Detail',
@@ -61,6 +78,7 @@ export default {
 
         return {
             goToDetail,
+            getGenre,
         };
     },
 };
