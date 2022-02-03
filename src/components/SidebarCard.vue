@@ -12,7 +12,7 @@
                 <div class="line-clamp-2 font-semibold">
                     {{ title }}
                 </div>
-                <div class="text-gray-600">{{ getGenre(genreId.slice(0, 2)) }}</div>
+                <div class="text-gray-600">{{ genre }}</div>
             </div>
             <RatingCount
                 :vote-average="voteAverage"
@@ -23,8 +23,10 @@
 </template>
 
 <script>
+import { onMounted, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGenreStore } from '@/stores';
+import MovieService from '@/services/MovieService';
 import RatingCount from './RatingCount.vue';
 
 export default {
@@ -57,18 +59,31 @@ export default {
             },
         },
     },
-    setup() {
+    setup(props) {
         const router = useRouter();
         const genreStore = useGenreStore();
+        const { genreId } = toRefs(props);
+        const genre = ref(null);
 
-        const getGenre = (ids) => {
+        const getGenre = () => {
             const genreName = [];
-            for (const id of ids) {
-                genreName.push(genreStore.getMovieGenreById(id).name);
+            for (const id of genreId.value.slice(0, 2)) {
+                const genreStoreName = genreStore.getMovieGenreById(id).name;
+                genreName.push(genreStoreName);
             }
-            return genreName.join(', ');
+            genre.value = genreName.join(', ');
         };
 
+        const getMovieGenre = async () => {
+            if (genreStore.movieGenre) {
+                return getGenre();
+            } else {
+                const result = await MovieService.getGenre();
+                const { data } = result;
+                genreStore.movieGenre = data.genres;
+                return getGenre();
+            }
+        };
         const goToDetail = (id) => {
             router.push({
                 name: 'Detail',
@@ -76,9 +91,10 @@ export default {
             });
         };
 
+        onMounted(getMovieGenre);
         return {
+            genre,
             goToDetail,
-            getGenre,
         };
     },
 };

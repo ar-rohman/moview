@@ -6,7 +6,7 @@
                 <carousel-card>
                     <div class="flex gap-x-4">
                         <button
-                            v-for="genre in movieGenre.genres"
+                            v-for="genre in movieGenre"
                             :key="genre.id"
                             class="px-4 py-2 rounded-2xl whitespace-nowrap border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2"
                             @click="gotoMovieGenre(genre.name, genre.id)">
@@ -48,7 +48,7 @@
 
 <script>
 import MovieService from '@/services/MovieService';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGenreStore } from '@/stores';
 import { isLetter } from '@/utils/string';
@@ -71,7 +71,7 @@ export default {
     setup() {
         const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
         const trendingMovie = reactive({});
-        const movieGenre = reactive({});
+        const movieGenre = ref();
         const nowPlaying = reactive({});
         const upcomingMovie = reactive({});
         const popularMovie = reactive({});
@@ -106,11 +106,11 @@ export default {
 
         const getMovieGenre = async () => {
             if (genreStore.movieGenre) {
-                movieGenre.genres = genreStore.movieGenre;
+                movieGenre.value = genreStore.movieGenre;
             } else {
                 const result = await MovieService.getGenre();
                 const { data } = result;
-                movieGenre.genres = data.genres;
+                movieGenre.value = data.genres;
                 genreStore.movieGenre = data.genres;
             }
         };
