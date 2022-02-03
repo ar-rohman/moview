@@ -1,21 +1,15 @@
 <template>
-    <div class="relative">
+    <div class="relative mt-10">
         <img
             :src="data.image"
             :alt="data.title"
-            class="h-80 w-full object-center object-cover rounded-xl sm:rounded-3xl" />
-        <div class="absolute inset-4 text-white flex items-end sm:w-1/2">
+            class="h-80 w-full object-center object-cover rounded-xl sm:rounded-3xl cursor-pointer"
+            @click="goToDetail(data.id)" />
+        <div class="absolute left-4 bottom-4 text-white">
             <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
-                <div class="py-4 px-6 flex justify-between gap-6">
+                <div class="py-4 px-6">
                     <div class="md:text-lg lg:text-2xl lg:font-semibold">
                         {{ data.title }}
-                    </div>
-                    <div class="self-end">
-                        <button
-                            class="bg-red-500 rounded-xl p-3 shadow-md hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
-                            title="Add to watchlist">
-                            <div class="w-6 h-6" v-html="bookmarkOutlineIcon"></div>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -24,7 +18,7 @@
 </template>
 
 <script>
-import { bookmarkIcon, bookmarkOutlineIcon } from './icon';
+import { useRouter } from 'vue-router';
 
 export default {
     props: {
@@ -37,7 +31,14 @@ export default {
         },
     },
     setup() {
-        return { bookmarkIcon, bookmarkOutlineIcon };
+        const router = useRouter();
+        const goToDetail = (id) => {
+            router.push({
+                name: 'Detail',
+                params: { id },
+            });
+        };
+        return { goToDetail };
     },
 };
 </script>

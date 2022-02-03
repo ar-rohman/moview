@@ -2,7 +2,7 @@
     <section>
         <div class="font-semibold mb-2">{{ title }}</div>
         <template v-if="data.length">
-            <div class="flex flex-col sm:flex-row md:flex-col gap-3">
+            <div class="flex flex-col sm:flex-row md:flex-col gap-4">
                 <template v-for="item in data" :key="item.id">
                     <SidebarCard
                         :id="item.id"
@@ -12,7 +12,7 @@
                         :genre-id="item.genre_id" />
                 </template>
             </div>
-            <div class="mt-2">
+            <div class="mt-4">
                 <router-link
                     :to="seeMoreLink"
                     class="block text-center bg-red-500 rounded-xl text-white px-6 py-2 w-full hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2">

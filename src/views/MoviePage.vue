@@ -15,6 +15,7 @@
                     </div>
                 </carousel-card>
             </div>
+            <HeroSection :data="heroData.result" />
             <ListCarousel
                 title="Trending"
                 :data="trendingMovie.result"
@@ -29,7 +30,7 @@
                 :data="upcomingMovie.result"
                 see-more-link="/movie/upcoming" />
         </div>
-        <div class="w-full md:w-1/3 flex flex-col gap-10">
+        <div class="w-full md:w-1/3 flex flex-col gap-12">
             <SidebarList
                 :data="popularMovie.result"
                 title="Popular Movies"
@@ -59,6 +60,7 @@ import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
 import CarouselCard from '@/components/CarouselCard.vue';
 import ListCarousel from '@/components/ListCarousel.vue';
 import SidebarList from '@/components/SidebarList.vue';
+import HeroSection from '../components/HeroSection.vue';
 import posterImage from '@/assets/images/poster.png';
 
 export default {
@@ -67,11 +69,12 @@ export default {
         ListCarousel,
         CarouselCard,
         SidebarList,
+        HeroSection,
     },
     setup() {
-        const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
         const trendingMovie = reactive({});
         const movieGenre = ref();
+        const heroData = reactive({});
         const nowPlaying = reactive({});
         const upcomingMovie = reactive({});
         const popularMovie = reactive({});
@@ -98,10 +101,16 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: `${imageBaseUrl}original${item.backdrop_path}`,
+                    image: isImageExist({
+                        firstImage: item.backdrop_path,
+                        secondImage: null,
+                        thirdImage: null,
+                        imageSize: defaults.backdropSize,
+                    }),
                 };
             });
             releaseMovie.result = data.slice(0, 5);
+            heroData.result = data.slice(5, 6)[0];
         };
 
         const getMovieGenre = async () => {
@@ -192,7 +201,7 @@ export default {
                     genre_id: item.genre_ids,
                 };
             });
-            popularMovie.result = data.slice(0, 3);
+            popularMovie.result = data.slice(0, 4);
         };
 
         const getTopRatedMovie = async () => {
@@ -212,7 +221,7 @@ export default {
                     genre_id: item.genre_ids,
                 };
             });
-            topRatedMovie.result = data.slice(0, 3);
+            topRatedMovie.result = data.slice(0, 4);
         };
 
         const getFreeToWatch = async () => {
@@ -256,6 +265,7 @@ export default {
 
         return {
             releaseMovie,
+            heroData,
             movieGenre,
             trendingMovie,
             nowPlaying,
