@@ -21,7 +21,7 @@ export default {
             required: true,
         },
         length: {
-            type: Number,
+            type: [String, Number],
             default: null,
         },
         textClass: {

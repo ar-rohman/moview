@@ -80,7 +80,7 @@
                     <p>
                         {{ movieDetail.result.overview }}
                     </p>
-                    <UserReview :data="review.result" />
+                    <UserReview v-if="review.result" :data="review.result" />
                 </div>
                 <div class="w-full lg:w-1/3">
                     <div class="font-semibold mb-4">Cast</div>

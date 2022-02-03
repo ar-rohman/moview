@@ -1,6 +1,7 @@
 /**
  * Check is the string is a letter,
  * that mean english alphabet not arabic, japanese, china or similar characters
+ * TODO - add specific language eg jp /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/
  * @param {String} string The string need to be chacked
  * @returns {Boolean}
  */
@@ -16,11 +17,19 @@ export const isLetter = (string) => {
 export const titleCase = (string) => {
     if (!string) return;
     // Replace underscore to space
-    const replaceString = string.replace(/_/g, ' ');
+    // const replaceString = string.replace(/_/g, ' ');
     // Capitalized each first word
-    const capitalized = replaceString.replace(
+    const capitalized = string.replace(
         /\w\S*/g,
         (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
     );
     return capitalized;
+};
+
+export const turncateString = (string, length = null) => {
+    if (length) {
+        const trimmedString = string.substring(0, length);
+        return `${trimmedString}...`;
+    }
+    return string;
 };

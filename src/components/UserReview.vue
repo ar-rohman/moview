@@ -1,7 +1,7 @@
 <template>
     <div class="font-semibold mt-10 mb-2">Reviews ({{ data.length }})</div>
-    <div v-if="data.length > 0" class="flex flex-col gap-y-8 h-60 overflow-y-auto">
-        <div v-for="item in data" :key="item.id">
+    <div v-if="data.length" class="flex flex-col gap-y-8">
+        <div v-for="item in reviews" :key="item.id">
             <div class="flex gap-4">
                 <img
                     :src="item.avatar"
@@ -35,17 +35,28 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-2 line-clamp-3 text-gray-500 text-sm">
-                {{ item.content }}
-            </div>
+            <ShowMore
+                :text="item.content.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br />')"
+                length="150"
+                text-class="mt-2 text-gray-500 text-sm" />
         </div>
+        <button
+            v-if="data.length > 1"
+            class="text-left text-red-400 font-semibold hover:text-red-500 text-sm"
+            @click="showReview">
+            {{ showReviewText }}
+        </button>
     </div>
 </template>
 
 <script>
-import { timeFromNow } from '../utils/date';
+import { onMounted, ref, toRefs, watch } from 'vue';
+import { timeFromNow } from '@/utils/date';
 import { starIcon, starHalfIcon } from '@/components/icon';
+import ShowMore from './ShowMore.vue';
+
 export default {
+    components: { ShowMore },
     props: {
         data: {
             type: Array,
@@ -55,8 +66,40 @@ export default {
             require: true,
         },
     },
-    setup() {
-        return { timeFromNow, starIcon, starHalfIcon };
+    setup(props) {
+        const { data } = toRefs(props);
+        const showAllReview = ref(false);
+        const reviews = ref();
+        const showReviewText = ref('Show all reviews');
+        const showReview = () => {
+            if (showAllReview.value) {
+                reviews.value = data.value;
+                showAllReview.value = false;
+                showReviewText.value = 'Close reviews';
+            } else {
+                reviews.value = data.value.slice(0, 1);
+                showAllReview.value = true;
+                showReviewText.value = 'Show all reviews';
+            }
+        };
+        onMounted(showReview);
+        watch(
+            () => props.data,
+            (newData) => {
+                if (newData) {
+                    showAllReview.value = false;
+                    showReview();
+                }
+            }
+        );
+        return {
+            reviews,
+            showReview,
+            showReviewText,
+            timeFromNow,
+            starIcon,
+            starHalfIcon,
+        };
     },
 };
 </script>
