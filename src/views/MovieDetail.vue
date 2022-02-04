@@ -83,29 +83,7 @@
                     <UserReview v-if="review.result" :data="review.result" />
                 </div>
                 <div class="w-full lg:w-1/3">
-                    <div class="font-semibold mb-4">Cast</div>
-                    <div class="flex lg:flex-col gap-4 flex-wrap">
-                        <template v-for="item in castMovie.result" :key="item.id">
-                            <div class="flex items-center flex-col lg:flex-row gap-x-3">
-                                <img
-                                    :src="item.image"
-                                    :alt="item.name"
-                                    class="h-[45px] w-[45px] min-w-[45px] rounded-full object-cover object-center" />
-                                <div
-                                    class="flex flex-col flex-wrap items-center lg:items-start w-[80px] lg:w-full">
-                                    <div class="line-clamp-1 text-xs lg:text-base font-semibold">
-                                        {{ item.name }}
-                                    </div>
-                                    <div class="line-clamp-1 text-xs lg:text-sm text-gray-500">
-                                        {{ item.character }}
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                        <button class="mt-4 text-sm font-semibold text-red-400 hover:text-red-600">
-                            See more
-                        </button>
-                    </div>
+                    <CastArtist :data="castMovie" />
                 </div>
             </div>
         </div>
@@ -122,7 +100,7 @@
         :see-more-link="`/movie/similar/${movieDetail.result.id}`" />
 </template>
 <script>
-import { onMounted, reactive, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
 import { isLetter } from '@/utils/string';
@@ -139,12 +117,13 @@ import ListCarousel from '@/components/ListCarousel.vue';
 import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
+import CastArtist from '@/components/CastArtist.vue';
 import backdropImage from '@/assets/images/backdrop.png';
 import posterImage from '@/assets/images/poster.png';
 import avatarImage from '@/assets/images/avatar.svg';
 
 export default {
-    components: { ListCarousel, SidebarList, UserReview, RatingCount },
+    components: { ListCarousel, SidebarList, UserReview, RatingCount, CastArtist },
     setup() {
         const router = useRouter();
         const route = useRoute();
@@ -152,7 +131,7 @@ export default {
         const movieDetail = reactive({ result });
         const recomendation = reactive({});
         const similarMovie = reactive({});
-        const castMovie = reactive({});
+        const castMovie = ref();
         const review = reactive({});
 
         const getMovieDetail = async () => {
@@ -237,7 +216,7 @@ export default {
                     }),
                 };
             });
-            castMovie.result = data.slice(0, 5);
+            castMovie.value = data;
         };
         const checkIfImageFromExternalLink = (image) => {
             if (!image) return false;
