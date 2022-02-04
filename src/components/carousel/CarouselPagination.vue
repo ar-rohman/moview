@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute bottom-2 z-10" :class="getPaginationPosition">
+    <div class="absolute bottom-0.5 sm:bottom-2 z-10" :class="getPaginationPosition">
         <button
             v-for="(item, index) in total"
             :key="index"
