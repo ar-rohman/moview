@@ -78,12 +78,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "movie-genre" */ '@/views/MovieGenre.vue'),
         meta: { pageName: 'Movie Genre', isShowHeader: false },
     },
-    // {
-    //     path: '/movie-list/:category/:id/:param?',
-    //     name: 'movie-list',
-    //     component: () => import(/* webpackChunkName: "movie-list" */ '@/views/MovieList.vue'),
-    //     meta: { pageName: 'Movie List', isShowHeader: false },
-    // },
     {
         path: '/search',
         name: 'search',

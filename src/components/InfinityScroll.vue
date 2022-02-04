@@ -1,7 +1,6 @@
 <template>
     <div class="font-semibold md:text-lg mb-3">{{ pageTitle }}</div>
-    <div
-        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 zh-screen zoverflow-y-auto">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         <template v-for="item in dataList.result" :key="item.id">
             <main-card
                 :id="item.id"
@@ -16,12 +15,14 @@
 </template>
 
 <script>
-// import { useRoute } from 'vue-router';
 import { onMounted, onUnmounted, watch, reactive, ref, toRefs } from 'vue';
-import API from '../services/API';
-import { isLetter } from '../utils/string';
-import MainCard from '../components/MainCard.vue';
-import BackToTop from '../components/BackToTop.vue';
+import API from '@/services/API';
+import { isLetter } from '@/utils/string';
+import defaults from '@/utils/defaults';
+import { isImageExist } from '@/utils/image';
+import MainCard from '@/components/MainCard.vue';
+import BackToTop from '@/components/BackToTop.vue';
+import posterImage from '@/assets/images/poster.png';
 
 export default {
     components: {
@@ -32,16 +33,13 @@ export default {
         pageTitle: {
             type: String,
             required: true,
-            // default: 'All List',
         },
         serviceUrl: {
             type: String,
             required: true,
-            // default: null,
         },
         query: {
             type: Object,
-            // required: true,
             default() {
                 return {};
             },
@@ -54,13 +52,6 @@ export default {
         const result = [];
         const dataList = reactive({ result });
         const { serviceUrl, query } = toRefs(props);
-        const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
-        // const route = useRoute();
-        // const pageTitle = () => {
-        //     const secondWordTitle = isNaN(route.params.id) ? route.params.id : route.params.param;
-        //     const title = titleCase(`${route.params.category} ${secondWordTitle}`);
-        //     return title;
-        // };
         const loadMore = () => {
             if (page.value < totalPage.value && bottom.value) {
                 page.value += 1;
@@ -71,20 +62,11 @@ export default {
             const scrollHeight = e.target.body.scrollHeight;
             const clientHeight = document.documentElement.clientHeight;
             const scrollTop = document.documentElement.scrollTop;
-            const cardHeight = 256; // 256px
+            const cardHeight = 224; // 224px
             if (scrollTop + clientHeight + cardHeight >= scrollHeight) {
                 bottom.value = true;
             } else {
                 bottom.value = false;
-            }
-        };
-        const isImageExist = (firstImage, secondImage) => {
-            if (firstImage) {
-                return `${imageBaseUrl}original${firstImage}`;
-            } else if (secondImage) {
-                return `${imageBaseUrl}original${secondImage}`;
-            } else {
-                return 'https://via.placeholder.com/1280x320/a83244/808080?text=Dummy Image';
             }
         };
         const getDataList = async () => {
@@ -100,7 +82,12 @@ export default {
                 return {
                     id: item.id,
                     title: isLetter(item.original_title) ? item.original_title : item.title,
-                    image: isImageExist(item.poster_path, item.backdrop_path),
+                    image: isImageExist({
+                        firstImage: item.poster_path,
+                        secondImage: item.backdrop_path,
+                        thirdImage: posterImage,
+                        imageSize: defaults.mainPosterSize,
+                    }),
                     vote_count: item.vote_count,
                     vote_average: item.vote_average,
                 };

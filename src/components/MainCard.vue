@@ -6,7 +6,7 @@
         @click="goToDetail(id)">
         <img
             :src="image"
-            class="h-[256px] w-full rounded-3xl object-cover object-center"
+            class="h-[224px] w-full rounded-3xl object-cover object-center"
             :alt="title" />
         <div class="absolute inset-x-0 bottom-0">
             <div
