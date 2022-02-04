@@ -2,7 +2,7 @@
     <section>
         <div class="font-semibold mb-2">{{ title }}</div>
         <template v-if="data.length">
-            <div class="flex flex-col sm:flex-row md:flex-col gap-4">
+            <div class="flex flex-col sm:flex-row md:flex-col gap-5">
                 <template v-for="item in data" :key="item.id">
                     <SidebarCard
                         :id="item.id"

@@ -221,7 +221,7 @@ export default {
                     genre_id: item.genre_ids,
                 };
             });
-            topRatedMovie.result = data.slice(0, 4);
+            topRatedMovie.result = data.slice(0, 3);
         };
 
         const getFreeToWatch = async () => {
