@@ -6,13 +6,13 @@
             class="h-80 w-full object-cover object-center" />
         <div class="absolute inset-0">
             <div class="bg-gradient-to-b from-white/20 to-white w-full h-full">
-                <div class="h-full flex flex-col justify-between p-4 sm:px-10">
-                    <div class="flex gap-x-4 text-black">
-                        <button
-                            class="h-6 w-6"
-                            @click="router.back()"
-                            v-html="arrowBackIcon"></button>
-                        <div class="font-semibold">{{ movieDetail.result.title }}</div>
+                <div class="h-full flex flex-col zjustify-end justify-between p-4 sm:px-10">
+                    <div class="flex justify-between">
+                        <BackToPervious
+                            display-text-after="275"
+                            :text="movieDetail.result.title"
+                            styles="text-black" />
+                        <button>share</button>
                     </div>
                     <div class="flex justify-between pb-4">
                         <RatingCount
@@ -118,12 +118,13 @@ import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import CastArtist from '@/components/CastArtist.vue';
+import BackToPervious from '../components/BackToPervious.vue';
 import backdropImage from '@/assets/images/backdrop.png';
 import posterImage from '@/assets/images/poster.png';
 import avatarImage from '@/assets/images/avatar.svg';
 
 export default {
-    components: { ListCarousel, SidebarList, UserReview, RatingCount, CastArtist },
+    components: { ListCarousel, SidebarList, UserReview, RatingCount, CastArtist, BackToPervious },
     setup() {
         const router = useRouter();
         const route = useRoute();

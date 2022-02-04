@@ -1,4 +1,5 @@
 <template>
+    <BackToPervious :text="pageTitle" />
     <div class="font-semibold md:text-lg mb-3">{{ pageTitle }}</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         <template v-for="item in dataList.result" :key="item.id">
@@ -22,12 +23,14 @@ import defaults from '@/utils/defaults';
 import { isImageExist } from '@/utils/image';
 import MainCard from '@/components/MainCard.vue';
 import BackToTop from '@/components/BackToTop.vue';
+import BackToPervious from './BackToPervious.vue';
 import posterImage from '@/assets/images/poster.png';
 
 export default {
     components: {
         MainCard,
         BackToTop,
+        BackToPervious,
     },
     props: {
         pageTitle: {

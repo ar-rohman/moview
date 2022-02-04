@@ -1,9 +1,10 @@
 <template>
     <header
-        class="sticky top-0 flex justify-between gap-x-10 items-center bg-white h-[60px] px-4 sm:px-10 border-b z-30">
+        class="sticky top-0 flex justify-between gap-x-10 items-center bg-white h-[60px] px-4 sm:px-10 z-30"
+        :class="border">
         <template v-if="!isShowSearch">
             <div class="flex items-center">
-                <img src="../assets/images/logo.png" alt="moview" class="h-10 w-10" />
+                <img :src="logo" alt="moview" class="h-10 w-10" />
                 <p class="font-bold text-red-500 text-xl tracking-tighter ml-4">MOVIEW</p>
                 <div class="md:ml-20 sm:ml-8">
                     <NavMenu />
@@ -29,19 +30,32 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import NavMenu from './NavMenu.vue';
 import SearchSection from './SearchSection.vue';
 import SearchInput from './SearchInput.vue';
+import logo from '@/assets/images/logo.png';
 import { sunOutlineIcon, languageOutlineIcon, arrowBackIcon } from './icon';
 export default {
     components: { NavMenu, SearchSection, SearchInput },
     setup() {
         const isShowSearch = ref(false);
+        const border = ref(null);
         const tiggerShowSearch = () => {
-            console.log('aaa');
             isShowSearch.value = true;
         };
+
+        const scrolling = () => {
+            const htmlScroll = document.documentElement.scrollTop;
+            if (htmlScroll > 5) {
+                border.value = 'border-b';
+            } else {
+                border.value = '';
+            }
+        };
+        onMounted(() => window.addEventListener('scroll', scrolling));
+        onUnmounted(() => window.removeEventListener('scroll', scrolling));
+
         return {
             tiggerShowSearch,
             isShowSearch,
@@ -51,6 +65,8 @@ export default {
             languageOutlineIcon,
             arrowBackIcon,
             // searchText,
+            logo,
+            border,
         };
     },
 };
