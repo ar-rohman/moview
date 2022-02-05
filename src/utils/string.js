@@ -26,8 +26,14 @@ export const titleCase = (string) => {
     return capitalized;
 };
 
+/**
+ * Turncate string to determined length
+ * @param {String} string text to be turncate
+ * @param {Number} length maximal length text
+ * @returns {String}
+ */
 export const turncateString = (string, length = null) => {
-    if (length) {
+    if (length && string.length > length) {
         const trimmedString = string.substring(0, length);
         return `${trimmedString}...`;
     }

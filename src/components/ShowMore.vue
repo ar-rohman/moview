@@ -38,11 +38,11 @@ export default {
             if (isTruncated.value) {
                 content.value = turncateString(text.value, length.value);
                 isTruncated.value = false;
-                toggleMoreLess.value = ' show more';
+                toggleMoreLess.value = text.value.length > length.value ? ' show more' : '';
             } else {
                 content.value = turncateString(text.value);
                 isTruncated.value = true;
-                toggleMoreLess.value = ' show less';
+                toggleMoreLess.value = text.value.length > length.value ? ' show less' : '';
             }
         };
         onMounted(toggleString);
