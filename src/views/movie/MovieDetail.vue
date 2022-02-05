@@ -103,7 +103,6 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
-import { isLetter } from '@/utils/string';
 import { timeFromNow, minuteToHour } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
@@ -135,7 +134,7 @@ export default {
             const { data } = result;
             movieDetail.result = {
                 id: data.id,
-                title: isLetter(data.original_title) ? data.original_title : data.title,
+                title: data.title,
                 original_title: data.original_title === data.title ? '' : data.original_title,
                 backdrop: isImageExist({
                     firstImage: data.backdrop_path,
@@ -164,7 +163,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -183,7 +182,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -202,7 +201,7 @@ export default {
             const data = cast.map((item) => {
                 return {
                     id: item.id,
-                    name: isLetter(item.original_name) ? item.original_name : item.name,
+                    name: item.name,
                     character: item.character,
                     image: isImageExist({
                         firstImage: item.profile_path,

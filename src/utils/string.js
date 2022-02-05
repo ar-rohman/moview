@@ -5,9 +5,9 @@
  * @param {String} string The string need to be chacked
  * @returns {Boolean}
  */
-export const isLetter = (string) => {
-    return string.toLowerCase() != string.toUpperCase();
-};
+// export const isLetter = (string) => {
+//     return string.toLowerCase() != string.toUpperCase();
+// };
 
 /**
  * Convert string to title case format

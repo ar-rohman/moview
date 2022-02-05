@@ -52,7 +52,6 @@ import MovieService from '@/services/MovieService';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGenreStore } from '@/stores';
-import { isLetter } from '@/utils/string';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
 import { getCountryCodeByUserIP } from '@/services/CountryService';
@@ -100,7 +99,7 @@ export default {
             data = data.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.backdrop_path,
                         secondImage: null,
@@ -130,7 +129,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -150,7 +149,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -170,7 +169,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -190,7 +189,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -210,7 +209,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
@@ -235,7 +234,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,
