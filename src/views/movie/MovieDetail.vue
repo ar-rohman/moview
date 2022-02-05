@@ -56,7 +56,7 @@
                             </div>
                             <div class="pl-2 flex gap-x-2 items-center">
                                 <div class="h-5 w-5" v-html="clockOutlineIcon"></div>
-                                {{ movieDetail.result.runtime }} mins
+                                {{ movieDetail.result.runtime }}
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
 import { isLetter } from '@/utils/string';
-import { timeFromNow } from '@/utils/date';
+import { timeFromNow, minuteToHour } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
 import { bookmarkOutlineIcon, clockOutlineIcon, calendarOutlineIcon } from '@/components/icon';
@@ -152,7 +152,7 @@ export default {
                 overview: data.overview,
                 genres: data.genres,
                 release: data.release_date ? data.release_date.split('-')[0] : '',
-                runtime: data.runtime,
+                runtime: minuteToHour(data.runtime),
                 vote_average: data.vote_average,
                 vote_count: data.vote_count,
                 adult: data.adult,

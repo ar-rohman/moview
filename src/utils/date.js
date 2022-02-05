@@ -25,3 +25,25 @@ export const timeFromNow = (date, language = 'en') => {
     }
     return result;
 };
+
+/**
+ * Convert minute to hour
+ * @param {(string|Number)} minute Minute to be converted
+ * @returns {String}
+ */
+export const minuteToHour = (minute) => {
+    const unit = (data, unit) => {
+        if (data > 1) {
+            return `${data} ${unit}s`;
+        } else if (data === 1) {
+            return `${data} ${unit}`;
+        } else {
+            return '';
+        }
+    };
+    const hr = Math.floor(+minute / 60);
+    const min = +minute % 60;
+    const hrUnit = unit(hr, 'hr');
+    const minUnit = unit(min, 'min');
+    return `${hrUnit} ${minUnit}`;
+};
