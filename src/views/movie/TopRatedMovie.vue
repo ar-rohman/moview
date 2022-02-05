@@ -6,8 +6,7 @@
 import InfinityScroll from '@/components/InfinityScroll.vue';
 
 export default {
-    components: {
-        InfinityScroll,
-    },
+    components: { InfinityScroll },
+    provide: { detailLink: '/movie/detail' },
 };
 </script>

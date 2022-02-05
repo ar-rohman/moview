@@ -18,7 +18,6 @@
 <script>
 import { onMounted, onUnmounted, watch, reactive, ref, toRefs } from 'vue';
 import API from '@/services/API';
-import { isLetter } from '@/utils/string';
 import defaults from '@/utils/defaults';
 import { isImageExist } from '@/utils/image';
 import MainCard from '@/components/MainCard.vue';
@@ -84,7 +83,7 @@ export default {
             const data = results.map((item) => {
                 return {
                     id: item.id,
-                    title: isLetter(item.original_title) ? item.original_title : item.title,
+                    title: item.title,
                     image: isImageExist({
                         firstImage: item.poster_path,
                         secondImage: item.backdrop_path,

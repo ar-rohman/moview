@@ -119,6 +119,7 @@ import avatarImage from '@/assets/images/avatar.svg';
 
 export default {
     components: { ListCarousel, SidebarList, UserReview, RatingCount, CastArtist, BackToPervious },
+    provide: { detailLink: '/movie/detail' },
     setup() {
         const router = useRouter();
         const route = useRoute();

@@ -1,8 +1,7 @@
 <template>
-    <div
-        class="flex gap-2 rounded-md h-[112px] w-full bg-black/5 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500"
-        tabindex="0"
-        @click="goToDetail(id)">
+    <router-link
+        :to="`${detailLink}/${id}`"
+        class="flex gap-2 rounded-md h-[112px] w-full bg-black/5 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500">
         <img
             :src="image"
             class="w-[84px] h-full rounded-lg object-cover object-center"
@@ -19,7 +18,7 @@
                 icon-class="w-4 h-4 lg:h-5 lg:w-5 text-yellow-400"
                 text-class="text-sm text-gray-500" />
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
@@ -31,6 +30,7 @@ import RatingCount from './RatingCount.vue';
 
 export default {
     components: { RatingCount },
+    inject: ['detailLink'],
     props: {
         id: {
             type: [String, Number],
@@ -65,6 +65,7 @@ export default {
         const { genreId } = toRefs(props);
         const genre = ref(null);
 
+        // TODO REMOVE THIS
         const getGenre = () => {
             const genreName = [];
             for (const id of genreId.value.slice(0, 2)) {
@@ -84,17 +85,10 @@ export default {
                 return getGenre();
             }
         };
-        const goToDetail = (id) => {
-            router.push({
-                name: 'Detail',
-                params: { id },
-            });
-        };
 
         onMounted(getMovieGenre);
         return {
             genre,
-            goToDetail,
         };
     },
 };

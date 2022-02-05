@@ -17,10 +17,9 @@
             </div>
             <HeroSection :data="heroData.result" />
             <ListCarousel
-                title="Trending"
+                title="Trending Movie"
                 :data="trendingMovie.result"
-                see-more-link="/movie/trending"
-                page-title="Trending Movie" />
+                see-more-link="/movie/trending" />
             <ListCarousel
                 title="Now Playing"
                 :data="nowPlaying.result"
@@ -70,6 +69,7 @@ export default {
         SidebarList,
         HeroSection,
     },
+    provide: { detailLink: '/movie/detail' },
     setup() {
         const trendingMovie = reactive({});
         const movieGenre = ref();

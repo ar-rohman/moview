@@ -8,9 +8,8 @@ import InfinityScroll from '@/components/InfinityScroll.vue';
 import { ref } from 'vue';
 
 export default {
-    components: {
-        InfinityScroll,
-    },
+    components: { InfinityScroll },
+    provide: { detailLink: '/movie/detail' },
     setup() {
         const route = useRoute();
         const serviceUrl = ref(null);

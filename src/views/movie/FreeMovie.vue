@@ -10,6 +10,7 @@ export default {
     components: {
         InfinityScroll,
     },
+    provide: { detailLink: '/movie/detail' },
     setup() {
         const query = {
             include_adult: false,

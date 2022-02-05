@@ -52,15 +52,13 @@ export default {
         const router = useRouter();
         const { direction, id } = toRefs(props);
         const currentSlide = inject('currentSlide');
+        const detailLink = inject('detailLink');
         const transitionEffect = computed(() =>
             direction.value === 'right' ? 'slide-out' : 'slide-in'
         );
 
         const goTo = () => {
-            router.push({
-                name: 'Detail',
-                params: { id: id.value },
-            });
+            router.push({ path: `${detailLink}/${id.value}` });
         };
 
         return { goTo, transitionEffect, currentSlide };

@@ -9,9 +9,8 @@ import InfinityScroll from '@/components/InfinityScroll.vue';
 import { titleCase } from '@/utils/string';
 
 export default {
-    components: {
-        InfinityScroll,
-    },
+    components: { InfinityScroll },
+    provide: { detailLink: '/movie/detail' },
     setup() {
         const route = useRoute();
         const pageTitle = ref(null);

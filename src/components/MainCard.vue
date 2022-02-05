@@ -1,9 +1,8 @@
 <template>
-    <div
-        class="flex gap-2 flex-col rounded-3xl cursor-pointer focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-red-400 relative"
-        :class="cardWidth"
-        tabindex="0"
-        @click="goToDetail(id)">
+    <router-link
+        :to="`${detailLink}/${id}`"
+        class="flex gap-2 flex-col rounded-3xl focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-red-400 relative"
+        :class="cardWidth">
         <img
             :src="image"
             class="h-[224px] w-full rounded-3xl object-cover object-center"
@@ -15,15 +14,15 @@
                 <RatingCount :vote-average="voteAverage" :vote-count="voteCount" />
             </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
 import RatingCount from './RatingCount.vue';
 
 export default {
     components: { RatingCount },
+    inject: ['detailLink'],
     props: {
         id: {
             type: [String, Number],
@@ -54,19 +53,6 @@ export default {
             type: String,
             default: 'w-[192px]',
         },
-    },
-    setup() {
-        const router = useRouter();
-        const goToDetail = (id) => {
-            router.push({
-                name: 'Detail',
-                params: { id },
-            });
-        };
-
-        return {
-            goToDetail,
-        };
     },
 };
 </script>

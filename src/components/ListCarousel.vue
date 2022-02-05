@@ -24,7 +24,6 @@
 <script>
 import MainCard from './MainCard.vue';
 import CarouselCard from './CarouselCard.vue';
-import { toRef, toRefs } from 'vue';
 
 export default {
     components: { MainCard, CarouselCard },
@@ -33,25 +32,6 @@ export default {
             type: String,
             default: null,
         },
-        // imageSize: {
-        //     type: String,
-        //     default: 'w500',
-        //     validator(value) {
-        //         return [
-        //             'w45',
-        //             'w92',
-        //             'w154',
-        //             'w185',
-        //             'w300',
-        //             'w342',
-        //             'w500',
-        //             'w780',
-        //             'w1280',
-        //             'h632',
-        //             'original',
-        //         ].includes(value);
-        //     },
-        // },
         data: {
             type: Array,
             default() {

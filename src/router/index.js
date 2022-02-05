@@ -4,86 +4,78 @@ import MoviePage from '@/views/movie/MoviePage.vue';
 const routes = [
     {
         path: '/',
-        name: 'Movies',
+        name: 'movies',
         component: MoviePage,
         meta: { pageName: 'Movies', isShowHeader: true },
     },
     {
-        path: '/tv-show',
-        name: 'tv-show',
-        component: () => import(/* webpackChunkName: "tv-show" */ '@/views/TVShowPage.vue'),
-        meta: { pageName: 'TV Shows', isShowHeader: true },
-    },
-    {
-        path: '/detail/:id',
-        name: 'Detail',
-        component: () => import(/* webpackChunkName: "detail" */ '@/views/movie/MovieDetail.vue'),
+        path: '/movie/detail/:id',
+        name: 'movie-detail',
+        component: () =>
+            import(/* webpackChunkName: "movie-detail" */ '@/views/movie/MovieDetail.vue'),
         meta: { pageName: 'Detail', isShowHeader: false },
     },
     {
         path: '/movie/upcoming',
-        name: 'Upcoming',
-        component: () =>
-            import(/* webpackChunkName: "upcoming" */ '@/views/movie/UpcomingMovie.vue'),
+        name: 'upcoming-movie',
+        component: () => import(/* webpackChunkName: "movie" */ '@/views/movie/UpcomingMovie.vue'),
         meta: { pageName: 'Upcoming Movies', isShowHeader: false },
     },
     {
         path: '/movie/trending',
-        name: 'Trending',
-        component: () =>
-            import(/* webpackChunkName: "trending" */ '@/views/movie/TrendingMovie.vue'),
+        name: 'trending-movie',
+        component: () => import(/* webpackChunkName: "movie" */ '@/views/movie/TrendingMovie.vue'),
         meta: { pageName: 'Trending Movies', isShowHeader: false },
     },
     {
         path: '/movie/now-playing',
-        name: 'now-playing',
+        name: 'now-playing-movie',
         component: () =>
-            import(/* webpackChunkName: "upcoming" */ '@/views/movie/NowPlayingMovie.vue'),
+            import(/* webpackChunkName: "movie" */ '@/views/movie/NowPlayingMovie.vue'),
         meta: { pageName: 'Now Playing Movies', isShowHeader: false },
     },
     {
         path: '/movie/popular',
         name: 'popular-movie',
-        component: () =>
-            import(/* webpackChunkName: "popular-movie" */ '@/views/movie/PopularMovie.vue'),
+        component: () => import(/* webpackChunkName: "movie" */ '@/views/movie/PopularMovie.vue'),
         meta: { pageName: 'Popular Movies', isShowHeader: false },
     },
     {
         path: '/movie/top-rated',
         name: 'top-rated-movie',
-        component: () =>
-            import(/* webpackChunkName: "top-rated-movie" */ '@/views/movie/TopRatedMovie.vue'),
+        component: () => import(/* webpackChunkName: "movie" */ '@/views/movie/TopRatedMovie.vue'),
         meta: { pageName: 'Top Rated Movies', isShowHeader: false },
     },
     {
         path: '/movie/recommendation/:id',
         name: 'recommendation-movie',
         component: () =>
-            import(
-                /* webpackChunkName: "recommendation-movie" */ '@/views/movie/RecommendationMovie.vue'
-            ),
+            import(/* webpackChunkName: "movie" */ '@/views/movie/RecommendationMovie.vue'),
         meta: { pageName: 'Recommendation Movies', isShowHeader: false },
     },
     {
         path: '/movie/similar/:id',
         name: 'similar-movie',
-        component: () =>
-            import(/* webpackChunkName: "similar-movie" */ '@/views/movie/SimilarMovie.vue'),
+        component: () => import(/* webpackChunkName: "movie" */ '@/views/movie/SimilarMovie.vue'),
         meta: { pageName: 'Similar Movies', isShowHeader: false },
     },
     {
         path: '/movie/free',
         name: 'free-movie',
-        component: () =>
-            import(/* webpackChunkName: "top-rated-movie" */ '@/views/movie/FreeMovie.vue'),
+        component: () => import(/* webpackChunkName: "movie" */ '@/views/movie/FreeMovie.vue'),
         meta: { pageName: 'Free Movies', isShowHeader: false },
     },
     {
         path: '/movie/genre/:genre/:id',
         name: 'movie-genre',
-        component: () =>
-            import(/* webpackChunkName: "movie-genre" */ '@/views/movie/MovieGenre.vue'),
+        component: () => import(/* webpackChunkName: "genre" */ '@/views/movie/MovieGenre.vue'),
         meta: { pageName: 'Movie Genre', isShowHeader: false },
+    },
+    {
+        path: '/tv-show',
+        name: 'tv-show',
+        component: () => import(/* webpackChunkName: "tv-show" */ '@/views/TVShowPage.vue'),
+        meta: { pageName: 'TV Shows', isShowHeader: true },
     },
     {
         path: '/search',
