@@ -31,7 +31,7 @@ export default {
         const textToDisplay = ref();
         const scrolling = () => {
             const htmlScroll = document.documentElement.scrollTop;
-            console.log(htmlScroll);
+            // console.log(htmlScroll);
             if (htmlScroll > 5) {
                 customClass.value = `${styles.value} bg-white border-b fixed top-0 inset-x-0 px-4 sm:px-10`;
             } else {

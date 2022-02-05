@@ -60,7 +60,7 @@ import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
 import CarouselCard from '@/components/CarouselCard.vue';
 import ListCarousel from '@/components/ListCarousel.vue';
 import SidebarList from '@/components/SidebarList.vue';
-import HeroSection from '../components/HeroSection.vue';
+import HeroSection from '@/components/HeroSection.vue';
 import posterImage from '@/assets/images/poster.png';
 
 export default {
