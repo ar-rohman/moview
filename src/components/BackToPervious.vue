@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-x-4 items-center h-[60px] z-10 mb-4" :class="customClass">
+    <div class="flex gap-x-4 items-center h-[60px] z-10 mb-4" :class="[styles, customClass]">
         <button class="h-6 w-6" @click="router.back()" v-html="arrowBackIcon"></button>
         <div class="line-clamp-1 font-semibold">{{ textToDisplay }}</div>
     </div>
@@ -26,16 +26,15 @@ export default {
     },
     setup(props) {
         const router = useRouter();
-        const { displayTextAfter, styles, text } = toRefs(props);
+        const { displayTextAfter, text } = toRefs(props);
         const customClass = ref(null);
         const textToDisplay = ref();
         const scrolling = () => {
             const htmlScroll = document.documentElement.scrollTop;
-            // console.log(htmlScroll);
             if (htmlScroll > 5) {
-                customClass.value = `${styles.value} bg-white border-b fixed top-0 inset-x-0 px-4 sm:px-10`;
+                customClass.value = 'bg-white border-b fixed top-0 inset-x-0 px-4 sm:px-10';
             } else {
-                customClass.value = `${styles.value} bg-transparent`;
+                customClass.value = 'bg-transparent';
             }
             if (htmlScroll > displayTextAfter.value) {
                 textToDisplay.value = text.value;
