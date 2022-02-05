@@ -113,14 +113,25 @@ export default {
         };
 
         const getMovieGenre = async () => {
-            if (genreStore.movieGenre) {
-                movieGenre.value = genreStore.movieGenre;
-            } else {
+            await getMovieGenreStore();
+            movieGenre.value = genreStore.movieGenre;
+        };
+
+        const getMovieGenreStore = async () => {
+            if (!genreStore.movieGenre) {
                 const result = await MovieService.getGenre();
                 const { data } = result;
-                movieGenre.value = data.genres;
                 genreStore.movieGenre = data.genres;
             }
+        };
+
+        const getGenreName = (arrayGenreId) => {
+            const genreName = [];
+            for (const id of arrayGenreId) {
+                const genreStoreName = genreStore.getMovieGenreById(id).name;
+                genreName.push(genreStoreName);
+            }
+            return genreName.join(', ');
         };
 
         const getTrendingMovie = async () => {
@@ -197,7 +208,7 @@ export default {
                         imageSize: defaults.sidebarPosterSize,
                     }),
                     vote_average: item.vote_average,
-                    genre_id: item.genre_ids,
+                    genre: getGenreName(item.genre_ids.slice(0, 2)),
                 };
             });
             popularMovie.result = data.slice(0, 4);
@@ -217,7 +228,7 @@ export default {
                         imageSize: defaults.sidebarPosterSize,
                     }),
                     vote_average: item.vote_average,
-                    genre_id: item.genre_ids,
+                    genre: getGenreName(item.genre_ids.slice(0, 2)),
                 };
             });
             topRatedMovie.result = data.slice(0, 3);
@@ -242,7 +253,7 @@ export default {
                         imageSize: defaults.sidebarPosterSize,
                     }),
                     vote_average: item.vote_average,
-                    genre_id: item.genre_ids,
+                    genre: getGenreName(item.genre_ids.slice(0, 2)),
                 };
             });
             freeToWatch.result = data.slice(0, 3);

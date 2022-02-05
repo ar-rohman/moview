@@ -9,7 +9,7 @@
                         :title="item.title"
                         :image="item.image"
                         :vote-average="item.vote_average"
-                        :genre-id="item.genre_id" />
+                        :genre="item.genre" />
                 </template>
             </div>
             <div class="mt-4">

@@ -22,10 +22,6 @@
 </template>
 
 <script>
-import { onMounted, ref, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
-import { useGenreStore } from '@/stores';
-import MovieService from '@/services/MovieService';
 import RatingCount from './RatingCount.vue';
 
 export default {
@@ -52,44 +48,10 @@ export default {
             default: '',
             required: true,
         },
-        genreId: {
-            type: Array,
-            default() {
-                return [];
-            },
+        genre: {
+            type: String,
+            default: '',
         },
-    },
-    setup(props) {
-        const router = useRouter();
-        const genreStore = useGenreStore();
-        const { genreId } = toRefs(props);
-        const genre = ref(null);
-
-        // TODO REMOVE THIS
-        const getGenre = () => {
-            const genreName = [];
-            for (const id of genreId.value.slice(0, 2)) {
-                const genreStoreName = genreStore.getMovieGenreById(id).name;
-                genreName.push(genreStoreName);
-            }
-            genre.value = genreName.join(', ');
-        };
-
-        const getMovieGenre = async () => {
-            if (genreStore.movieGenre) {
-                return getGenre();
-            } else {
-                const result = await MovieService.getGenre();
-                const { data } = result;
-                genreStore.movieGenre = data.genres;
-                return getGenre();
-            }
-        };
-
-        onMounted(getMovieGenre);
-        return {
-            genre,
-        };
     },
 };
 </script>

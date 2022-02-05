@@ -103,6 +103,7 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
+import { useGenreStore } from '@/stores';
 import { timeFromNow, minuteToHour } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
@@ -123,6 +124,7 @@ export default {
     setup() {
         const router = useRouter();
         const route = useRoute();
+        const genreStore = useGenreStore();
         const result = {};
         const movieDetail = reactive({ result });
         const recomendation = reactive({});
@@ -172,7 +174,7 @@ export default {
                         imageSize: defaults.sidebarPosterSize,
                     }),
                     vote_average: item.vote_average,
-                    genre_id: item.genre_ids,
+                    genre: getGenreName(item.genre_ids.slice(0, 2)),
                 };
             });
             recomendation.result = data.slice(0, 3);
@@ -260,6 +262,24 @@ export default {
             const genreName = name.replace(/ /g, '-').toLowerCase();
             router.push({ path: `/movie/genre/${genreName}/${id}` });
         };
+
+        const getMovieGenreStore = async () => {
+            if (!genreStore.movieGenre) {
+                const result = await MovieService.getGenre();
+                const { data } = result;
+                genreStore.movieGenre = data.genres;
+            }
+        };
+
+        const getGenreName = (arrayGenreId) => {
+            const genreName = [];
+            for (const id of arrayGenreId) {
+                const genreStoreName = genreStore.getMovieGenreById(id).name;
+                genreName.push(genreStoreName);
+            }
+            return genreName.join(', ');
+        };
+
         const fetchData = () => {
             getMovieDetail();
             getRecomendation();
@@ -275,6 +295,7 @@ export default {
             }
         );
 
+        onMounted(getMovieGenreStore);
         onMounted(getMovieDetail);
         onMounted(getRecomendation);
         onMounted(getSimilarMovie);
