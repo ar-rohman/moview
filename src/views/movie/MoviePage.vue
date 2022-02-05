@@ -51,6 +51,7 @@ import MovieService from '@/services/MovieService';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGenreStore } from '@/stores';
+import { useCountryCodeStore } from '@/stores/country';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
 import { getCountryCodeByUserIP } from '@/services/CountryService';
@@ -82,6 +83,7 @@ export default {
         const releaseMovie = reactive({});
         const router = useRouter();
         const genreStore = useGenreStore();
+        const countryCodeStore = useCountryCodeStore();
 
         const getReleaseMovie = async () => {
             let today = new Date();
@@ -237,7 +239,7 @@ export default {
         const getFreeToWatch = async () => {
             const param = {
                 include_adult: false,
-                watch_region: await getCountryCodeByUserIP(),
+                watch_region: await countryCodeStore.getCountryCode(),
                 with_watch_monetization_types: 'free',
             };
             const result = await MovieService.getDiscover(param);
