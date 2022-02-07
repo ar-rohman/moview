@@ -198,6 +198,7 @@ export default {
 
         const getPopularMovie = async () => {
             const result = await MovieService.getPopular();
+            await getMovieGenreStore();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -218,6 +219,7 @@ export default {
 
         const getTopRatedMovie = async () => {
             const result = await MovieService.getTopRated();
+            await getMovieGenreStore();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -243,6 +245,7 @@ export default {
                 with_watch_monetization_types: 'free',
             };
             const result = await MovieService.getDiscover(param);
+            await getMovieGenreStore();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
