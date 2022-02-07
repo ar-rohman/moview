@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center relative">
+    <div v-if="data.length" class="flex justify-center relative">
         <div class="relative h-80 w-full overflow-hidden rounded-xl sm:rounded-3xl">
             <carousel-pagination
                 v-if="pagination"
@@ -21,6 +21,7 @@
         </div>
         <carousel-navigation v-if="navigation" @prev="previous" @next="next"></carousel-navigation>
     </div>
+    <HeroSectionSkeleton v-else />
 </template>
 
 <script>
@@ -28,9 +29,10 @@ import { ref, onMounted, onBeforeUnmount, toRefs, provide } from 'vue';
 import CarouselSlide from './CarouselSlide.vue';
 import CarouselNavigation from './CarouselNavigation.vue';
 import CarouselPagination from './CarouselPagination.vue';
+import HeroSectionSkeleton from '../skeleton/HeroSectionSkeleton.vue';
 
 export default {
-    components: { CarouselSlide, CarouselNavigation, CarouselPagination },
+    components: { CarouselSlide, CarouselNavigation, CarouselPagination, HeroSectionSkeleton },
     props: {
         data: {
             type: Array,
