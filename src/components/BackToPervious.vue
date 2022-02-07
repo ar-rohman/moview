@@ -1,6 +1,8 @@
 <template>
     <div class="flex gap-x-4 items-center h-[60px] z-10 mb-4" :class="[styles, customClass]">
-        <button class="h-6 w-6" @click="router.back()" v-html="arrowBackIcon"></button>
+        <button @click="router.back()">
+            <BaseIcon name="arrowBack" />
+        </button>
         <div class="line-clamp-1 font-semibold">{{ textToDisplay }}</div>
     </div>
 </template>
@@ -8,8 +10,10 @@
 <script>
 import { onMounted, onUnmounted, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
-import { arrowBackIcon } from './icon';
+import BaseIcon from '@/components/icon/BaseIcon.vue';
+
 export default {
+    components: { BaseIcon },
     props: {
         displayTextAfter: {
             type: [Number, String],
@@ -49,7 +53,6 @@ export default {
             router,
             customClass,
             textToDisplay,
-            arrowBackIcon,
         };
     },
 };

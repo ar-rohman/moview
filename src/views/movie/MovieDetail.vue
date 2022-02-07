@@ -28,7 +28,7 @@
                             <button
                                 class="bg-red-500 rounded-xl p-3 flex shadow-md hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                                 title="Add to watchlist">
-                                <div class="w-6 h-6 text-white" v-html="bookmarkOutlineIcon"></div>
+                                <BaseIcon name="bookmarkOutline" color="text-white" />
                             </button>
                         </div>
                     </div>
@@ -51,11 +51,11 @@
                         <div
                             class="flex gap-x-4 divide-x divide-gray-700 text-gray-500 text-sm font-semibold">
                             <div class="flex gap-x-2 items-center">
-                                <div class="h-5 w-5" v-html="calendarOutlineIcon"></div>
+                                <BaseIcon name="calendarOutline" size="w-5 h-5" />
                                 {{ movieDetail.result.release }}
                             </div>
                             <div class="pl-2 flex gap-x-2 items-center">
-                                <div class="h-5 w-5" v-html="clockOutlineIcon"></div>
+                                <BaseIcon name="clockOutline" size="w-5 h-5" />
                                 {{ movieDetail.result.runtime }}
                             </div>
                         </div>
@@ -107,7 +107,7 @@ import { useGenreStore } from '@/stores';
 import { timeFromNow, minuteToHour } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
-import { bookmarkOutlineIcon, clockOutlineIcon, calendarOutlineIcon } from '@/components/icon';
+import BaseIcon from '@/components/icon/BaseIcon.vue';
 import ListCarousel from '@/components/ListCarousel.vue';
 import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
@@ -119,7 +119,15 @@ import posterImage from '@/assets/images/poster.png';
 import avatarImage from '@/assets/images/avatar.svg';
 
 export default {
-    components: { ListCarousel, SidebarList, UserReview, RatingCount, CastArtist, BackToPervious },
+    components: {
+        ListCarousel,
+        SidebarList,
+        UserReview,
+        RatingCount,
+        CastArtist,
+        BackToPervious,
+        BaseIcon,
+    },
     provide: { detailLink: '/movie/detail' },
     setup() {
         const router = useRouter();
@@ -309,9 +317,6 @@ export default {
             castMovie,
             review,
             timeFromNow,
-            bookmarkOutlineIcon,
-            clockOutlineIcon,
-            calendarOutlineIcon,
             gotoMovieGenre,
         };
     },

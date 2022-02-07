@@ -12,21 +12,17 @@
                     <div class="flex gap-x-4 items-center">
                         <div class="flex gap-x-0.5">
                             <template v-if="item.star.two_star">
-                                <div
-                                    v-for="i in item.star.two_star"
-                                    :key="i"
-                                    class="h-4 w-4 text-yellow-400"
-                                    v-html="starIcon"></div>
+                                <div v-for="i in item.star.two_star" :key="i">
+                                    <BaseIcon name="star" size="h-4 w-4" color="text-yellow-400" />
+                                </div>
                             </template>
                             <template v-if="item.star.one_star">
-                                <div class="h-4 w-4 text-yellow-400" v-html="starHalfIcon"></div>
+                                <BaseIcon name="starHalf" size="h-4 w-4" color="text-yellow-400" />
                             </template>
                             <template v-if="item.star.zero_star">
-                                <div
-                                    v-for="i in item.star.zero_star"
-                                    :key="i"
-                                    class="h-4 w-4 text-slate-300"
-                                    v-html="starIcon"></div>
+                                <div v-for="i in item.star.zero_star" :key="i">
+                                    <BaseIcon name="star" size="h-4 w-4" color="text-slate-300" />
+                                </div>
                             </template>
                         </div>
                         <div class="text-sm text-gray-500">
@@ -52,11 +48,11 @@
 <script>
 import { onMounted, ref, toRefs, watch } from 'vue';
 import { timeFromNow } from '@/utils/date';
-import { starIcon, starHalfIcon } from '@/components/icon';
+import BaseIcon from '@/components/icon/BaseIcon.vue';
 import ShowMore from './ShowMore.vue';
 
 export default {
-    components: { ShowMore },
+    components: { BaseIcon, ShowMore },
     props: {
         data: {
             type: Array,
@@ -97,8 +93,6 @@ export default {
             showReview,
             showReviewText,
             timeFromNow,
-            starIcon,
-            starHalfIcon,
         };
     },
 };

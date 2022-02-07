@@ -11,18 +11,16 @@
                 </div>
             </div>
             <div class="flex justify-end items-center gap-x-6">
-                <!-- <div class="h-6 w-6" v-html="searchOutline"></div> -->
                 <SearchSection @show-search-input="tiggerShowSearch" />
-                <div class="h-6 w-6" v-html="sunOutlineIcon"></div>
-                <div class="h-6 w-6" v-html="languageOutlineIcon"></div>
+                <BaseIcon name="sunOutline" />
+                <BaseIcon name="languageOutline" />
             </div>
         </template>
         <template v-else>
             <div class="w-full flex items-center">
-                <button
-                    class="mr-6 h6 w-6"
-                    @click="isShowSearch = false"
-                    v-html="arrowBackIcon"></button>
+                <button class="mr-6" @click="isShowSearch = false">
+                    <BaseIcon name="arrowBack" />
+                </button>
                 <SearchInput autofocus />
             </div>
         </template>
@@ -34,10 +32,10 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import NavMenu from './NavMenu.vue';
 import SearchSection from './SearchSection.vue';
 import SearchInput from './SearchInput.vue';
+import BaseIcon from '@/components/icon/BaseIcon.vue';
 import logo from '@/assets/images/logo.png';
-import { sunOutlineIcon, languageOutlineIcon, arrowBackIcon } from './icon';
 export default {
-    components: { NavMenu, SearchSection, SearchInput },
+    components: { NavMenu, SearchSection, SearchInput, BaseIcon },
     setup() {
         const isShowSearch = ref(false);
         const border = ref(null);
@@ -59,12 +57,6 @@ export default {
         return {
             tiggerShowSearch,
             isShowSearch,
-            // searchOutline,
-            // close,
-            sunOutlineIcon,
-            languageOutlineIcon,
-            arrowBackIcon,
-            // searchText,
             logo,
             border,
         };

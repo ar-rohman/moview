@@ -1,6 +1,6 @@
 <template>
     <div v-if="voteAverage" class="flex items-center">
-        <div :class="iconClass" v-html="starIcon"></div>
+        <BaseIcon name="star" :size="iconClass" />
         <div :class="`flex ml-1 divide-x divide-current`">
             <p class="pr-2" :class="textClass">{{ Number.parseFloat(voteAverage).toFixed(1) }}</p>
             <p v-if="voteCount" class="pl-2" :class="textClass">
@@ -11,8 +11,10 @@
 </template>
 
 <script>
-import { starIcon } from './icon';
+import BaseIcon from '@/components/icon/BaseIcon.vue';
+
 export default {
+    components: { BaseIcon },
     props: {
         iconClass: {
             type: String,
@@ -31,9 +33,6 @@ export default {
             type: [String, Number, null],
             default: null,
         },
-    },
-    setup() {
-        return { starIcon };
     },
 };
 </script>

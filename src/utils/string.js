@@ -27,7 +27,7 @@ export const titleCase = (string) => {
 };
 
 /**
- * Turncate string to determined length
+ * Turncate string to the determined length
  * @param {String} string text to be turncate
  * @param {Number} length maximal length text
  * @returns {String}

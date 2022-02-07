@@ -3,16 +3,17 @@
         <button
             class="flex justify-center items-center bg-red-500 rounded-full p-3 mx-8 sm:mx-20 text-white hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
             @click="toTop">
-            <div v-html="arrowUpIcon"></div>
+            <BaseIcon name="arrowUp" size="w-5 h-5" />
         </button>
     </div>
 </template>
 
 <script>
 import { onMounted, onUnmounted, ref } from 'vue';
-import { arrowUpIcon } from './icon';
+import BaseIcon from '@/components/icon/BaseIcon.vue';
 
 export default {
+    components: { BaseIcon },
     setup() {
         const isScroll = ref(false);
 
@@ -34,7 +35,7 @@ export default {
                 isScroll.value = false;
             }
         };
-        return { isScroll, toTop, arrowUpIcon };
+        return { isScroll, toTop };
     },
 };
 </script>
