@@ -12,7 +12,7 @@
                             display-text-after="275"
                             :text="movieDetail.result.title"
                             styles="text-black" />
-                        <button>share</button>
+                        <button><BaseIcon name="shareOutline" color="text-black" /></button>
                     </div>
                     <div class="flex justify-between pb-4">
                         <RatingCount
@@ -63,7 +63,7 @@
                     <div class="flex gap-2 flex-wrap">
                         <template v-for="item in movieDetail.result.genres" :key="item.id">
                             <button
-                                class="px-4 py-1 border rounded-full text-sm font-semibold hover:border-red-500 hover:text-red-500 focus:text-white focus:bg-red-500 focus:border-none focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+                                class="px-4 py-1 border rounded-full text-sm font-semibold hover:border-red-500 hover:text-red-500 focus:text-white focus:bg-red-500 focus:border-transparent focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                                 @click="gotoMovieGenre(item.name, item.id)">
                                 {{ item.name }}
                             </button>
@@ -104,6 +104,7 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
 import { useGenreStore } from '@/stores';
+import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
 import { timeFromNow, minuteToHour } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
@@ -172,38 +173,15 @@ export default {
             const result = await MovieService.getRecommendation(route.params.id);
             const { results } = result.data;
             const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.sidebarPosterSize,
-                    }),
-                    vote_average: item.vote_average,
-                    genre: getGenreName(item.genre_ids.slice(0, 2)),
-                };
+                const genre = getGenreName(item.genre_ids.slice(0, 2));
+                return { ...item, genre_name: genre };
             });
-            recomendation.result = data.slice(0, 3);
+            recomendation.result = sidebarCardResource(data.slice(0, 3));
         };
         const getSimilarMovie = async () => {
             const result = await MovieService.getSimilar(route.params.id);
             const { results } = result.data;
-            const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.mainPosterSize,
-                    }),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
-                };
-            });
+            const data = mainCardResource(results);
             similarMovie.result = data;
         };
         const getCast = async () => {
@@ -282,7 +260,7 @@ export default {
         const getGenreName = (arrayGenreId) => {
             const genreName = [];
             for (const id of arrayGenreId) {
-                const genreStoreName = genreStore.getMovieGenreById(id).name;
+                const genreStoreName = genreStore.getMovieGenreById(id);
                 genreName.push(genreStoreName);
             }
             return genreName.join(', ');
@@ -304,11 +282,7 @@ export default {
         );
 
         onMounted(getMovieGenreStore);
-        onMounted(getMovieDetail);
-        onMounted(getRecomendation);
-        onMounted(getSimilarMovie);
-        onMounted(getCast);
-        onMounted(getReview);
+        onMounted(fetchData);
         return {
             router,
             movieDetail,
