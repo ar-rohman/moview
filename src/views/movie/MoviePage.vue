@@ -52,9 +52,8 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGenreStore } from '@/stores';
 import { useCountryCodeStore } from '@/stores/country';
-import { isImageExist } from '@/utils/image';
-import defaults from '@/utils/defaults';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
+import { heroResource } from '@/resources/hero-resource';
 import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
 import CarouselCard from '@/components/CarouselCard.vue';
 import ListCarousel from '@/components/ListCarousel.vue';
@@ -96,21 +95,9 @@ export default {
             };
             const result = await MovieService.getDiscover(param);
             const { results } = result.data;
-            let data = results.filter((item) => item.backdrop_path !== null);
-            data = data.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.backdrop_path,
-                        secondImage: null,
-                        thirdImage: null,
-                        imageSize: defaults.backdropSize,
-                    }),
-                };
-            });
-            releaseMovie.result = data.slice(0, 5);
-            heroData.result = data.slice(5, 6)[0];
+            const data = results.filter((item) => item.backdrop_path !== null);
+            releaseMovie.result = heroResource(data.slice(0, 5));
+            heroData.result = heroResource(data.slice(5, 6))[0];
         };
 
         const getMovieGenre = async () => {
