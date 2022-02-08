@@ -54,6 +54,7 @@ import { useGenreStore } from '@/stores';
 import { useCountryCodeStore } from '@/stores/country';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
+import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
 import { getCountryCodeByUserIP } from '@/services/CountryService';
 import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
 import CarouselCard from '@/components/CarouselCard.vue';
@@ -115,23 +116,15 @@ export default {
         };
 
         const getMovieGenre = async () => {
-            await getMovieGenreStore();
+            await genreStore.getMovieGenreStore();
             movieGenre.value = genreStore.movieGenre;
-        };
-
-        const getMovieGenreStore = async () => {
-            if (!genreStore.movieGenre) {
-                const result = await MovieService.getGenre();
-                const { data } = result;
-                genreStore.movieGenre = data.genres;
-            }
         };
 
         const getGenreName = (arrayGenreId) => {
             const genreName = [];
             for (const id of arrayGenreId) {
-                const genreStoreName = genreStore.getMovieGenreById(id).name;
-                genreName.push(genreStoreName);
+                const genre = genreStore.getMovieGenreById(id);
+                genreName.push(genre);
             }
             return genreName.join(', ');
         };
@@ -139,66 +132,26 @@ export default {
         const getTrendingMovie = async () => {
             const result = await MovieService.getTrendingByDay();
             const { results } = result.data;
-            const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.mainPosterSize,
-                    }),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
-                };
-            });
+            const data = mainCardResource(results);
             trendingMovie.result = data;
         };
 
         const getNowPlaying = async () => {
             const result = await MovieService.getNowPlaying();
             const { results } = result.data;
-            const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.mainPosterSize,
-                    }),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
-                };
-            });
+            const data = mainCardResource(results);
             nowPlaying.result = data;
         };
 
         const getUpcomingMovie = async () => {
             const result = await MovieService.getUpcoming();
             const { results } = result.data;
-            const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.mainPosterSize,
-                    }),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
-                };
-            });
+            const data = mainCardResource(results);
             upcomingMovie.result = data;
         };
 
         const getPopularMovie = async () => {
             const result = await MovieService.getPopular();
-            await getMovieGenreStore();
             const { results } = result.data;
             const data = results.map((item) => {
                 return {
@@ -219,8 +172,9 @@ export default {
 
         const getTopRatedMovie = async () => {
             const result = await MovieService.getTopRated();
-            await getMovieGenreStore();
+            // await getMovieGenreStore();
             const { results } = result.data;
+            // const data = sidebarCardResource(results);
             const data = results.map((item) => {
                 return {
                     id: item.id,
@@ -245,8 +199,9 @@ export default {
                 with_watch_monetization_types: 'free',
             };
             const result = await MovieService.getDiscover(param);
-            await getMovieGenreStore();
+            // await getMovieGenreStore();
             const { results } = result.data;
+            // const data = sidebarCardResource(results);
             const data = results.map((item) => {
                 return {
                     id: item.id,
