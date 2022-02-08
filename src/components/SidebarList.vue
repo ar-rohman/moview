@@ -4,12 +4,7 @@
         <template v-if="data.length">
             <div class="flex flex-col sm:flex-row md:flex-col gap-5">
                 <template v-for="item in data" :key="item.id">
-                    <SidebarCard
-                        :id="item.id"
-                        :title="item.title"
-                        :image="item.image"
-                        :vote-average="item.vote_average"
-                        :genre="item.genre" />
+                    <SidebarCard :data="item" />
                 </template>
             </div>
             <div class="mt-4">

@@ -1,20 +1,20 @@
 <template>
     <router-link
-        :to="`${detailLink}/${id}`"
+        :to="`${detailLink}/${data.id}`"
         class="flex gap-2 rounded-md h-[112px] w-full bg-black/5 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500">
         <img
-            :src="image"
+            :src="data.image"
             class="w-[84px] h-full rounded-lg object-cover object-center"
-            :alt="title" />
+            :alt="data.title" />
         <div class="px-2 py-4 flex flex-col justify-between">
             <div class="flex flex-col gap-y-2 text-sm">
                 <div class="line-clamp-2 font-semibold">
-                    {{ title }}
+                    {{ data.title }}
                 </div>
-                <div class="text-gray-600">{{ genre }}</div>
+                <div class="text-gray-600">{{ data.genre_name }}</div>
             </div>
             <RatingCount
-                :vote-average="voteAverage"
+                :vote-average="data.vote_average"
                 icon-class="w-4 h-4 lg:h-5 lg:w-5 text-yellow-400"
                 text-class="text-sm text-gray-500" />
         </div>
@@ -28,29 +28,9 @@ export default {
     components: { RatingCount },
     inject: ['detailLink'],
     props: {
-        id: {
-            type: [String, Number],
-            default: '',
+        data: {
+            type: Object,
             required: true,
-        },
-        title: {
-            type: String,
-            default: '',
-            required: true,
-        },
-        image: {
-            type: String,
-            default: '',
-            required: true,
-        },
-        voteAverage: {
-            type: [String, Number],
-            default: '',
-            required: true,
-        },
-        genre: {
-            type: String,
-            default: '',
         },
     },
 };

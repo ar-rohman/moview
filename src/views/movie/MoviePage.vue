@@ -55,13 +55,11 @@ import { useCountryCodeStore } from '@/stores/country';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
-import { getCountryCodeByUserIP } from '@/services/CountryService';
 import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
 import CarouselCard from '@/components/CarouselCard.vue';
 import ListCarousel from '@/components/ListCarousel.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import HeroSection from '@/components/HeroSection.vue';
-import posterImage from '@/assets/images/poster.png';
 
 export default {
     components: {
@@ -154,42 +152,20 @@ export default {
             const result = await MovieService.getPopular();
             const { results } = result.data;
             const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.sidebarPosterSize,
-                    }),
-                    vote_average: item.vote_average,
-                    genre: getGenreName(item.genre_ids.slice(0, 2)),
-                };
+                const genre = getGenreName(item.genre_ids.slice(0, 2));
+                return { ...item, genre_name: genre };
             });
-            popularMovie.result = data.slice(0, 4);
+            popularMovie.result = sidebarCardResource(data.slice(0, 4));
         };
 
         const getTopRatedMovie = async () => {
             const result = await MovieService.getTopRated();
-            // await getMovieGenreStore();
             const { results } = result.data;
-            // const data = sidebarCardResource(results);
             const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.sidebarPosterSize,
-                    }),
-                    vote_average: item.vote_average,
-                    genre: getGenreName(item.genre_ids.slice(0, 2)),
-                };
+                const genre = getGenreName(item.genre_ids.slice(0, 2));
+                return { ...item, genre_name: genre };
             });
-            topRatedMovie.result = data.slice(0, 3);
+            topRatedMovie.result = sidebarCardResource(data.slice(0, 3));
         };
 
         const getFreeToWatch = async () => {
@@ -199,24 +175,12 @@ export default {
                 with_watch_monetization_types: 'free',
             };
             const result = await MovieService.getDiscover(param);
-            // await getMovieGenreStore();
             const { results } = result.data;
-            // const data = sidebarCardResource(results);
             const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.sidebarPosterSize,
-                    }),
-                    vote_average: item.vote_average,
-                    genre: getGenreName(item.genre_ids.slice(0, 2)),
-                };
+                const genre = getGenreName(item.genre_ids.slice(0, 2));
+                return { ...item, genre_name: genre };
             });
-            freeToWatch.result = data.slice(0, 3);
+            freeToWatch.result = sidebarCardResource(data.slice(0, 3));
         };
 
         const gotoMovieGenre = (name, id) => {

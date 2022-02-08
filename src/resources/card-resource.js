@@ -1,6 +1,5 @@
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
-import { getMovieGenreName } from '@/utils/misc';
 import posterImage from '@/assets/images/poster.png';
 
 export const mainCardResource = (data) => {
@@ -35,7 +34,6 @@ export const sidebarCardResource = (data) => {
             vote_average: item.vote_average,
             genre_id: item.genre_ids,
             genre_name: item.genre_name,
-            // genre_name: item.genre_name.slice(0, 2),
         };
     });
     return result;
