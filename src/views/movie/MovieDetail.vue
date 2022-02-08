@@ -12,7 +12,13 @@
                             display-text-after="275"
                             :text="movieDetail.result.title"
                             styles="text-black" />
-                        <button><BaseIcon name="shareOutline" color="text-black" /></button>
+                        <div class="flex items-center mb-4">
+                            <button
+                                class="text-gray-800 bg-white/50 rounded-full p-2 block hover:bg-white/70 focus:bg-white"
+                                @click="shareMovie">
+                                <BaseIcon name="shareOutline" />
+                            </button>
+                        </div>
                     </div>
                     <div class="flex justify-between pb-4">
                         <RatingCount
@@ -266,6 +272,14 @@ export default {
             return genreName.join(', ');
         };
 
+        const shareMovie = () => {
+            navigator.share({
+                title: 'MOVIEW',
+                text: `Look ${movieDetail.result.title} movie at MOVIEW`,
+                url: `${route.path}`,
+            });
+        };
+
         const fetchData = () => {
             getMovieDetail();
             getRecomendation();
@@ -292,6 +306,7 @@ export default {
             review,
             timeFromNow,
             gotoMovieGenre,
+            shareMovie,
         };
     },
 };

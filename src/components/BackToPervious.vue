@@ -1,6 +1,8 @@
 <template>
     <div class="flex gap-x-4 items-center h-[60px] z-10 mb-4" :class="[styles, customClass]">
-        <button @click="router.back()">
+        <button
+            class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white"
+            @click="router.back()">
             <BaseIcon name="arrowBack" />
         </button>
         <div class="line-clamp-1 font-semibold">{{ textToDisplay }}</div>
