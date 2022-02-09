@@ -3,7 +3,7 @@
     <div class="font-semibold md:text-lg mb-3">{{ pageTitle }}</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         <template v-for="item in dataList.result" :key="item.id">
-            <main-card
+            <MainCard
                 :id="item.id"
                 :title="item.title"
                 :vote-average="item.vote_average"
@@ -49,7 +49,7 @@ export default {
     },
     setup(props) {
         const page = ref(1);
-        const totalPage = ref();
+        const totalPage = ref(null);
         const bottom = ref(false);
         const result = [];
         const dataList = reactive({ result });
@@ -60,12 +60,15 @@ export default {
                 getDataList();
             }
         };
-        const scrolling = (e) => {
-            const scrollHeight = e.target.body.scrollHeight;
+        const scrolling = () => {
+            const scrollHeight = document.documentElement.scrollHeight;
             const clientHeight = document.documentElement.clientHeight;
             const scrollTop = document.documentElement.scrollTop;
             const cardHeight = 224; // 224px
-            if (scrollTop + clientHeight + cardHeight >= scrollHeight) {
+            if (scrollHeight === clientHeight && scrollTop === 0) {
+                bottom.value = true;
+                loadMore();
+            } else if (scrollTop + clientHeight + cardHeight >= scrollHeight) {
                 bottom.value = true;
             } else {
                 bottom.value = false;
@@ -96,6 +99,7 @@ export default {
             });
             dataList.result = [...dataList.result, ...data];
             bottom.value = false;
+            scrolling();
         };
         onMounted(getDataList);
         onMounted(() => {
