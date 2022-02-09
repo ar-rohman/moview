@@ -17,7 +17,10 @@
                                 </div>
                             </template>
                             <template v-if="item.star.one_star">
-                                <BaseIcon name="starHalf" size="h-4 w-4" color="text-yellow-400" />
+                                <BaseIcon
+                                    name="starHalf"
+                                    size="h-4 w-4"
+                                    :color="['text-yellow-400', 'text-slate-300']" />
                             </template>
                             <template v-if="item.star.zero_star">
                                 <div v-for="i in item.star.zero_star" :key="i">

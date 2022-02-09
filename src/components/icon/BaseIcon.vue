@@ -24,17 +24,29 @@ export default {
             default: 'h-6 w-6',
         },
         color: {
-            type: String,
+            type: [Array, String],
             default: '',
         },
     },
     render() {
+        const getPath = () => {
+            const path = [];
+            const draw = icons[this.name].split('|');
+            const color = Array.isArray(this.color) ? this.color : this.color.split(',');
+            if (color.length !== draw.length) {
+                return console.error('Please provide the right number of colors!');
+            }
+            for (const [i, d] of draw.entries()) {
+                const clasees = color[i] ? `class="${color[i]}"` : '';
+                path.push(`<path d="${d}" fill="${this.fill}" ${clasees} />`);
+            }
+            return path;
+        };
         const svgAttrs = {
             xmlns: this.xmlns,
             viewBox: this.viewBox,
-            fill: this.fill,
-            class: `${this.size} ${this.color}`,
-            innerHTML: icons[this.name],
+            class: `${this.size}`,
+            innerHTML: getPath(),
         };
         return h('svg', svgAttrs);
     },
