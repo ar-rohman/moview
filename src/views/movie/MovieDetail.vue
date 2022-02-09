@@ -6,7 +6,7 @@
             class="h-80 w-full object-cover object-center" />
         <div class="absolute inset-0">
             <div class="bg-gradient-to-b from-white/20 to-white w-full h-full">
-                <div class="h-full flex flex-col zjustify-end justify-between p-4 sm:px-10">
+                <div class="h-full flex flex-col justify-between p-4 sm:px-10">
                     <div class="flex justify-between">
                         <BackToPervious
                             display-text-after="275"

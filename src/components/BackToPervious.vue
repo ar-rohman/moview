@@ -1,7 +1,7 @@
 <template>
     <div class="flex gap-x-4 items-center h-[60px] z-10 mb-4" :class="[styles, customClass]">
         <button
-            class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white"
+            class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white zpx-4 zsm:px-10"
             @click="router.back()">
             <BaseIcon name="arrowBack" />
         </button>
@@ -38,7 +38,7 @@ export default {
         const scrolling = () => {
             const htmlScroll = document.documentElement.scrollTop;
             if (htmlScroll > 5) {
-                customClass.value = 'bg-white border-b fixed top-0 inset-x-0 px-4 sm:px-10';
+                customClass.value = `bg-white border-b fixed top-0 max-w-screen-xl mx-auto w-full inset-x-0 px-4 sm:px-10`;
             } else {
                 customClass.value = 'bg-transparent';
             }
