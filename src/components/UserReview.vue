@@ -29,7 +29,7 @@
                             </template>
                         </div>
                         <div class="text-sm text-gray-500">
-                            {{ timeFromNow(item.created_at) }}
+                            {{ item.created_at }}
                         </div>
                     </div>
                 </div>
@@ -50,10 +50,8 @@
 
 <script>
 import { onMounted, ref, toRefs, watch } from 'vue';
-import { timeFromNow } from '@/utils/date';
 import BaseIcon from '@/components/icon/BaseIcon.vue';
 import ShowMore from './ShowMore.vue';
-
 export default {
     components: { BaseIcon, ShowMore },
     props: {
@@ -95,7 +93,6 @@ export default {
             reviews,
             showReview,
             showReviewText,
-            timeFromNow,
         };
     },
 };

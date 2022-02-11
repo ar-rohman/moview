@@ -1,27 +1,33 @@
 <template>
-    <div class="my-10">
-        <template v-if="data.length">
-            <div class="flex justify-between mb-3">
-                <div class="font-semibold md:text-lg">{{ title }}</div>
-                <router-link
-                    :to="seeMoreLink"
-                    class="self-end text-red-400 hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline"
-                    >See more</router-link
-                >
-            </div>
-            <carousel-card>
-                <template v-for="item in data" :key="item.id">
-                    <MainCard
-                        :id="item.id"
-                        :title="item.title"
-                        :image="item.image"
-                        :vote-average="item.vote_average"
-                        :vote-count="item.vote_count" />
-                </template>
-            </carousel-card>
-        </template>
-        <ListCarouselSkeleton v-else />
-    </div>
+    <template v-if="data.isError">
+        <!-- TODO -->
+        <div>error please reload</div>
+    </template>
+    <template v-else>
+        <div class="my-10">
+            <ListCarouselSkeleton v-if="data.isLoading" />
+            <template v-else>
+                <div class="flex justify-between mb-3">
+                    <div class="font-semibold md:text-lg">{{ title }}</div>
+                    <router-link
+                        :to="seeMoreLink"
+                        class="self-end text-red-400 hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline"
+                        >See more</router-link
+                    >
+                </div>
+                <carousel-card>
+                    <template v-for="item in data.result" :key="item.id">
+                        <MainCard
+                            :id="item.id"
+                            :title="item.title"
+                            :image="item.image"
+                            :vote-average="item.vote_average"
+                            :vote-count="item.vote_count" />
+                    </template>
+                </carousel-card>
+            </template>
+        </div>
+    </template>
 </template>
 
 <script>
@@ -37,7 +43,7 @@ export default {
             default: null,
         },
         data: {
-            type: Array,
+            type: [Array, Object],
             default() {
                 return [];
             },

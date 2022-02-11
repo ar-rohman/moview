@@ -14,3 +14,17 @@ export const isImageExist = ({ firstImage, secondImage, thirdImage, imageSize })
         return thirdImage;
     }
 };
+
+/**
+ * Check if image is from external link
+ * @param {String} image url of image
+ * @returns {Boolean}
+ */
+export const checkIfImageFromExternalLink = (image) => {
+    if (!image) return false;
+    if (image.includes('/http')) {
+        return true;
+    } else {
+        return false;
+    }
+};
