@@ -81,6 +81,12 @@ const routes = [
         meta: { pageName: 'Search', isShowHeader: false },
     },
     {
+        path: '/people/detail/:id',
+        name: 'people-detail',
+        component: () => import('@/views/people/PeopleDetail.vue'),
+        meta: { pageName: 'Person Detail', isShowHeader: false },
+    },
+    {
         path: '/watchlist',
         name: 'watchlist',
         component: () => import('@/views/WatchlistPage.vue'),
