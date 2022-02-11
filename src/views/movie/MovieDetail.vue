@@ -89,7 +89,7 @@
                     <UserReview v-if="review.result" :data="review.result" />
                 </div>
                 <div class="w-full lg:w-1/3">
-                    <CastArtist :data="castMovie" />
+                    <PeopleList :data="castMovie" title="Cast" />
                 </div>
             </div>
         </div>
@@ -111,6 +111,7 @@ import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/MovieService';
 import { useGenreStore } from '@/stores';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
+import { peopleListResource } from '@/resources/people-resource';
 import { timeFromNow, minuteToHour } from '@/utils/date';
 import { isImageExist } from '@/utils/image';
 import defaults from '@/utils/defaults';
@@ -119,7 +120,7 @@ import ListCarousel from '@/components/ListCarousel.vue';
 import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
-import CastArtist from '@/components/CastArtist.vue';
+import PeopleList from '@/components/PeopleList.vue';
 import BackToPervious from '@/components/BackToPervious.vue';
 import backdropImage from '@/assets/images/backdrop.png';
 import posterImage from '@/assets/images/poster.png';
@@ -131,7 +132,7 @@ export default {
         SidebarList,
         UserReview,
         RatingCount,
-        CastArtist,
+        PeopleList,
         BackToPervious,
         BaseIcon,
     },
@@ -193,20 +194,7 @@ export default {
         const getCast = async () => {
             const result = await MovieService.getCredit(route.params.id);
             const { cast } = result.data;
-            const data = cast.map((item) => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    character: item.character,
-                    image: isImageExist({
-                        firstImage: item.profile_path,
-                        secondImage: null,
-                        thirdImage: avatarImage,
-                        imageSize: defaults.profileSize,
-                    }),
-                };
-            });
-            castMovie.value = data;
+            castMovie.value = peopleListResource(cast.slice(0, 5));
         };
         const checkIfImageFromExternalLink = (image) => {
             if (!image) return false;
@@ -291,7 +279,7 @@ export default {
         watch(
             () => route.params.id,
             (newId) => {
-                if (newId) fetchData();
+                if (route.name === 'movie-detail' && newId) fetchData();
             }
         );
 
