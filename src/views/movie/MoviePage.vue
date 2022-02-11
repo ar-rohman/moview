@@ -18,30 +18,27 @@
             <HeroSection :data="heroData.result" />
             <ListCarousel
                 title="Trending Movie"
-                :data="trendingMovie.result"
+                :data="trendingMovie"
                 see-more-link="/movie/trending" />
             <ListCarousel
                 title="Now Playing"
-                :data="nowPlaying.result"
+                :data="nowPlaying"
                 see-more-link="/movie/now-playing" />
             <ListCarousel
                 title="Upcoming Movies"
-                :data="upcomingMovie.result"
+                :data="upcomingMovie"
                 see-more-link="/movie/upcoming" />
         </div>
         <div class="w-full md:w-1/3 flex flex-col gap-12">
             <SidebarList
-                :data="popularMovie.result"
+                :data="popularMovie"
                 title="Popular Movies"
                 see-more-link="/movie/popular" />
             <SidebarList
-                :data="topRatedMovie.result"
+                :data="topRatedMovie"
                 title="Top Rated Movies"
                 see-more-link="/movie/top-rated" />
-            <SidebarList
-                :data="freeToWatch.result"
-                title="Free To Watch"
-                see-more-link="/movie/free" />
+            <SidebarList :data="freeToWatch" title="Free To Watch" see-more-link="/movie/free" />
         </div>
     </div>
 </template>
@@ -70,14 +67,14 @@ export default {
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
-        const trendingMovie = reactive({});
+        const trendingMovie = reactive({ result: {}, isLoading: true, isError: false });
         const movieGenre = ref();
         const heroData = reactive({});
-        const nowPlaying = reactive({});
-        const upcomingMovie = reactive({});
-        const popularMovie = reactive({});
-        const topRatedMovie = reactive({});
-        const freeToWatch = reactive({});
+        const nowPlaying = reactive({ result: {}, isLoading: true, isError: false });
+        const upcomingMovie = reactive({ result: {}, isLoading: true, isError: false });
+        const popularMovie = reactive({ result: {}, isLoading: true, isError: false });
+        const topRatedMovie = reactive({ result: {}, isLoading: true, isError: false });
+        const freeToWatch = reactive({ result: {}, isLoading: true, isError: false });
         const releaseMovie = reactive({});
         const router = useRouter();
         const genreStore = useGenreStore();
@@ -115,59 +112,95 @@ export default {
         };
 
         const getTrendingMovie = async () => {
-            const result = await MovieService.getTrendingByDay();
-            const { results } = result.data;
-            const data = mainCardResource(results);
-            trendingMovie.result = data;
+            try {
+                const result = await MovieService.getTrendingByDay();
+                const { results } = result.data;
+                const data = mainCardResource(results);
+                trendingMovie.result = data;
+                trendingMovie.isLoading = false;
+                trendingMovie.isError = false;
+            } catch (error) {
+                trendingMovie.isError = true;
+            }
         };
 
         const getNowPlaying = async () => {
-            const result = await MovieService.getNowPlaying();
-            const { results } = result.data;
-            const data = mainCardResource(results);
-            nowPlaying.result = data;
+            try {
+                const result = await MovieService.getNowPlaying();
+                const { results } = result.data;
+                const data = mainCardResource(results);
+                nowPlaying.result = data;
+                nowPlaying.isLoading = false;
+                nowPlaying.isError = false;
+            } catch (error) {
+                nowPlaying.isError = true;
+            }
         };
 
         const getUpcomingMovie = async () => {
-            const result = await MovieService.getUpcoming();
-            const { results } = result.data;
-            const data = mainCardResource(results);
-            upcomingMovie.result = data;
+            try {
+                const result = await MovieService.getUpcoming();
+                const { results } = result.data;
+                const data = mainCardResource(results);
+                upcomingMovie.result = data;
+                upcomingMovie.isLoading = false;
+                upcomingMovie.isError = false;
+            } catch (error) {
+                upcomingMovie.isError = true;
+            }
         };
 
         const getPopularMovie = async () => {
-            const result = await MovieService.getPopular();
-            const { results } = result.data;
-            const data = results.map((item) => {
-                const genre = getGenreName(item.genre_ids.slice(0, 2));
-                return { ...item, genre_name: genre };
-            });
-            popularMovie.result = sidebarCardResource(data.slice(0, 4));
+            try {
+                const result = await MovieService.getPopular();
+                const { results } = result.data;
+                const data = results.map((item) => {
+                    const genre = getGenreName(item.genre_ids.slice(0, 2));
+                    return { ...item, genre_name: genre };
+                });
+                popularMovie.result = sidebarCardResource(data.slice(0, 4));
+                popularMovie.isLoading = false;
+                popularMovie.isError = false;
+            } catch (error) {
+                popularMovie.isError = true;
+            }
         };
 
         const getTopRatedMovie = async () => {
-            const result = await MovieService.getTopRated();
-            const { results } = result.data;
-            const data = results.map((item) => {
-                const genre = getGenreName(item.genre_ids.slice(0, 2));
-                return { ...item, genre_name: genre };
-            });
-            topRatedMovie.result = sidebarCardResource(data.slice(0, 3));
+            try {
+                const result = await MovieService.getTopRated();
+                const { results } = result.data;
+                const data = results.map((item) => {
+                    const genre = getGenreName(item.genre_ids.slice(0, 2));
+                    return { ...item, genre_name: genre };
+                });
+                topRatedMovie.result = sidebarCardResource(data.slice(0, 3));
+                topRatedMovie.isLoading = false;
+                topRatedMovie.isError = false;
+            } catch (error) {
+                topRatedMovie.isError = true;
+            }
         };
 
         const getFreeToWatch = async () => {
-            const param = {
-                include_adult: false,
-                watch_region: await countryCodeStore.getCountryCode(),
-                with_watch_monetization_types: 'free',
-            };
-            const result = await MovieService.getDiscover(param);
-            const { results } = result.data;
-            const data = results.map((item) => {
-                const genre = getGenreName(item.genre_ids.slice(0, 2));
-                return { ...item, genre_name: genre };
-            });
-            freeToWatch.result = sidebarCardResource(data.slice(0, 3));
+            try {
+                const param = {
+                    include_adult: false,
+                    watch_region: await countryCodeStore.getCountryCode(),
+                    with_watch_monetization_types: 'free',
+                };
+                const result = await MovieService.getDiscover(param);
+                const { results } = result.data;
+                const data = results.map((item) => {
+                    const genre = getGenreName(item.genre_ids.slice(0, 2));
+                    return { ...item, genre_name: genre };
+                });
+                freeToWatch.result = sidebarCardResource(data.slice(0, 3));
+                freeToWatch.isLoading = false;
+                freeToWatch.isError = false;
+            } catch (error) {
+                freeToWatch.isError = true;
+            }
         };
 
         const gotoMovieGenre = (name, id) => {
