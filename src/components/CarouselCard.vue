@@ -1,8 +1,8 @@
 <template>
     <div class="relative">
         <button
-            v-if="showArrowLeft"
-            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer z-20 absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            v-if="showArrowLeft && !isTouchScreen()"
+            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer z-20 absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
             @click="scrollTo('left')">
             <BaseIcon name="chevronLeft" />
         </button>
@@ -12,8 +12,8 @@
             </div>
         </div>
         <button
-            v-if="showArrowRight"
-            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer absolute top-1/2 -right-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 hidden md:block focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            v-if="showArrowRight && !isTouchScreen()"
+            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer absolute top-1/2 -right-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
             @click="scrollTo('right')">
             <BaseIcon name="chevronRight" />
         </button>
@@ -22,6 +22,7 @@
 
 <script>
 import { onMounted, ref } from 'vue';
+import { isTouchScreen } from '@/utils/screen';
 import BaseIcon from '@/components/icon/BaseIcon.vue';
 
 export default {
@@ -67,6 +68,7 @@ export default {
             showArrowLeft,
             showArrowRight,
             scrollTo,
+            isTouchScreen,
         };
     },
 };
