@@ -18,12 +18,10 @@
 <script>
 import { onMounted, onUnmounted, watch, reactive, ref, toRefs } from 'vue';
 import API from '@/services/api';
-import defaults from '@/utils/defaults';
-import { isImageExist } from '@/utils/image';
+import { mainCardResource } from '@/resources/card-resource';
 import MainCard from '@/components/MainCard.vue';
 import BackToTop from '@/components/BackToTop.vue';
 import BackToPervious from './BackToPervious.vue';
-import posterImage from '@/assets/images/poster.png';
 
 export default {
     components: {
@@ -83,20 +81,7 @@ export default {
             const { results } = result.data;
             page.value = result.data.page;
             totalPage.value = result.data.total_pages;
-            const data = results.map((item) => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    image: isImageExist({
-                        firstImage: item.poster_path,
-                        secondImage: item.backdrop_path,
-                        thirdImage: posterImage,
-                        imageSize: defaults.mainPosterSize,
-                    }),
-                    vote_count: item.vote_count,
-                    vote_average: item.vote_average,
-                };
-            });
+            const data = mainCardResource(results);
             dataList.result = [...dataList.result, ...data];
             bottom.value = false;
             scrolling();
