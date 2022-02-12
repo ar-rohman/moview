@@ -63,7 +63,7 @@ import { onMounted, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import PeopleService from '@/services/people-service';
 import { peopleDetailResource, peopleListResource } from '@/resources/people-resource';
-import BackToPervious from '@/components/BackToPervious.vue';
+import BackToPervious from '@/components/header/BackToPervious.vue';
 import ShowMore from '@/components/ShowMore.vue';
 import PeopleList from '@/components/PeopleList.vue';
 

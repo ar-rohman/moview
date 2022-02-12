@@ -10,7 +10,7 @@
 
 <script>
 import { useRoute } from 'vue-router';
-import HeaderSection from './components/HeaderSection.vue';
+import HeaderSection from './components/header/HeaderSection.vue';
 
 export default {
     components: { HeaderSection },

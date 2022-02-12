@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import BackToPervious from '../components/BackToPervious.vue';
+import BackToPervious from '@/components/header/BackToPervious.vue';
 export default {
     components: { BackToPervious },
 };

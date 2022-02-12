@@ -138,7 +138,7 @@ import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import PeopleList from '@/components/PeopleList.vue';
-import BackToPervious from '@/components/BackToPervious.vue';
+import BackToPervious from '@/components/header/BackToPervious.vue';
 
 export default {
     components: {

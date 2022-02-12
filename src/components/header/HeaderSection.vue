@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="flex justify-end items-center gap-x-6">
-                <SearchSection @show-search-input="tiggerShowSearch" />
+                <SearchBar @show-search-input="tiggerShowSearch" />
                 <BaseIcon name="sunOutline" />
                 <BaseIcon name="languageOutline" />
             </div>
@@ -30,12 +30,12 @@
 <script>
 import { onMounted, onUnmounted, ref } from 'vue';
 import NavMenu from './NavMenu.vue';
-import SearchSection from './SearchSection.vue';
+import SearchBar from './SearchBar.vue';
 import SearchInput from './SearchInput.vue';
 import BaseIcon from '@/components/icon/BaseIcon.vue';
 import logo from '@/assets/images/logo.png';
 export default {
-    components: { NavMenu, SearchSection, SearchInput, BaseIcon },
+    components: { NavMenu, SearchBar, SearchInput, BaseIcon },
     setup() {
         const isShowSearch = ref(false);
         const border = ref(null);

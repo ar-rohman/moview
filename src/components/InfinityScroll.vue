@@ -1,5 +1,5 @@
 <template>
-    <BackToPervious :text="pageTitle" />
+    <BackToPervious :text="pageTitle" tool-bar search-bar />
     <div class="font-semibold md:text-lg mb-3">{{ pageTitle }}</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         <template v-for="item in dataList.result" :key="item.id">
@@ -21,7 +21,7 @@ import API from '@/services/api';
 import { mainCardResource } from '@/resources/card-resource';
 import MainCard from '@/components/MainCard.vue';
 import BackToTop from '@/components/BackToTop.vue';
-import BackToPervious from './BackToPervious.vue';
+import BackToPervious from './header/BackToPervious.vue';
 
 export default {
     components: {
