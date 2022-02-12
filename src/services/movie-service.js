@@ -1,4 +1,4 @@
-import API from './API';
+import API from './api';
 
 export default {
     getDetail(id, param = null) {

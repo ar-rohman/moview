@@ -126,7 +126,7 @@
 <script>
 import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import MovieService from '@/services/MovieService';
+import MovieService from '@/services/movie-service';
 import { useGenreStore } from '@/stores';
 import { movieDetailResource } from '@/resources/movie-detail-resource';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';

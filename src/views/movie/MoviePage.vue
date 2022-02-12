@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import MovieService from '@/services/MovieService';
+import MovieService from '@/services/movie-service';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGenreStore } from '@/stores';

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getCountryCodeByUserIP } from '@/services/CountryService';
+import { getCountryCodeByUserIP } from '@/services/country-service';
 
 export const useCountryCodeStore = defineStore('country', {
     state: () => ({

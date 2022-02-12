@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import MovieService from '@/services/MovieService';
+import MovieService from '@/services/movie-service';
 
 export const useGenreStore = defineStore('genre', {
     state: () => ({

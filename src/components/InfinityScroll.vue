@@ -17,7 +17,7 @@
 
 <script>
 import { onMounted, onUnmounted, watch, reactive, ref, toRefs } from 'vue';
-import API from '@/services/API';
+import API from '@/services/api';
 import defaults from '@/utils/defaults';
 import { isImageExist } from '@/utils/image';
 import MainCard from '@/components/MainCard.vue';
