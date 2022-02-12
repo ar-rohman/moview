@@ -2,9 +2,12 @@
     <transition :name="transitionEffect">
         <div
             v-show="currentSlide === index"
-            class="absolute inset-0 cursor-pointer"
-            @mouseenter="$emit('mouseenter')"
-            @mouseout="$emit('mouseout')"
+            class="absolute inset-0 cursor-pointer select-none"
+            @mouseenter="$emit('enter')"
+            @mouseout="$emit('out')"
+            @touchstart="touchStart"
+            @touchend="touchEnd"
+            @touchmove="touchMove"
             @click="goTo">
             <img :src="slide" class="h-80 w-full object-center object-cover" />
             <div class="absolute inset-0 text-white flex items-end zsm:w-1/2">
@@ -21,7 +24,7 @@
 </template>
 
 <script>
-import { computed, inject, toRefs } from 'vue';
+import { computed, inject, ref, toRefs, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -47,9 +50,13 @@ export default {
             default: 0,
         },
     },
-    emits: ['mouseenter', 'mouseout'],
-    setup(props) {
+    emits: ['enter', 'out', 'prev', 'next'],
+    setup(props, { emit }) {
         const router = useRouter();
+        const swipeStart = ref(0);
+        const swipeEnd = ref(false);
+        const swiping = ref(0);
+
         const { direction, id } = toRefs(props);
         const currentSlide = inject('currentSlide');
         const detailLink = inject('detailLink');
@@ -61,7 +68,44 @@ export default {
             router.push({ path: `${detailLink}/${id.value}` });
         };
 
-        return { goTo, transitionEffect, currentSlide };
+        const swipe = () => {
+            if (swipeStart.value > swiping.value + 10) {
+                emit('next');
+                swipeStart.value = 0;
+                swipeEnd.value = false;
+                swiping.value = 0;
+            } else if (swiping.value > swipeStart.value + 10) {
+                emit('prev');
+                swipeStart.value = 0;
+                swipeEnd.value = false;
+                swiping.value = 0;
+            }
+        };
+
+        const touchStart = (event) => {
+            swipeStart.value = event.changedTouches[0].clientX;
+            emit('enter');
+        };
+
+        const touchEnd = () => {
+            emit('out');
+            swipeEnd.value = true;
+        };
+
+        const touchMove = (event) => {
+            swiping.value = event.changedTouches[0].clientX;
+        };
+
+        watch(
+            () => swipeEnd.value,
+            (newValue) => {
+                if (newValue) {
+                    swipe();
+                }
+            }
+        );
+
+        return { goTo, transitionEffect, currentSlide, touchStart, touchEnd, touchMove };
     },
 };
 </script>

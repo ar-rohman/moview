@@ -15,8 +15,10 @@
                     :title="item.title"
                     :index="index"
                     :direction="slideDirection"
-                    @mouseenter="stopSlideTimer"
-                    @mouseout="startSlideTimer"></carousel-slide>
+                    @enter="stopSlideTimer"
+                    @out="startSlideTimer"
+                    @prev="previous"
+                    @next="next"></carousel-slide>
             </div>
         </div>
         <carousel-navigation v-if="navigation" @prev="previous" @next="next"></carousel-navigation>
