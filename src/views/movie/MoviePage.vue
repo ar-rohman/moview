@@ -1,21 +1,9 @@
 <template>
     <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
-        <div class="w-full md:w-2/3">
-            <BaseCarousel :data="releaseMovie.result" pagination navigation />
-            <div class="mt-10">
-                <carousel-card>
-                    <div class="flex gap-x-4">
-                        <button
-                            v-for="genre in movieGenre"
-                            :key="genre.id"
-                            class="px-4 py-2 rounded-2xl whitespace-nowrap border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2"
-                            @click="gotoMovieGenre(genre.name, genre.id)">
-                            {{ genre.name }}
-                        </button>
-                    </div>
-                </carousel-card>
-            </div>
-            <HeroSection :data="heroData.result" />
+        <div class="w-full md:w-2/3 flex flex-col gap-y-10">
+            <BaseCarousel :data="releaseMovie" pagination navigation />
+            <GenreListCarousel :data="movieGenre" />
+            <HeroSection :data="releaseMovie" />
             <ListCarousel
                 title="Trending Movie"
                 :data="trendingMovie"
@@ -45,38 +33,35 @@
 
 <script>
 import MovieService from '@/services/movie-service';
-import { onMounted, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, reactive } from 'vue';
 import { useGenreStore } from '@/stores';
 import { useCountryCodeStore } from '@/stores/country';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
 import { heroResource } from '@/resources/hero-resource';
 import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
-import CarouselCard from '@/components/CarouselCard.vue';
 import ListCarousel from '@/components/ListCarousel.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import HeroSection from '@/components/HeroSection.vue';
+import GenreListCarousel from '@/components/GenreListCarousel.vue';
 
 export default {
     components: {
         BaseCarousel,
         ListCarousel,
-        CarouselCard,
         SidebarList,
         HeroSection,
+        GenreListCarousel,
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
         const trendingMovie = reactive({ result: {}, isLoading: true, isError: false });
-        const movieGenre = ref();
-        const heroData = reactive({});
+        const movieGenre = reactive({ result: {}, isLoading: true });
+        const releaseMovie = reactive({ carousel: {}, hero: {}, isLoading: true, isError: false });
         const nowPlaying = reactive({ result: {}, isLoading: true, isError: false });
         const upcomingMovie = reactive({ result: {}, isLoading: true, isError: false });
         const popularMovie = reactive({ result: {}, isLoading: true, isError: false });
         const topRatedMovie = reactive({ result: {}, isLoading: true, isError: false });
         const freeToWatch = reactive({ result: {}, isLoading: true, isError: false });
-        const releaseMovie = reactive({});
-        const router = useRouter();
         const genreStore = useGenreStore();
         const countryCodeStore = useCountryCodeStore();
 
@@ -90,16 +75,23 @@ export default {
                 'primary_release_date.gte': oneWeekAgo,
                 'primary_release_date.lte': today,
             };
-            const result = await MovieService.getDiscover(param);
-            const { results } = result.data;
-            const data = results.filter((item) => item.backdrop_path !== null);
-            releaseMovie.result = heroResource(data.slice(0, 5));
-            heroData.result = heroResource(data.slice(5, 6))[0];
+            try {
+                const result = await MovieService.getDiscover(param);
+                const { results } = result.data;
+                const data = results.filter((item) => item.backdrop_path !== null);
+                releaseMovie.carousel = heroResource(data.slice(0, 5));
+                releaseMovie.hero = heroResource(data.slice(5, 6))[0];
+                releaseMovie.isLoading = false;
+                releaseMovie.isError = false;
+            } catch (error) {
+                releaseMovie.isError = true;
+            }
         };
 
         const getMovieGenre = async () => {
             await genreStore.getMovieGenreStore();
-            movieGenre.value = genreStore.movieGenre;
+            movieGenre.result = genreStore.movieGenre;
+            movieGenre.isLoading = genreStore.movieGenre ? false : true;
         };
 
         const getGenreName = (arrayGenreId) => {
@@ -203,11 +195,6 @@ export default {
             }
         };
 
-        const gotoMovieGenre = (name, id) => {
-            const genreName = name.replace(/ /g, '-').toLowerCase();
-            router.push({ path: `/movie/genre/${genreName}/${id}` });
-        };
-
         onMounted(getReleaseMovie);
         onMounted(getMovieGenre);
         onMounted(getTrendingMovie);
@@ -219,7 +206,6 @@ export default {
 
         return {
             releaseMovie,
-            heroData,
             movieGenre,
             trendingMovie,
             nowPlaying,
@@ -227,7 +213,6 @@ export default {
             popularMovie,
             topRatedMovie,
             freeToWatch,
-            gotoMovieGenre,
         };
     },
 };

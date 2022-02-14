@@ -1,14 +1,15 @@
 <template>
-    <div v-if="data.length" class="flex justify-center relative">
+    <HeroSectionSkeleton v-if="data.isLoading" />
+    <div v-else class="flex justify-center relative">
         <div class="relative h-80 w-full overflow-hidden rounded-xl sm:rounded-3xl">
             <carousel-pagination
                 v-if="pagination"
-                :total="data.length"
+                :total="data.carousel.length"
                 :pagination-position="paginationPosition"
                 @switch="switchSlide($event)"></carousel-pagination>
             <div>
                 <carousel-slide
-                    v-for="(item, index) in data"
+                    v-for="(item, index) in data.carousel"
                     :id="item.id"
                     :key="`item-${index}`"
                     :slide="item.image"
@@ -21,9 +22,11 @@
                     @next="next"></carousel-slide>
             </div>
         </div>
-        <carousel-navigation v-if="navigation" @prev="previous" @next="next"></carousel-navigation>
+        <carousel-navigation
+            v-if="navigation && !data.isError"
+            @prev="previous"
+            @next="next"></carousel-navigation>
     </div>
-    <HeroSectionSkeleton v-else />
 </template>
 
 <script>
@@ -34,12 +37,17 @@ import CarouselPagination from './CarouselPagination.vue';
 import HeroSectionSkeleton from '../skeleton/HeroSectionSkeleton.vue';
 
 export default {
-    components: { CarouselSlide, CarouselNavigation, CarouselPagination, HeroSectionSkeleton },
+    components: {
+        CarouselSlide,
+        CarouselNavigation,
+        CarouselPagination,
+        HeroSectionSkeleton,
+    },
     props: {
         data: {
-            type: Array,
+            type: Object,
             default() {
-                return [];
+                return {};
             },
             require: true,
         },
@@ -76,14 +84,14 @@ export default {
         };
         const previous = (step = -1) => {
             const index =
-                currentSlide.value > 0 ? currentSlide.value + step : data.value.length - 1;
+                currentSlide.value > 0 ? currentSlide.value + step : data.value.carousel.length - 1;
             setCurrentSlide(index);
             slideDirection.value = 'left';
             startSlideTimer();
         };
         const _next = (step = 1) => {
             const index =
-                currentSlide.value < data.value.length - 1 ? currentSlide.value + step : 0;
+                currentSlide.value < data.value.carousel.length - 1 ? currentSlide.value + step : 0;
             setCurrentSlide(index);
             slideDirection.value = 'right';
         };

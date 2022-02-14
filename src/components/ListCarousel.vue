@@ -4,7 +4,7 @@
         <div>error please reload</div>
     </template>
     <template v-else>
-        <div class="my-10">
+        <section>
             <ListCarouselSkeleton v-if="data.isLoading" />
             <template v-else>
                 <div class="flex justify-between mb-3">
@@ -26,7 +26,7 @@
                     </template>
                 </carousel-card>
             </template>
-        </div>
+        </section>
     </template>
 </template>
 

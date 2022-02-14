@@ -1,27 +1,27 @@
 <template>
-    <div class="mt-10">
+    <section>
+        <HeroSectionSkeleton v-if="data.isLoading" />
         <router-link
-            v-if="Object.keys(data).length"
-            :to="`${detailLink}/${data.id}`"
+            v-else
+            :to="`${detailLink}/${data.hero.id}`"
             class="focus:outline-none focus-visible:outline-none">
             <div class="relative">
                 <img
-                    :src="data.image"
-                    :alt="data.title"
+                    :src="data.hero.image"
+                    :alt="data.hero.title"
                     class="h-80 w-full object-center object-cover rounded-xl sm:rounded-3xl cursor-pointer" />
                 <div class="absolute left-4 bottom-4 text-white">
                     <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
                         <div class="py-4 px-6">
                             <div class="md:text-lg lg:text-2xl lg:font-semibold">
-                                {{ data.title }}
+                                {{ data.hero.title }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </router-link>
-        <HeroSectionSkeleton v-else />
-    </div>
+    </section>
 </template>
 
 <script>
