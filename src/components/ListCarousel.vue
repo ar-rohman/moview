@@ -11,9 +11,9 @@
                     <div class="font-semibold md:text-lg">{{ title }}</div>
                     <router-link
                         :to="seeMoreLink"
-                        class="self-end text-red-400 hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline"
-                        >See more</router-link
-                    >
+                        class="self-end text-red-400 hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline">
+                        See more
+                    </router-link>
                 </div>
                 <carousel-card>
                     <template v-for="item in data.result" :key="item.id">
