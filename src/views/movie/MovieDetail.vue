@@ -97,13 +97,7 @@
                             <div class="font-semibold mb-2">Overview</div>
                             <p>{{ movieDetail.result.overview }}</p>
                         </div>
-                        <template v-if="review.isLoading">
-                            <div class="">Loading..</div>
-                        </template>
-                        <template v-else-if="review.isError">
-                            <div class="">Error please reload</div>
-                        </template>
-                        <UserReview v-else :data="review.result" />
+                        <UserReview :data="review" />
                     </div>
                     <div class="w-full lg:w-1/3">
                         <PeopleList :data="theCast" title="Cast" />
