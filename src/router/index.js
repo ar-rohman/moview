@@ -96,7 +96,7 @@ const routes = [
         path: '/about',
         name: 'about',
         component: () => import('@/views/AboutPage.vue'),
-        meta: { pageName: 'About', isShowHeader: true },
+        meta: { pageName: 'About', isShowHeader: false },
     },
 ];
 

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="animate-pulse">
         <div class="h-5 w-3/4 bg-gray-200 rounded-md"></div>
         <div class="mt-4 flex flex-col sm:flex-row md:flex-col gap-5">
             <template v-for="item in 3" :key="item">
