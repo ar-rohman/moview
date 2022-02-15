@@ -32,7 +32,7 @@ export const peopleListResource = (data) => {
                 thirdImage: avatarImage,
                 imageSize: defaults.profileSize,
             }),
-            known_for: item.known_for_department ? item.known_for_department : item.character || '',
+            known_for: item.character ? item.character : item.known_for_department || '',
         };
     });
     return result;
