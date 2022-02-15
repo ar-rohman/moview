@@ -1,8 +1,5 @@
 <template>
-    <template v-if="data.isLoading">
-        <!--TODO-->
-        <div>Loading...</div>
-    </template>
+    <PeopleListSkeleton v-if="data.isLoading" />
     <template v-else>
         <div class="font-semibold mb-4">{{ title }}</div>
         <template v-if="data.isError">
@@ -23,9 +20,10 @@
 
 <script>
 import PeopleCard from './PeopleCard.vue';
+import PeopleListSkeleton from './skeleton/PeopleListSkeleton.vue';
 
 export default {
-    components: { PeopleCard },
+    components: { PeopleCard, PeopleListSkeleton },
     props: {
         data: {
             type: [Array, Object],

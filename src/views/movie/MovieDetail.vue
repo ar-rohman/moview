@@ -1,19 +1,18 @@
 <template>
-    <template v-if="movieDetail.detail.isError">
+    <MovieDetailSkeleton v-if="movieDetail.isLoading" />
+    <template v-else-if="movieDetail.isError">
+        <!-- TODO -->
         <div class="text-center">
-            <h1 class="text-2xl font-semibold">
-                <BaseIcon name="error" class="text-red-500" /><!-- TODO -->
-                <span class="text-red-500">
-                    {{ movieDetail.detail.errorMessage }}
-                </span>
-            </h1>
+            <h1 class="text-2xl font-semibold">ERROR</h1>
+            <p>{{ movieDetail.errorCode }}</p>
+            <p>{{ movieDetail.errorMessage }}</p>
         </div>
     </template>
-    <template v-else>
+    <div v-else class="flex flex-col gap-y-10">
         <div class="relative -mt-4 -mx-4 sm:-mx-10">
             <img
-                :src="movieDetail.detail.data.backdrop"
-                :alt="movieDetail.detail.data.title"
+                :src="movieDetail.result.backdrop"
+                :alt="movieDetail.result.title"
                 class="h-80 w-full object-cover object-center" />
             <div class="absolute inset-0 -bottom-px">
                 <div class="bg-gradient-to-b from-white/20 to-white w-full h-full">
@@ -21,7 +20,7 @@
                         <div class="flex justify-between">
                             <BackToPervious
                                 display-text-after="275"
-                                :text="movieDetail.detail.data.title"
+                                :text="movieDetail.result.title"
                                 styles="text-black" />
                             <div class="flex items-center mb-4">
                                 <button
@@ -34,11 +33,11 @@
                         <div class="flex justify-between pb-4">
                             <RatingCount
                                 text-class="text-sm font-semibold text-gray-700"
-                                :vote-average="movieDetail.detail.data.vote_average"
-                                :vote-count="movieDetail.detail.data.vote_count" />
+                                :vote-average="movieDetail.result.vote_average"
+                                :vote-count="movieDetail.result.vote_count" />
                             <div class="flex gap-x-4 sm:gap-x-8 items-center">
                                 <div
-                                    v-if="movieDetail.detail.data.adult"
+                                    v-if="movieDetail.result.adult"
                                     class="font-bold border-2 border-red-500 py-2 px-1.5 rounded-full text-red-500">
                                     18+
                                 </div>
@@ -53,32 +52,32 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col md:flex-row gap-10 lg:gap-20 mt-10">
+        <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
             <div class="w-full md:w-2/3">
                 <div class="flex gap-4">
                     <img
-                        :src="movieDetail.detail.data.poster"
-                        :alt="movieDetail.detail.data.title"
+                        :src="movieDetail.result.poster"
+                        :alt="movieDetail.result.title"
                         class="h-[128px] w-[96px] rounded-3xl object-cover object-center" />
                     <div class="flex flex-col gap-4">
                         <div class="flex flex-col gap-y-2">
                             <div class="font-semibold sm:font-bold sm:text-xl">
-                                {{ movieDetail.detail.data.title }}
+                                {{ movieDetail.result.title }}
                             </div>
                             <div
                                 class="flex gap-x-4 divide-x divide-gray-700 text-gray-500 text-sm font-semibold">
                                 <div class="flex gap-x-2 items-center">
                                     <BaseIcon name="calendarOutline" size="w-5 h-5" />
-                                    {{ movieDetail.detail.data.release }}
+                                    {{ movieDetail.result.release }}
                                 </div>
                                 <div class="pl-2 flex gap-x-2 items-center">
                                     <BaseIcon name="clockOutline" size="w-5 h-5" />
-                                    {{ movieDetail.detail.data.runtime }}
+                                    {{ movieDetail.result.runtime }}
                                 </div>
                             </div>
                         </div>
                         <div class="flex gap-2 flex-wrap">
-                            <template v-for="item in movieDetail.detail.data.genres" :key="item.id">
+                            <template v-for="item in movieDetail.result.genres" :key="item.id">
                                 <button
                                     class="px-4 py-1 border rounded-full text-sm font-semibold hover:border-red-500 hover:text-red-500 focus:text-white focus:bg-red-500 focus:border-transparent focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                                     @click="gotoMovieGenre(item.name, item.id)">
@@ -89,42 +88,43 @@
                     </div>
                 </div>
                 <div class="flex flex-col lg:flex-row gap-10 mt-6">
-                    <div class="w-full lg:w-2/3">
-                        <div v-if="movieDetail.detail.data.original_title" class="text-sm mb-4">
-                            Original title: {{ movieDetail.detail.data.original_title }}
+                    <div class="w-full lg:w-2/3 flex flex-col gap-y-10">
+                        <div v-if="movieDetail.result.original_title">
+                            <div class="font-semibold mb-2">Original title</div>
+                            <p>{{ movieDetail.result.original_title }}</p>
                         </div>
-                        <div class="font-semibold mb-2">Overview</div>
-                        <p>
-                            {{ movieDetail.detail.data.overview }}
-                        </p>
-                        <template v-if="movieReview.review.isLoading">
+                        <div>
+                            <div class="font-semibold mb-2">Overview</div>
+                            <p>{{ movieDetail.result.overview }}</p>
+                        </div>
+                        <template v-if="review.isLoading">
                             <div class="">Loading..</div>
                         </template>
-                        <template v-else-if="movieReview.review.isError">
+                        <template v-else-if="review.isError">
                             <div class="">Error please reload</div>
                         </template>
-                        <UserReview v-else :data="movieReview.review.result" />
+                        <UserReview v-else :data="review.result" />
                     </div>
                     <div class="w-full lg:w-1/3">
-                        <PeopleList :data="castMovie.cast" title="Cast" />
+                        <PeopleList :data="theCast" title="Cast" />
                     </div>
                 </div>
             </div>
             <div class="w-full md:w-1/3">
                 <SidebarList
-                    :data="recomendation.recomen"
+                    :data="recomendation"
                     title="Recommendations"
-                    :see-more-link="`/movie/recommendation/${movieDetail.detail.data.id}`" />
+                    :see-more-link="`/movie/recommendation/${movieDetail.result.id}`" />
             </div>
         </div>
         <ListCarousel
             title="More like this"
-            :data="similarMovie.similar"
-            :see-more-link="`/movie/similar/${movieDetail.detail.data.id}`" />
-    </template>
+            :data="similarMovie"
+            :see-more-link="`/movie/similar/${movieDetail.result.id}`" />
+    </div>
 </template>
 <script>
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import MovieService from '@/services/movie-service';
 import { useGenreStore } from '@/stores';
@@ -139,6 +139,7 @@ import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import PeopleList from '@/components/PeopleList.vue';
 import BackToPervious from '@/components/header/BackToPervious.vue';
+import MovieDetailSkeleton from '@/components/skeleton/MovieDetailSkeleton.vue';
 
 export default {
     components: {
@@ -149,32 +150,37 @@ export default {
         PeopleList,
         BackToPervious,
         BaseIcon,
+        MovieDetailSkeleton,
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
         const router = useRouter();
         const route = useRoute();
         const genreStore = useGenreStore();
-        const detail = { data: {}, isLoading: true, isError: false, errorMessage: '' };
-        const movieDetail = reactive({ detail });
-        const recomen = { result: {}, isLoading: true, isError: false };
-        const recomendation = reactive({ recomen });
-        const similar = { result: {}, isLoading: true, isError: false };
-        const similarMovie = reactive({ similar });
-        const cast = { result: {}, isLoading: true, isError: false };
-        const castMovie = reactive({ cast });
-        const review = { result: {}, isLoading: true, isError: false };
-        const movieReview = reactive({ review });
+        const movieDetail = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            errorCode: null,
+            errorMessage: null,
+        });
+        const recomendation = reactive({ result: {}, isLoading: true, isError: false });
+        const similarMovie = reactive({ result: {}, isLoading: true, isError: false });
+        const theCast = reactive({ result: {}, isLoading: true, isError: false });
+        const review = reactive({ result: {}, isLoading: true, isError: false });
 
         const getMovieDetail = async () => {
             try {
                 const result = await MovieService.getDetail(route.params.id);
                 const { data } = result;
-                movieDetail.detail.data = movieDetailResource(data);
-                movieDetail.detail.isLoading = false;
-                movieDetail.detail.isError = false;
+                movieDetail.result = movieDetailResource(data);
+                movieDetail.isLoading = false;
+                movieDetail.isError = false;
             } catch (error) {
-                movieDetail.detail.isError = true;
+                movieDetail.isError = true;
+                movieDetail.isLoading = false;
+                movieDetail.errorCode = error.response.status;
+                movieDetail.errorMessage = error.response.data.status_message;
             }
         };
         const getRecomendation = async () => {
@@ -185,12 +191,11 @@ export default {
                     const genre = getGenreName(item.genre_ids.slice(0, 2));
                     return { ...item, genre_name: genre };
                 });
-                recomendation.recomen.result = sidebarCardResource(data.slice(0, 3));
-                recomendation.recomen.isLoading = false;
-                recomendation.recomen.isError = false;
+                recomendation.result = sidebarCardResource(data.slice(0, 3));
+                recomendation.isLoading = false;
+                recomendation.isError = false;
             } catch (error) {
-                recomendation.recomen.isError = true;
-                recomendation.recomen.errorMessage = error.message;
+                recomendation.isError = true;
             }
         };
         const getSimilarMovie = async () => {
@@ -198,22 +203,22 @@ export default {
                 const result = await MovieService.getSimilar(route.params.id);
                 const { results } = result.data;
                 const data = mainCardResource(results);
-                similarMovie.similar.result = data;
-                similarMovie.similar.isLoading = false;
-                similarMovie.similar.isError = false;
+                similarMovie.result = data;
+                similarMovie.isLoading = false;
+                similarMovie.isError = false;
             } catch (error) {
-                similarMovie.similar.isError = true;
+                similarMovie.isError = true;
             }
         };
         const getCast = async () => {
             try {
                 const result = await MovieService.getCredit(route.params.id);
                 const { cast } = result.data;
-                castMovie.cast.result = peopleListResource(cast.slice(0, 5));
-                castMovie.cast.isLoading = false;
-                castMovie.cast.isError = false;
+                theCast.result = peopleListResource(cast.slice(0, 5));
+                theCast.isLoading = false;
+                theCast.isError = false;
             } catch (error) {
-                castMovie.cast.isError = true;
+                theCast.isError = true;
             }
         };
         const getReview = async () => {
@@ -221,11 +226,11 @@ export default {
                 const result = await MovieService.getReview(route.params.id);
                 const { results } = result.data;
                 const data = reviewResource(results);
-                movieReview.review.result = data.reverse();
-                movieReview.review.isLoading = false;
-                movieReview.review.isError = false;
+                review.result = data.reverse();
+                review.isLoading = false;
+                review.isError = false;
             } catch (error) {
-                movieReview.review.isError = true;
+                review.isError = true;
             }
         };
 
@@ -270,7 +275,14 @@ export default {
         watch(
             () => route.params.id,
             (newId) => {
-                if (route.name === 'movie-detail' && newId) fetchData();
+                if (route.name === 'movie-detail' && newId) {
+                    movieDetail.isLoading = true;
+                    recomendation.isLoading = true;
+                    similarMovie.isLoading = true;
+                    theCast.isLoading = true;
+                    review.isLoading = true;
+                    fetchData();
+                }
             }
         );
 
@@ -281,8 +293,8 @@ export default {
             movieDetail,
             recomendation,
             similarMovie,
-            castMovie,
-            movieReview,
+            theCast,
+            review,
             gotoMovieGenre,
             shareMovie,
         };

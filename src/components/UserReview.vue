@@ -1,51 +1,59 @@
 <template>
-    <div class="font-semibold mt-10 mb-2">Reviews ({{ data.length }})</div>
-    <div v-if="data.length" class="flex flex-col gap-y-8">
-        <div v-for="item in reviews" :key="item.id">
-            <div class="flex gap-4">
-                <img
-                    :src="item.avatar"
-                    :alt="item.name"
-                    class="h-[35px] w-[35px] min-w-[35px] rounded-full object-cover object-center" />
-                <div>
-                    <div class="font-semibold text-sm">{{ item.name }}</div>
-                    <div class="flex gap-x-4 items-center">
-                        <div class="flex gap-x-0.5">
-                            <template v-if="item.star.two_star">
-                                <div v-for="i in item.star.two_star" :key="i">
-                                    <BaseIcon name="star" size="h-4 w-4" color="text-yellow-400" />
-                                </div>
-                            </template>
-                            <template v-if="item.star.one_star">
-                                <BaseIcon
-                                    name="starHalf"
-                                    size="h-4 w-4"
-                                    :color="['text-yellow-400', 'text-slate-300']" />
-                            </template>
-                            <template v-if="item.star.zero_star">
-                                <div v-for="i in item.star.zero_star" :key="i">
-                                    <BaseIcon name="star" size="h-4 w-4" color="text-slate-300" />
-                                </div>
-                            </template>
-                        </div>
-                        <div class="text-sm text-gray-500">
-                            {{ item.created_at }}
+    <section>
+        <div class="font-semibold mb-3">Reviews ({{ data.length }})</div>
+        <div v-if="data.length" class="flex flex-col gap-y-8">
+            <div v-for="item in reviews" :key="item.id">
+                <div class="flex gap-4">
+                    <img
+                        :src="item.avatar"
+                        :alt="item.name"
+                        class="h-[35px] w-[35px] min-w-[35px] rounded-full object-cover object-center" />
+                    <div>
+                        <div class="font-semibold text-sm">{{ item.name }}</div>
+                        <div class="flex gap-x-4 items-center">
+                            <div class="flex gap-x-0.5">
+                                <template v-if="item.star.two_star">
+                                    <div v-for="i in item.star.two_star" :key="i">
+                                        <BaseIcon
+                                            name="star"
+                                            size="h-4 w-4"
+                                            color="text-yellow-400" />
+                                    </div>
+                                </template>
+                                <template v-if="item.star.one_star">
+                                    <BaseIcon
+                                        name="starHalf"
+                                        size="h-4 w-4"
+                                        :color="['text-yellow-400', 'text-slate-300']" />
+                                </template>
+                                <template v-if="item.star.zero_star">
+                                    <div v-for="i in item.star.zero_star" :key="i">
+                                        <BaseIcon
+                                            name="star"
+                                            size="h-4 w-4"
+                                            color="text-slate-300" />
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ item.created_at }}
+                            </div>
                         </div>
                     </div>
                 </div>
+                <ShowMore
+                    :text="item.content.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br />')"
+                    length="150"
+                    text-class="mt-2 text-gray-500 text-sm" />
             </div>
-            <ShowMore
-                :text="item.content.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br />')"
-                length="150"
-                text-class="mt-2 text-gray-500 text-sm" />
+            <button
+                v-if="data.length > 1"
+                class="text-left text-sm text-red-400 font-semibold hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline"
+                @click="showReview">
+                {{ showReviewText }}
+            </button>
         </div>
-        <button
-            v-if="data.length > 1"
-            class="text-left text-sm text-red-400 font-semibold hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline"
-            @click="showReview">
-            {{ showReviewText }}
-        </button>
-    </div>
+    </section>
 </template>
 
 <script>
