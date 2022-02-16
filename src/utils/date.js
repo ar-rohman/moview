@@ -6,6 +6,7 @@
  */
 export const timeFromNow = (date, language = 'en') => {
     const fromDate = new Date(date);
+    if (!fromDate.getTime()) return;
     const difference = fromDate - new Date();
     const units = {
         year: 1000 * 60 * 60 * 24 * 365,
@@ -32,6 +33,8 @@ export const timeFromNow = (date, language = 'en') => {
  * @returns {String}
  */
 export const minuteToHour = (minute) => {
+    if (isNaN(minute) || minute < 0) return;
+
     const unit = (data, unit) => {
         if (data > 1) {
             return `${data} ${unit}s`;
@@ -45,5 +48,6 @@ export const minuteToHour = (minute) => {
     const min = +minute % 60;
     const hrUnit = unit(hr, 'hr');
     const minUnit = unit(min, 'min');
-    return `${hrUnit} ${minUnit}`;
+    const result = `${hrUnit} ${minUnit}`;
+    return result.trim();
 };
