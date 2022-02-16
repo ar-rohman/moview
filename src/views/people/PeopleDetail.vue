@@ -1,61 +1,72 @@
 <template>
-    <div class="relative">
-        <div class="absolute top-0">
-            <BackToPervious :text="detail.result.name" />
+    <PeopleDetailSkeleton v-if="detail.isLoading" />
+    <template v-else-if="detail.isError">
+        <!-- TODO-->
+        <div class="flex flex-col justify-center items-center">
+            <h1 class="text-2xl font-semibold">ERROR</h1>
+            <p>{{ detail.errorCode }}</p>
+            <p>{{ detail.errorMessage }}</p>
         </div>
-    </div>
-    <div class="flex flex-col lg:flex-row gap-10 lg:gap-20">
-        <div class="flex flex-col gap-y-8 w-full lg:w-3/4 xs:mt-[60px]">
-            <div class="flex flex-col xs:flex-row gap-x-4 w-ful">
-                <div class="min-w-[192px] -mx-4 xs:mx-0">
-                    <img
-                        :src="detail.result.image"
-                        :alt="detail.result.name"
-                        class="xs:h-[256px] w-full rounded-none xs:rounded-2xl lg:rounded-3xl object-cover object-top" />
+    </template>
+    <template v-else>
+        <div class="relative">
+            <div class="absolute top-0">
+                <BackToPervious :text="detail.result.name" />
+            </div>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-20">
+            <div class="flex flex-col gap-y-8 w-full lg:w-3/4 xs:mt-[60px]">
+                <div class="flex flex-col xs:flex-row gap-x-4 w-ful">
+                    <div class="min-w-[192px] -mx-4 xs:mx-0">
+                        <img
+                            :src="detail.result.image"
+                            :alt="detail.result.name"
+                            class="xs:h-[256px] w-full rounded-none xs:rounded-2xl lg:rounded-3xl object-cover object-top" />
+                    </div>
+                    <div class="flex flex-col gap-y-4 lg:w-1/2 sm:pr-4 lg:pr-10">
+                        <div class="my-6 xs:mb-6 xs:mt-0">
+                            <div class="font-semibold sm:font-bold text-3xl">
+                                {{ detail.result.name }}
+                            </div>
+                            <div class="text-gray-500">
+                                {{ detail.result.known_for_department }}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-semibold mb-1">Birthday</div>
+                            <p>{{ detail.result.birthday }}</p>
+                        </div>
+                        <div>
+                            <div class="font-semibold mb-1">Deathday</div>
+                            <p>{{ detail.result.deathday }}</p>
+                        </div>
+                        <div>
+                            <div class="font-semibold mb-1">Place of birth</div>
+                            <p>{{ detail.result.place_of_birth }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col gap-y-4 lg:w-1/2 sm:pr-4 lg:pr-10">
-                    <div class="my-6 xs:mb-6 xs:mt-0">
-                        <div class="font-semibold sm:font-bold text-3xl">
-                            {{ detail.result.name }}
-                        </div>
-                        <div class="text-gray-500">
-                            {{ detail.result.known_for_department }}
-                        </div>
+                <div class="flex flex-col md:flex-row gap-10">
+                    <div v-if="detail.result.biography" class="w-full md:w-2/3">
+                        <div class="font-semibold mb-1">Biography</div>
+                        <ShowMore :text="detail.result.biography" length="300" />
                     </div>
-                    <div>
-                        <div class="font-semibold mb-1">Birthday</div>
-                        <p>{{ detail.result.birthday }}</p>
-                    </div>
-                    <div>
-                        <div class="font-semibold mb-1">Deathday</div>
-                        <p>{{ detail.result.deathday }}</p>
-                    </div>
-                    <div>
-                        <div class="font-semibold mb-1">Place of birth</div>
-                        <p>{{ detail.result.place_of_birth }}</p>
+                    <div v-if="detail.result.also_known_as" class="w-full md:w-1/3">
+                        <div class="font-semibold mb-1">Also known as</div>
+                        <ul
+                            v-for="(item, index) in detail.result.also_known_as"
+                            :key="index"
+                            class="list-disc list-inside">
+                            <li>{{ item }}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row gap-10">
-                <div v-if="detail.result.biography" class="w-full md:w-2/3">
-                    <div class="font-semibold mb-1">Biography</div>
-                    <ShowMore :text="detail.result.biography" length="300" />
-                </div>
-                <div v-if="detail.result.also_known_as" class="w-full md:w-1/3">
-                    <div class="font-semibold mb-1">Also known as</div>
-                    <ul
-                        v-for="(item, index) in detail.result.also_known_as"
-                        :key="index"
-                        class="list-disc list-inside">
-                        <li>{{ item }}</li>
-                    </ul>
-                </div>
+            <div class="w-full lg:w-1/4 xs:mt-[60px]">
+                <PeopleList :data="popular" title="Popular People" />
             </div>
         </div>
-        <div class="w-full lg:w-1/4 xs:mt-[60px]">
-            <PeopleList :data="popular" title="Popular People" />
-        </div>
-    </div>
+    </template>
 </template>
 
 <script>
@@ -66,13 +77,21 @@ import { peopleDetailResource, peopleListResource } from '@/resources/people-res
 import BackToPervious from '@/components/header/BackToPervious.vue';
 import ShowMore from '@/components/ShowMore.vue';
 import PeopleList from '@/components/PeopleList.vue';
+import PeopleDetailSkeleton from '@/components/skeleton/PeopleDetailSkeleton.vue';
 
 export default {
-    components: { BackToPervious, ShowMore, PeopleList },
+    components: { BackToPervious, ShowMore, PeopleList, PeopleDetailSkeleton },
     setup() {
         const route = useRoute();
-        const detail = reactive({ result: {}, isLoading: true, isError: false });
+        const detail = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            errorCode: null,
+            errorMessage: null,
+        });
         const popular = reactive({ result: {}, isLoading: true, isError: false });
+        const credits = reactive({ result: {}, isLoading: true, isError: false });
 
         const getPersonDetail = async () => {
             try {
@@ -82,7 +101,10 @@ export default {
                 detail.isLoading = false;
                 detail.isError = false;
             } catch (error) {
+                detail.isLoading = false;
                 detail.isError = true;
+                detail.errorCode = error.response.status;
+                detail.errorMessage = error.response.data.status_message;
             }
         };
 
@@ -98,16 +120,31 @@ export default {
             }
         };
 
+        const getPersonCredits = async () => {
+            try {
+                const result = await PeopleService.getCredits(route.params.id);
+                const { data } = result;
+                credits.result.credits = data.cast.slice(0, 5);
+                credits.isLoading = false;
+                credits.isError = false;
+            } catch (error) {
+                credits.isError = true;
+            }
+        };
+
         watch(
             () => route.params.id,
             (newId) => {
                 if (route.name === 'people-detail' && newId) {
+                    detail.isLoading = true;
+                    popular.isLoading = true;
                     getPersonDetail();
                     getPopularPerson();
                 }
             }
         );
         onMounted(getPersonDetail);
+        // onMounted(getPersonCredits);
         onMounted(getPopularPerson);
         return { detail, popular };
     },

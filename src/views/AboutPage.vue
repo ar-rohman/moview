@@ -1,11 +1,3 @@
 <template>
-    <!-- <div class="">about</div> -->
-    <PeopleDetailSkeleton />
+    <div class="">about</div>
 </template>
-
-<script>
-import PeopleDetailSkeleton from '../components/skeleton/PeopleDetailSkeleton.vue';
-export default {
-    components: { PeopleDetailSkeleton },
-};
-</script>
