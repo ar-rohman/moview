@@ -40,7 +40,7 @@ export default {
                 const clasees = color[i] ? `class="${color[i]}"` : '';
                 path.push(`<path d="${d}" fill="${this.fill}" ${clasees} />`);
             }
-            return path;
+            return path.join('');
         };
         const svgAttrs = {
             xmlns: this.xmlns,
