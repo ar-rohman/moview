@@ -14,53 +14,47 @@ describe('Date - Time From Now', () => {
         const result = timeFromNow(date, language);
         expect(result).eq('sekarang');
     });
-    it('should return 60 seconds ago', () => {
-        const date = new Date(Date.now() - 60000);
+    it('should return 1 minute ago', () => {
+        const date = new Date(Date.now() - 1 * 60 * 1000);
         const language = 'en';
         const result = timeFromNow(date, language);
-        expect(result).eq('60 seconds ago');
+        expect(result).eq('1 minute ago');
     });
     it('should return 59 seconds ago', () => {
-        const date = new Date(Date.now() - 59000);
+        const date = new Date(Date.now() - 59 * 1000);
         const language = 'en';
         const result = timeFromNow(date, language);
         expect(result).eq('59 seconds ago');
     });
-    it('should return 60 detik yang lalu', () => {
-        const date = new Date(Date.now() - 60000);
+    it('should return 1 menit yang lalu', () => {
+        const date = new Date(Date.now() - 1 * 60 * 1000);
         const language = 'id';
         const result = timeFromNow(date, language);
-        expect(result).eq('60 detik yang lalu');
+        expect(result).eq('1 menit yang lalu');
     });
-    it('should return 60 minutes ago', () => {
-        const date = new Date(Date.now() - 3600000);
+    it('should return 1 hour ago', () => {
+        const date = new Date(Date.now() - 1 * 60 * 60 * 1000);
         const language = 'en';
         const result = timeFromNow(date, language);
-        expect(result).eq('60 minutes ago');
+        expect(result).eq('1 hour ago');
     });
-    it('should return 24 hours ago', () => {
-        const date = new Date(Date.now() - 86400000);
+    it('should return yesterday', () => {
+        const date = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000);
         const language = 'en';
         const result = timeFromNow(date, language);
-        expect(result).eq('24 hours ago');
+        expect(result).eq('yesterday');
     });
-    it('should return 1 month ago', () => {
-        const date = new Date(Date.now() - 2628000000);
+    it('should return last month', () => {
+        const date = new Date(Date.now() - (365 / 12) * 24 * 60 * 60 * 1000);
         const language = 'en';
         const result = timeFromNow(date, language);
-        expect(result).eq('30 days ago');
+        expect(result).eq('last month');
     });
-    it('should return 12 months ago', () => {
-        const date = new Date(Date.now() - 31536000000);
+    it('should return last year', () => {
+        const date = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000);
         const language = 'en';
         const result = timeFromNow(date, language);
-        expect(result).eq('12 months ago');
-    });
-    it('should return 2 years ago', () => {
-        const date = '2020';
-        const language = 'en';
-        const result = timeFromNow(date, language);
-        expect(result).eq('2 years ago');
+        expect(result).eq('last year');
     });
     it('should return undefined', () => {
         const date = 'test string';

@@ -19,7 +19,7 @@ export const timeFromNow = (date, language = 'en') => {
     const rtf = new Intl.RelativeTimeFormat(language, { numeric: 'auto' });
     let result;
     for (const unit in units) {
-        if (Math.abs(difference) > units[unit] || unit === 'second') {
+        if (Math.abs(difference) >= units[unit] || unit === 'second') {
             result = rtf.format(Math.round(difference / units[unit]), unit);
             break;
         }
