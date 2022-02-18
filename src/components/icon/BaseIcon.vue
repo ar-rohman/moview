@@ -31,7 +31,9 @@ export default {
     render() {
         const getPath = () => {
             const path = [];
-            const draw = icons[this.name].split('|');
+            const icon = icons[this.name];
+            if (!icon) return;
+            const draw = icon.split('|');
             const color = Array.isArray(this.color) ? this.color : this.color.split(',');
             if (color.length !== draw.length) {
                 return console.error('Please provide the right number of colors!');
