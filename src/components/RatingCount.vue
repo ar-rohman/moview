@@ -1,9 +1,9 @@
 <template>
     <div v-if="voteAverage" class="flex items-center">
         <BaseIcon name="star" :size="iconClass" />
-        <div :class="`flex ml-1 divide-x divide-current`">
-            <p class="pr-2" :class="textClass">{{ Number.parseFloat(voteAverage).toFixed(1) }}</p>
-            <p v-if="voteCount" class="pl-2" :class="textClass">
+        <div :class="`flex ml-1 divide-x divide-current ${textClass}`">
+            <p class="pr-2">{{ Number.parseFloat(voteAverage).toFixed(1) }}</p>
+            <p v-if="voteCount" class="pl-2">
                 {{ voteCount }} {{ voteCount > 1 ? 'Votes' : 'Vote' }}
             </p>
         </div>
