@@ -1,7 +1,11 @@
 <template>
-    <div v-if="isScroll" class="flex justify-end w-full max-w-screen-xl fixed bottom-4">
+    <div
+        v-if="isScroll"
+        class="flex justify-end w-full max-w-screen-xl fixed bottom-4"
+        data-test="back-to-top">
         <button
             class="flex justify-center items-center bg-red-500 rounded-full p-3 mx-8 sm:mx-20 text-white hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            data-test="back-to-top-button"
             @click="toTop">
             <BaseIcon name="arrowUp" size="w-5 h-5" />
         </button>
@@ -26,14 +30,9 @@ export default {
         onMounted(() => window.addEventListener('scroll', scrolling));
         onUnmounted(() => window.removeEventListener('scroll', scrolling));
         const scrolling = () => {
-            const bodyScroll = document.body.scrollTop;
-            const htmlScroll = document.documentElement.scrollTop;
-            const screenHeight = screen.height;
-            if (bodyScroll > screenHeight || htmlScroll > screenHeight) {
-                isScroll.value = true;
-            } else {
-                isScroll.value = false;
-            }
+            const scrollTop = document.documentElement.scrollTop;
+            const screenHeight = window.screen.height;
+            isScroll.value = scrollTop > screenHeight;
         };
         return { isScroll, toTop };
     },
