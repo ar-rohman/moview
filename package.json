@@ -7,6 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "e2e": "cypress open",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -21,6 +22,7 @@
     "@vue/test-utils": "^2.0.0-rc.18",
     "autoprefixer": "^10.4.2",
     "c8": "^7.11.0",
+    "cypress": "^9.5.0",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
