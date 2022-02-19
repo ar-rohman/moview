@@ -5,7 +5,6 @@
             <carousel-pagination
                 v-if="pagination"
                 :total="data.carousel.length"
-                :pagination-position="paginationPosition"
                 @switch="switchSlide($event)"></carousel-pagination>
             <div>
                 <carousel-slide
@@ -30,7 +29,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, toRefs, provide } from 'vue';
+import { ref, onMounted, onBeforeUnmount, toRefs, provide, onUnmounted } from 'vue';
 import CarouselSlide from './CarouselSlide.vue';
 import CarouselNavigation from './CarouselNavigation.vue';
 import CarouselPagination from './CarouselPagination.vue';
@@ -116,6 +115,14 @@ export default {
                 previous(step);
             }
         };
+
+        const isVisible = () => {
+            if (document.hidden) {
+                stopSlideTimer();
+            } else {
+                startSlideTimer();
+            }
+        };
         // const showNavigation = () => {
         //     navigationVisibility.value = true;
         // };
@@ -136,6 +143,8 @@ export default {
 
         onMounted(startSlideTimer);
         onBeforeUnmount(stopSlideTimer);
+        onMounted(() => document.addEventListener('visibilitychange', isVisible));
+        onUnmounted(() => document.removeEventListener('visibilitychange', isVisible));
 
         return {
             currentSlide,
