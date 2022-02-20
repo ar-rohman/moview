@@ -1,5 +1,9 @@
 <template>
-    <transition :name="transitionEffect">
+    <transition
+        enter-active-class="transition duration-1000 ease-in-out"
+        :enter-from-class="direction === 'right' ? 'translate-x-full' : '-translate-x-full'"
+        leave-active-class="transition duration-1000 ease-in-out"
+        :leave-to-class="direction === 'right' ? '-translate-x-full' : 'translate-x-full'">
         <div
             v-show="currentSlide === index"
             class="absolute inset-0 cursor-pointer select-none"
@@ -9,8 +13,8 @@
             @touchend="touchEnd"
             @touchmove="touchMove"
             @click="goTo">
-            <img :src="slide" class="h-80 w-full object-center object-cover" />
-            <div class="absolute inset-0 text-white flex items-end zsm:w-1/2">
+            <img :src="slide" class="h-80 w-full object-top object-cover" />
+            <div class="absolute inset-0 text-white flex items-end">
                 <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-3xl w-full">
                     <div class="py-4 px-8 lg:px-10 lg:py-8">
                         <div class="md:text-lg lg:text-2xl lg:font-semibold">
@@ -24,7 +28,7 @@
 </template>
 
 <script>
-import { computed, inject, ref, toRefs, watch } from 'vue';
+import { inject, ref, toRefs, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -57,12 +61,9 @@ export default {
         const swipeEnd = ref(false);
         const swiping = ref(0);
 
-        const { direction, id } = toRefs(props);
+        const { id } = toRefs(props);
         const currentSlide = inject('currentSlide');
         const detailLink = inject('detailLink');
-        const transitionEffect = computed(() =>
-            direction.value === 'right' ? 'slide-out' : 'slide-in'
-        );
 
         const goTo = () => {
             router.push({ path: `${detailLink}/${id.value}` });
@@ -105,28 +106,7 @@ export default {
             }
         );
 
-        return { goTo, transitionEffect, currentSlide, touchStart, touchEnd, touchMove };
+        return { goTo, currentSlide, touchStart, touchEnd, touchMove };
     },
 };
 </script>
-
-<style scoped>
-.slide-in-enter-active,
-.slide-in-leave-active,
-.slide-out-enter-active,
-.slide-out-leave-active {
-    transition: all 1s ease-in-out;
-}
-.slide-in-enter-from {
-    transform: translateX(-100%);
-}
-.slide-in-leave-to {
-    transform: translateX(100%);
-}
-.slide-out-enter-from {
-    transform: translateX(100%);
-}
-.slide-out-leave-to {
-    transform: translateX(-100%);
-}
-</style>
