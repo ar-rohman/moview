@@ -6,12 +6,12 @@
         :leave-to-class="direction === 'right' ? '-translate-x-full' : 'translate-x-full'">
         <div
             v-show="currentSlide === index"
+            ref="swipeElement"
             class="absolute inset-0 cursor-pointer select-none"
             @mouseenter="$emit('enter')"
             @mouseout="$emit('out')"
-            @touchstart="touchStart"
-            @touchend="touchEnd"
-            @touchmove="touchMove"
+            @touchstart="$emit('enter')"
+            @touchend="$emit('out')"
             @click="goTo">
             <img :src="slide" class="h-80 w-full object-top object-cover" />
             <div class="absolute inset-0 text-white flex items-end">
@@ -28,8 +28,9 @@
 </template>
 
 <script>
-import { inject, ref, toRefs, watch } from 'vue';
+import { inject, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSwipe } from '@vueuse/core';
 
 export default {
     props: {
@@ -57,56 +58,31 @@ export default {
     emits: ['enter', 'out', 'prev', 'next'],
     setup(props, { emit }) {
         const router = useRouter();
-        const swipeStart = ref(0);
-        const swipeEnd = ref(false);
-        const swiping = ref(0);
-
+        const swipeElement = ref(null);
         const { id } = toRefs(props);
         const currentSlide = inject('currentSlide');
         const detailLink = inject('detailLink');
 
         const goTo = () => {
+            emit('prev');
             router.push({ path: `${detailLink}/${id.value}` });
         };
 
-        const swipe = () => {
-            if (swipeStart.value > swiping.value + 10) {
-                emit('next');
-                swipeStart.value = 0;
-                swipeEnd.value = false;
-                swiping.value = 0;
-            } else if (swiping.value > swipeStart.value + 10) {
-                emit('prev');
-                swipeStart.value = 0;
-                swipeEnd.value = false;
-                swiping.value = 0;
-            }
-        };
-
-        const touchStart = (event) => {
-            swipeStart.value = event.changedTouches[0].clientX;
-            emit('enter');
-        };
-
-        const touchEnd = () => {
-            emit('out');
-            swipeEnd.value = true;
-        };
-
-        const touchMove = (event) => {
-            swiping.value = event.changedTouches[0].clientX;
-        };
-
-        watch(
-            () => swipeEnd.value,
-            (newValue) => {
-                if (newValue) {
-                    swipe();
+        useSwipe(swipeElement, {
+            onSwipeEnd: (event, direction) => {
+                if (direction === 'RIGHT') {
+                    emit('prev');
+                } else if (direction === 'LEFT') {
+                    emit('next');
                 }
-            }
-        );
+            },
+        });
 
-        return { goTo, currentSlide, touchStart, touchEnd, touchMove };
+        return {
+            goTo,
+            currentSlide,
+            swipeElement,
+        };
     },
 };
 </script>
