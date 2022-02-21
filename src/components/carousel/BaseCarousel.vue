@@ -1,6 +1,6 @@
 <template>
     <HeroSectionSkeleton v-if="data.isLoading" />
-    <div v-else class="flex justify-center relative">
+    <div v-else class="flex justify-center relative" data-test="carousel">
         <div class="relative h-80 w-full overflow-hidden rounded-xl sm:rounded-3xl">
             <carousel-pagination
                 v-if="pagination"
@@ -74,10 +74,9 @@ export default {
         const currentSlide = ref(0);
         const slideDuration = ref(null);
         const slideDirection = ref('right');
-        const { data, duration, navigation, paginationPosition } = toRefs(props); // navigation belum dipake
+        const { data, duration, paginationPosition } = toRefs(props);
         provide('currentSlide', currentSlide);
         provide('paginationPosition', paginationPosition);
-        // const navigationVisibility = ref(false);
         const setCurrentSlide = (index) => {
             currentSlide.value = index;
         };
@@ -123,23 +122,6 @@ export default {
                 startSlideTimer();
             }
         };
-        // const showNavigation = () => {
-        //     navigationVisibility.value = true;
-        // };
-        // const hideNavigation = () => {
-        //     navigationVisibility.value = false;
-        // };
-        // const toggleNavigation = () => {
-        //     return navigation.value && navigationVisibility.value;
-        // };
-        // const mouseEnter = () => {
-        //     stopSlideTimer();
-        //     showNavigation();
-        // };
-        // const mouseOut = () => {
-        //     startSlideTimer();
-        //     hideNavigation();
-        // };
 
         onMounted(startSlideTimer);
         onBeforeUnmount(stopSlideTimer);
@@ -149,17 +131,11 @@ export default {
         return {
             currentSlide,
             slideDirection,
-            // navigationVisibility,
-            // showNavigation,
-            // hideNavigation,
             startSlideTimer,
             stopSlideTimer,
             switchSlide,
             next,
             previous,
-            // toggleNavigation,
-            // mouseEnter,
-            // mouseOut,
         };
     },
 };

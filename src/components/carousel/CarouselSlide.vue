@@ -8,6 +8,7 @@
             v-show="currentSlide === index"
             ref="swipeElement"
             class="absolute inset-0 cursor-pointer select-none"
+            data-test="carousel-slide"
             @mouseenter="$emit('enter')"
             @mouseout="$emit('out')"
             @touchstart="$emit('enter')"

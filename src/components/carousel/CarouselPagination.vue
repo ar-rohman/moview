@@ -1,10 +1,13 @@
 <template>
-    <div class="absolute bottom-0.5 sm:bottom-2 z-10" :class="getPaginationPosition">
+    <div
+        class="absolute bottom-0.5 sm:bottom-2 z-10"
+        :class="getPaginationPosition"
+        data-test="carousel-pagination">
         <button
             v-for="(item, index) in total"
             :key="index"
-            class="w-2 h-2 bg-white opacity-50 m-1 rounded-full cursor-pointer hover:bg-red-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
-            :class="{ 'opacity-100': currentIndex === index }"
+            class="w-2 h-2 bg-white m-1 rounded-full cursor-pointer hover:bg-red-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            :class="[currentIndex === index ? 'opacity-100' : 'opacity-50']"
             @click="$emit('switch', index)"></button>
     </div>
 </template>

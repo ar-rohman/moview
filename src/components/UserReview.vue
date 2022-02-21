@@ -95,7 +95,6 @@ export default {
                 return data.value.result.slice(0, 1);
             }
         };
-        console.log(props.data);
         onMounted(showReview);
         watch(
             () => props.data.result,
