@@ -54,14 +54,39 @@ export default {
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
-        const trendingMovie = reactive({ result: {}, isLoading: true, isError: false });
+        const trendingMovie = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
         const movieGenre = reactive({ result: {}, isLoading: true });
         const releaseMovie = reactive({ carousel: {}, hero: {}, isLoading: true, isError: false });
-        const nowPlaying = reactive({ result: {}, isLoading: true, isError: false });
-        const upcomingMovie = reactive({ result: {}, isLoading: true, isError: false });
-        const popularMovie = reactive({ result: {}, isLoading: true, isError: false });
-        const topRatedMovie = reactive({ result: {}, isLoading: true, isError: false });
-        const freeToWatch = reactive({ result: {}, isLoading: true, isError: false });
+        const nowPlaying = reactive({ result: {}, isLoading: true, isError: false, isMore: false });
+        const upcomingMovie = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
+        const popularMovie = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
+        const topRatedMovie = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
+        const freeToWatch = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
         const genreStore = useGenreStore();
         const countryCodeStore = useCountryCodeStore();
 
@@ -111,6 +136,7 @@ export default {
                 trendingMovie.result = data;
                 trendingMovie.isLoading = false;
                 trendingMovie.isError = false;
+                trendingMovie.isMore = result.data.total_pages > result.data.page;
             } catch (error) {
                 trendingMovie.isError = true;
             }
@@ -124,6 +150,7 @@ export default {
                 nowPlaying.result = data;
                 nowPlaying.isLoading = false;
                 nowPlaying.isError = false;
+                nowPlaying.isMore = result.data.total_pages > result.data.page;
             } catch (error) {
                 nowPlaying.isError = true;
             }
@@ -137,6 +164,7 @@ export default {
                 upcomingMovie.result = data;
                 upcomingMovie.isLoading = false;
                 upcomingMovie.isError = false;
+                upcomingMovie.isMore = result.data.total_pages > result.data.page;
             } catch (error) {
                 upcomingMovie.isError = true;
             }
@@ -153,6 +181,7 @@ export default {
                 popularMovie.result = sidebarCardResource(data.slice(0, 4));
                 popularMovie.isLoading = false;
                 popularMovie.isError = false;
+                popularMovie.isMore = data.length > 4;
             } catch (error) {
                 popularMovie.isError = true;
             }
@@ -169,6 +198,7 @@ export default {
                 topRatedMovie.result = sidebarCardResource(data.slice(0, 3));
                 topRatedMovie.isLoading = false;
                 topRatedMovie.isError = false;
+                topRatedMovie.isMore = data.length > 3;
             } catch (error) {
                 topRatedMovie.isError = true;
             }
@@ -190,6 +220,7 @@ export default {
                 freeToWatch.result = sidebarCardResource(data.slice(0, 3));
                 freeToWatch.isLoading = false;
                 freeToWatch.isError = false;
+                freeToWatch.isMore = data.length > 3;
             } catch (error) {
                 freeToWatch.isError = true;
             }

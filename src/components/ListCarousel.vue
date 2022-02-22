@@ -10,6 +10,7 @@
                 <div class="flex justify-between mb-3">
                     <div class="font-semibold md:text-lg">{{ title }}</div>
                     <router-link
+                        v-if="data.isMore"
                         :to="seeMoreLink"
                         class="self-end text-red-400 hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline">
                         See more

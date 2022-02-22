@@ -31,10 +31,12 @@
                             </div>
                         </div>
                         <div class="flex justify-between pb-4">
-                            <RatingCount
-                                text-class="text-sm font-semibold text-gray-700"
-                                :vote-average="movieDetail.result.vote_average"
-                                :vote-count="movieDetail.result.vote_count" />
+                            <div>
+                                <RatingCount
+                                    text-class="text-sm font-semibold text-gray-700"
+                                    :vote-average="movieDetail.result.vote_average"
+                                    :vote-count="movieDetail.result.vote_count" />
+                            </div>
                             <div class="flex gap-x-4 sm:gap-x-8 items-center">
                                 <div
                                     v-if="movieDetail.result.adult"
@@ -158,8 +160,18 @@ export default {
             errorCode: null,
             errorMessage: null,
         });
-        const recomendation = reactive({ result: {}, isLoading: true, isError: false });
-        const similarMovie = reactive({ result: {}, isLoading: true, isError: false });
+        const recomendation = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
+        const similarMovie = reactive({
+            result: {},
+            isLoading: true,
+            isError: false,
+            isMore: false,
+        });
         const theCast = reactive({ result: {}, isLoading: true, isError: false });
         const review = reactive({ result: {}, isLoading: true, isError: false });
 
@@ -188,6 +200,7 @@ export default {
                 recomendation.result = sidebarCardResource(data.slice(0, 3));
                 recomendation.isLoading = false;
                 recomendation.isError = false;
+                recomendation.isMore = data.length > 3;
             } catch (error) {
                 recomendation.isError = true;
             }
@@ -200,6 +213,7 @@ export default {
                 similarMovie.result = data;
                 similarMovie.isLoading = false;
                 similarMovie.isError = false;
+                similarMovie.isMore = result.data.total_pages > result.data.page;
             } catch (error) {
                 similarMovie.isError = true;
             }
