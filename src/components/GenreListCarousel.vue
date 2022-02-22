@@ -6,7 +6,7 @@
                 <button
                     v-for="genre in data.result"
                     :key="genre.id"
-                    class="px-4 py-2 rounded-2xl whitespace-nowrap border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2"
+                    class="px-4 py-2 rounded-2xl whitespace-nowrap border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:bg-red-600 focus:outline-none focus:text-white focus-visible:ring-red-400 focus-visible:ring-2 select-none min-w-0"
                     @click="gotoMovieGenre(genre.name, genre.id)">
                     {{ genre.name }}
                 </button>
