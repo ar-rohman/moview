@@ -4,7 +4,7 @@
         class="flex gap-2 rounded-md h-[112px] w-full bg-black/5 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500">
         <img
             :src="data.image"
-            class="w-[84px] h-full rounded-lg object-cover object-center"
+            class="h-full aspect-[2/3] rounded-lg object-cover object-center"
             :alt="data.title" />
         <div class="px-2 py-4 flex flex-col justify-between">
             <div class="flex flex-col gap-y-2 text-sm">

@@ -1,7 +1,7 @@
 <template>
-    <HeroSectionSkeleton v-if="data.isLoading" />
+    <CarouselSkeleton v-if="data.isLoading" />
     <div v-else class="flex justify-center relative" data-test="carousel">
-        <div class="relative h-80 w-full overflow-hidden rounded-xl sm:rounded-3xl">
+        <div class="relative aspect-video w-full overflow-hidden rounded-xl sm:rounded-3xl">
             <carousel-pagination
                 v-if="pagination"
                 :total="data.carousel.length"
@@ -33,14 +33,14 @@ import { ref, onMounted, onBeforeUnmount, toRefs, provide, onUnmounted } from 'v
 import CarouselSlide from './CarouselSlide.vue';
 import CarouselNavigation from './CarouselNavigation.vue';
 import CarouselPagination from './CarouselPagination.vue';
-import HeroSectionSkeleton from '../skeleton/HeroSectionSkeleton.vue';
+import CarouselSkeleton from '../skeleton/CarouselSkeleton.vue';
 
 export default {
     components: {
         CarouselSlide,
         CarouselNavigation,
         CarouselPagination,
-        HeroSectionSkeleton,
+        CarouselSkeleton,
     },
     props: {
         data: {

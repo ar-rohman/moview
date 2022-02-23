@@ -13,7 +13,7 @@
             <img
                 :src="movieDetail.result.backdrop"
                 :alt="movieDetail.result.title"
-                class="h-80 w-full object-cover object-center" />
+                class="h-80 w-full object-cover object-top" />
             <div class="absolute inset-0 -bottom-px">
                 <div class="bg-gradient-to-b from-white/20 to-white w-full h-full">
                     <div class="h-full flex flex-col justify-between p-4 sm:px-10">
@@ -60,7 +60,7 @@
                     <img
                         :src="movieDetail.result.poster"
                         :alt="movieDetail.result.title"
-                        class="h-[128px] w-[96px] rounded-3xl object-cover object-center" />
+                        class="aspect-[2/3] h-full rounded-xl object-cover object-center" />
                     <div class="flex flex-col gap-4">
                         <div class="flex flex-col gap-y-2">
                             <div class="font-semibold sm:font-bold sm:text-xl">
@@ -197,7 +197,7 @@ export default {
                     const genre = getGenreName(item.genre_ids.slice(0, 2));
                     return { ...item, genre_name: genre };
                 });
-                recomendation.result = sidebarCardResource(data.slice(0, 3));
+                recomendation.result = sidebarCardResource(data.slice(0, 4));
                 recomendation.isLoading = false;
                 recomendation.isError = false;
                 recomendation.isMore = data.length > 3;
@@ -222,7 +222,7 @@ export default {
             try {
                 const result = await MovieService.getCredit(route.params.id);
                 const { cast } = result.data;
-                theCast.result = peopleListResource(cast.slice(0, 5));
+                theCast.result = peopleListResource(cast.slice(0, 6));
                 theCast.isLoading = false;
                 theCast.isError = false;
             } catch (error) {

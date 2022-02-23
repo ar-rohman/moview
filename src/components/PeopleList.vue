@@ -6,7 +6,9 @@
             <!--TODO-->
             <div>error please reload</div>
         </template>
-        <div v-else class="flex lg:flex-col gap-4 flex-wrap">
+        <div
+            v-else
+            class="grid place-items-start grid-cols-3 grid-flow-row zgrid-rows-2 sm:grid-cols-6 lg:grid-cols-1 gap-4">
             <template v-for="item in data.result" :key="item.id">
                 <PeopleCard
                     :id="item.id"
@@ -26,10 +28,10 @@ export default {
     components: { PeopleCard, PeopleListSkeleton },
     props: {
         data: {
-            type: [Array, Object],
+            type: Object,
             require: true,
             default() {
-                return [];
+                return {};
             },
         },
         title: {

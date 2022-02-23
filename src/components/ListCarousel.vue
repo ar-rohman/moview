@@ -7,7 +7,7 @@
         <section>
             <ListCarouselSkeleton v-if="data.isLoading" />
             <template v-else>
-                <div class="flex justify-between mb-3">
+                <div class="flex justify-between mb-2">
                     <div class="font-semibold md:text-lg">{{ title }}</div>
                     <router-link
                         v-if="data.isMore"
@@ -44,9 +44,9 @@ export default {
             default: null,
         },
         data: {
-            type: [Array, Object],
+            type: Object,
             default() {
-                return [];
+                return {};
             },
             require: true,
         },

@@ -10,7 +10,7 @@ export const heroResource = (data) => {
                 firstImage: item.backdrop_path,
                 secondImage: null,
                 thirdImage: null,
-                imageSize: defaults.backdropSize,
+                imageSize: defaults.heroSize,
             }),
         };
     });

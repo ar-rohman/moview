@@ -9,7 +9,7 @@
             <div class="flex flex-col xs:flex-row gap-x-4 w-ful">
                 <div class="min-w-[192px] -mx-4 xs:mx-0 animate-pulse">
                     <div
-                        class="h-[256px] w-full rounded-none xs:rounded-2xl lg:rounded-3xl bg-gray-200"></div>
+                        class="h-[256px] w-full rounded-none xs:rounded-xl lg:rounded-2xl bg-gray-200"></div>
                 </div>
                 <div class="flex flex-col gap-y-4 lg:w-1/2 sm:pr-4 lg:pr-10 animate-pulse">
                     <div class="my-6 xs:mb-6 xs:mt-0">

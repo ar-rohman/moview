@@ -56,12 +56,12 @@ const routes = [
         component: () => import('@/views/movie/SimilarMovie.vue'),
         meta: { pageName: 'Similar Movies', isShowHeader: false },
     },
-    {
-        path: '/movie/free',
-        name: 'free-movie',
-        component: () => import('@/views/movie/FreeMovie.vue'),
-        meta: { pageName: 'Free Movies', isShowHeader: false },
-    },
+    // {
+    //     path: '/movie/free',
+    //     name: 'free-movie',
+    //     component: () => import('@/views/movie/FreeMovie.vue'),
+    //     meta: { pageName: 'Free Movies', isShowHeader: false },
+    // },
     {
         path: '/movie/genre/:genre/:id',
         name: 'movie-genre',

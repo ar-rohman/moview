@@ -8,12 +8,12 @@
         <section v-else>
             <div class="font-semibold mb-2">{{ title }}</div>
             <template v-if="data.result.length">
-                <div class="flex flex-col sm:flex-row md:flex-col gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-3">
                     <template v-for="item in data.result" :key="item.id">
                         <SidebarCard :data="item" />
                     </template>
                 </div>
-                <div class="mt-4">
+                <div class="mt-3">
                     <router-link
                         v-if="data.isMore"
                         :to="seeMoreLink"
@@ -37,9 +37,9 @@ export default {
     components: { SidebarCard, SidebarListSkeleton },
     props: {
         data: {
-            type: [Array, Object],
+            type: Object,
             default() {
-                return [];
+                return {};
             },
             required: true,
         },

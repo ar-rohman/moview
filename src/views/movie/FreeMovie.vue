@@ -1,4 +1,5 @@
 <template>
+    <!-- NOT USED ANYMORE -->
     <InfinityScroll
         v-if="state.query.watch_region"
         page-title="Free Movies"

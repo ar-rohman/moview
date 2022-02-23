@@ -1,26 +1,29 @@
 <template>
     <section>
         <HeroSectionSkeleton v-if="data.isLoading" />
-        <router-link
-            v-else
-            :to="`${detailLink}/${data.hero.id}`"
-            class="focus:outline-none focus-visible:outline-none">
-            <div class="relative">
-                <img
-                    :src="data.hero.image"
-                    :alt="data.hero.title"
-                    class="h-80 w-full object-center object-cover rounded-xl sm:rounded-3xl cursor-pointer" />
-                <div class="absolute left-4 bottom-4 text-white">
-                    <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
-                        <div class="py-4 px-6">
-                            <div class="md:text-lg lg:text-2xl lg:font-semibold">
-                                {{ data.hero.title }}
+        <div v-else class="flex flex-col gap-5">
+            <router-link
+                v-for="item in data.hero"
+                :key="item.id"
+                :to="`${detailLink}/${item.id}`"
+                class="focus:outline-none focus-visible:outline-none">
+                <div class="relative">
+                    <img
+                        :src="item.image"
+                        :alt="item.title"
+                        class="aspect-video md:aspect-[16/6] w-full object-center object-cover rounded-xl sm:rounded-2xl cursor-pointer" />
+                    <div class="absolute inset-x-4 bottom-4 text-white">
+                        <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
+                            <div class="py-4 px-6">
+                                <div class="line-clamp-1 lg:text-lg">
+                                    {{ item.title }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </router-link>
+            </router-link>
+        </div>
     </section>
 </template>
 

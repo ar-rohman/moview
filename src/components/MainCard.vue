@@ -5,11 +5,11 @@
         :class="cardWidth">
         <img
             :src="image"
-            class="h-[224px] w-full rounded-3xl object-cover object-center"
+            class="aspect-[2/3] w-full rounded-3xl object-cover object-center"
             :alt="title" />
         <div class="absolute inset-x-0 bottom-0">
             <div
-                class="backdrop-blur-sm bg-black/30 rounded-3xl w-full text-white py-3 px-4 flex flex-col gap-2">
+                class="backdrop-blur-sm bg-black/30 rounded-3xl h-[88px] w-full text-white py-3 px-4 flex flex-col gap-2 justify-between">
                 <div class="line-clamp-2 font-semibold">{{ title }}</div>
                 <RatingCount :vote-average="voteAverage" :vote-count="voteCount" />
             </div>
@@ -51,7 +51,7 @@ export default {
         },
         cardWidth: {
             type: String,
-            default: 'w-[192px]',
+            default: 'w-[185px]',
         },
     },
 };

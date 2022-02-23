@@ -1,9 +1,15 @@
 <template>
-    <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
-        <div class="w-full md:w-2/3 flex flex-col gap-y-10">
+    <div class="flex flex-col md:flex-row gap-10 mb-10">
+        <div class="w-full md:w-7/12">
             <BaseCarousel :data="releaseMovie" pagination navigation />
-            <GenreListCarousel :data="movieGenre" />
+        </div>
+        <div class="w-full md:w-5/12">
             <HeroSection :data="releaseMovie" />
+        </div>
+    </div>
+    <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
+        <div class="w-full md:w-2/3 flex flex-col gap-y-12">
+            <GenreListCarousel :data="movieGenre" />
             <ListCarousel
                 title="Trending Movie"
                 :data="trendingMovie"
@@ -17,7 +23,7 @@
                 :data="upcomingMovie"
                 see-more-link="/movie/upcoming" />
         </div>
-        <div class="w-full md:w-1/3 flex flex-col gap-12">
+        <div class="w-full md:w-1/3 flex flex-col gap-10">
             <SidebarList
                 :data="popularMovie"
                 title="Popular Movies"
@@ -26,7 +32,6 @@
                 :data="topRatedMovie"
                 title="Top Rated Movies"
                 see-more-link="/movie/top-rated" />
-            <SidebarList :data="freeToWatch" title="Free To Watch" see-more-link="/movie/free" />
         </div>
     </div>
 </template>
@@ -35,7 +40,6 @@
 import MovieService from '@/services/movie-service';
 import { onMounted, reactive } from 'vue';
 import { useGenreStore } from '@/stores';
-import { useCountryCodeStore } from '@/stores/country';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
 import { heroResource } from '@/resources/hero-resource';
 import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
@@ -81,14 +85,7 @@ export default {
             isError: false,
             isMore: false,
         });
-        const freeToWatch = reactive({
-            result: {},
-            isLoading: true,
-            isError: false,
-            isMore: false,
-        });
         const genreStore = useGenreStore();
-        const countryCodeStore = useCountryCodeStore();
 
         const getReleaseMovie = async () => {
             let today = new Date();
@@ -105,7 +102,7 @@ export default {
                 const { results } = result.data;
                 const data = results.filter((item) => item.backdrop_path !== null);
                 releaseMovie.carousel = heroResource(data.slice(0, 5));
-                releaseMovie.hero = heroResource(data.slice(5, 6))[0];
+                releaseMovie.hero = heroResource(data.slice(5, 7));
                 releaseMovie.isLoading = false;
                 releaseMovie.isError = false;
             } catch (error) {
@@ -195,34 +192,12 @@ export default {
                     const genre = getGenreName(item.genre_ids.slice(0, 2));
                     return { ...item, genre_name: genre };
                 });
-                topRatedMovie.result = sidebarCardResource(data.slice(0, 3));
+                topRatedMovie.result = sidebarCardResource(data.slice(0, 4));
                 topRatedMovie.isLoading = false;
                 topRatedMovie.isError = false;
                 topRatedMovie.isMore = data.length > 3;
             } catch (error) {
                 topRatedMovie.isError = true;
-            }
-        };
-
-        const getFreeToWatch = async () => {
-            try {
-                const param = {
-                    include_adult: false,
-                    watch_region: await countryCodeStore.getCountryCode(),
-                    with_watch_monetization_types: 'free',
-                };
-                const result = await MovieService.getDiscover(param);
-                const { results } = result.data;
-                const data = results.map((item) => {
-                    const genre = getGenreName(item.genre_ids.slice(0, 2));
-                    return { ...item, genre_name: genre };
-                });
-                freeToWatch.result = sidebarCardResource(data.slice(0, 3));
-                freeToWatch.isLoading = false;
-                freeToWatch.isError = false;
-                freeToWatch.isMore = data.length > 3;
-            } catch (error) {
-                freeToWatch.isError = true;
             }
         };
 
@@ -233,7 +208,6 @@ export default {
         onMounted(getUpcomingMovie);
         onMounted(getPopularMovie);
         onMounted(getTopRatedMovie);
-        onMounted(getFreeToWatch);
 
         return {
             releaseMovie,
@@ -243,7 +217,6 @@ export default {
             upcomingMovie,
             popularMovie,
             topRatedMovie,
-            freeToWatch,
         };
     },
 };

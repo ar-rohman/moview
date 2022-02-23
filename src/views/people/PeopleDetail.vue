@@ -21,7 +21,7 @@
                         <img
                             :src="detail.result.image"
                             :alt="detail.result.name"
-                            class="xs:h-[256px] w-full rounded-none xs:rounded-2xl lg:rounded-3xl object-cover object-top" />
+                            class="xs:h-[256px] w-full rounded-none xs:rounded-xl lg:rounded-2xl object-cover object-top" />
                     </div>
                     <div class="flex flex-col gap-y-4 lg:w-1/2 sm:pr-4 lg:pr-10">
                         <div class="my-6 xs:mb-6 xs:mt-0">
@@ -112,7 +112,7 @@ export default {
             try {
                 const result = await PeopleService.getPopular();
                 const { data } = result;
-                popular.result = peopleListResource(data.results.slice(0, 5));
+                popular.result = peopleListResource(data.results.slice(0, 6));
                 popular.isLoading = false;
                 popular.isError = false;
             } catch (error) {

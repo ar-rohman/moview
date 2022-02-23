@@ -1,7 +1,8 @@
 <template>
     <div class="w-32 h-6 bg-gray-200 rounded-md mb-4 animate-pulse"></div>
-    <div class="flex lg:flex-col gap-4 flex-wrap animate-pulse">
-        <template v-for="item in 5" :key="item">
+    <div
+        class="grid place-items-start grid-cols-3 grid-flow-row zgrid-rows-2 sm:grid-cols-6 lg:grid-cols-1 gap-4 animate-pulse">
+        <template v-for="item in 6" :key="item">
             <div class="flex items-center flex-col lg:flex-row gap-3">
                 <div class="w-[45px] h-[45px] min-w-[45px] bg-gray-200 rounded-full"></div>
                 <div class="flex flex-col justify-between">

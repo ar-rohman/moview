@@ -21,7 +21,7 @@
     <div class="flex flex-col md:flex-row gap-10 lg:gap-20 my-10 animate-pulse">
         <div class="w-full md:w-2/3">
             <div class="flex gap-4">
-                <div class="h-[128px] w-[96px] min-w-[96px] rounded-3xl bg-gray-200"></div>
+                <div class="h-[138px] w-[92px] min-w-[92px] rounded-xl bg-gray-200"></div>
                 <div class="flex flex-col gap-4 w-full">
                     <div class="flex flex-col gap-y-2 w-full">
                         <div class="w-full sm:w-1/2 h-8 bg-gray-200 rounded-md"></div>
