@@ -45,6 +45,10 @@ export default {
             type: [Number, String],
             default: 5,
         },
+        displayBackgroundAfter: {
+            type: [Number, String],
+            default: 5,
+        },
         text: {
             type: String,
             default: null,
@@ -65,7 +69,7 @@ export default {
     setup(props) {
         const router = useRouter();
         const isShowSearch = ref(false);
-        const { displayTextAfter, text } = toRefs(props);
+        const { displayTextAfter, displayBackgroundAfter, text } = toRefs(props);
         const customClass = ref(null);
         const textToDisplay = ref();
 
@@ -74,7 +78,7 @@ export default {
         };
         const scrolling = () => {
             const htmlScroll = document.documentElement.scrollTop;
-            if (htmlScroll > 5) {
+            if (htmlScroll > displayBackgroundAfter.value) {
                 customClass.value = `bg-white border-b fixed top-0 max-w-screen-xl mx-auto w-full inset-x-0 px-4 sm:px-10`;
             } else {
                 customClass.value = 'bg-transparent';

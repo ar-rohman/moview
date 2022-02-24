@@ -37,4 +37,7 @@ export default {
     getGenre(param = null) {
         return API.apiClient('genre/movie/list', param);
     },
+    getVideo(id, param = null) {
+        return API.apiClient(`movie/${id}/videos`, param);
+    },
 };

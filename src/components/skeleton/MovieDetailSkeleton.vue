@@ -5,7 +5,7 @@
             <div class="bg-gradient-to-b from-white/20 to-white w-full h-full">
                 <div class="h-full flex flex-col justify-between p-4 sm:px-10">
                     <div class="flex justify-between">
-                        <BackToPervious styles="text-black" />
+                        <back-to-pervious styles="text-black"></back-to-pervious>
                         <div class="flex items-center mb-4">
                             <div class="h-10 w-10 bg-gray-200/70 rounded-full"></div>
                         </div>
