@@ -12,16 +12,16 @@
                 <div class="w-full flex justify-end">
                     <button
                         class="text-white/70 h-[40px] hover:text-white focus:outline-none focus:text-white"
-                        @click="close">
+                        @click="showVideo = false">
                         <BaseIcon name="close" size="h-8 w-8" />
                     </button>
                 </div>
 
                 <iframe
                     ref="iframe"
-                    :src="`https://www.youtube-nocookie.com/embed/${id}?autoplay=1`"
+                    :src="`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&version=3&enablejsapi=1`"
                     frameborder="0"
-                    allow="autoplay"
+                    allow="autoplay; encrypted-media"
                     allowfullscreen
                     class="w-full h-full"></iframe>
             </div>
@@ -30,32 +30,32 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { emitter } from '@/utils/emitter';
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside, useMagicKeys } from '@vueuse/core';
 import BaseIcon from '@/components/icon/BaseIcon.vue';
 
 export default {
     components: { BaseIcon },
     props: {
         id: {
-            type: String,
+            type: [String, null],
             required: true,
         },
     },
     setup() {
         const showVideo = ref(false);
         const iframe = ref(null);
+        const { escape } = useMagicKeys();
         emitter.on('show-trailer-video', () => (showVideo.value = true));
-        onClickOutside(iframe, () => close());
-        const close = () => {
-            showVideo.value = false;
-        };
+        onClickOutside(iframe, () => (showVideo.value = false));
+        watch(escape, (key) => {
+            if (key) showVideo.value = false;
+        });
 
         return {
             showVideo,
             iframe,
-            close,
         };
     },
 };

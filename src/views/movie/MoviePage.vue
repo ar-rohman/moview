@@ -40,6 +40,7 @@
 import MovieService from '@/services/movie-service';
 import { onMounted, reactive } from 'vue';
 import { useGenreStore } from '@/stores';
+import { emitter } from '@/utils/emitter';
 import { mainCardResource, sidebarCardResource } from '@/resources/card-resource';
 import { heroResource } from '@/resources/hero-resource';
 import BaseCarousel from '@/components/carousel/BaseCarousel.vue';
@@ -200,6 +201,19 @@ export default {
                 topRatedMovie.isError = true;
             }
         };
+
+        emitter.on('reload-hero-carousel', () => {
+            getReleaseMovie();
+        });
+        emitter.on('reload-list-carousel', () => {
+            if (trendingMovie.isError) getTrendingMovie();
+            if (nowPlaying.isError) getNowPlaying();
+            if (upcomingMovie.isError) getUpcomingMovie();
+        });
+        emitter.on('reload-sidebar-list', () => {
+            if (popularMovie.isError) getPopularMovie();
+            if (topRatedMovie.isError) getTopRatedMovie();
+        });
 
         onMounted(getReleaseMovie);
         onMounted(getMovieGenre);

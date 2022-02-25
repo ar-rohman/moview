@@ -197,7 +197,7 @@ export default {
         });
         const theCast = reactive({ result: {}, isLoading: true, isError: false });
         const review = reactive({ result: {}, isLoading: true, isError: false });
-        const video = reactive({ result: '', isLoading: true, isError: false });
+        const video = reactive({ result: null, isLoading: true, isError: false });
 
         const getMovieDetail = async () => {
             try {
@@ -277,6 +277,9 @@ export default {
                 video.isError = true;
             }
         };
+
+        emitter.on('reload-list-carousel', () => getSimilarMovie());
+        emitter.on('reload-sidebar-list', () => getRecomendation());
 
         const showVideo = () => {
             emitter.emit('show-trailer-video');

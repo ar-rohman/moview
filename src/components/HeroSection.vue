@@ -1,6 +1,6 @@
 <template>
     <section>
-        <HeroSectionSkeleton v-if="data.isLoading" />
+        <HeroSectionSkeleton v-if="data.isLoading" :error="data.isError" />
         <div v-else class="flex flex-col gap-5">
             <router-link
                 v-for="item in data.hero"
@@ -12,9 +12,9 @@
                         :src="item.image"
                         :alt="item.title"
                         class="aspect-video md:aspect-[16/6] w-full object-center object-cover rounded-xl sm:rounded-2xl cursor-pointer" />
-                    <div class="absolute inset-x-4 bottom-4 text-white">
+                    <div class="absolute inset-x-0 bottom-0 text-white">
                         <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-2xl w-full">
-                            <div class="py-4 px-6">
+                            <div class="py-2 px-4">
                                 <div class="line-clamp-1 lg:text-lg">
                                     {{ item.title }}
                                 </div>

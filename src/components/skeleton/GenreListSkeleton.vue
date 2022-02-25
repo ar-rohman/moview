@@ -4,6 +4,6 @@
         <button
             v-for="i in 10"
             :key="i"
-            class="w-24 h-11 rounded-2xl bg-gray-200 animate-pulse"></button>
+            class="w-24 min-w-[84px] h-11 rounded-2xl bg-gray-200 animate-pulse"></button>
     </div>
 </template>

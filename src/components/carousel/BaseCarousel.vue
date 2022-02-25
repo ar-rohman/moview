@@ -1,5 +1,5 @@
 <template>
-    <CarouselSkeleton v-if="data.isLoading" />
+    <CarouselSkeleton v-if="data.isLoading" :error="data.isError" />
     <div v-else class="flex justify-center relative" data-test="carousel">
         <div class="relative aspect-video w-full overflow-hidden rounded-xl sm:rounded-3xl">
             <carousel-pagination
