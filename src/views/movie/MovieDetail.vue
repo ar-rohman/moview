@@ -60,11 +60,7 @@
                             class="font-bold border-2 border-red-500 py-2 px-1.5 rounded-full text-red-500">
                             18+
                         </div>
-                        <button
-                            class="bg-red-500 rounded-xl p-3 flex shadow-md hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
-                            title="Add to watchlist">
-                            <BaseIcon name="bookmarkOutline" color="text-white" />
-                        </button>
+                        <ToggleWatchlist :data="movieDetail.result" />
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row gap-10 lg:gap-20">
@@ -157,6 +153,7 @@ import PeopleList from '@/components/PeopleList.vue';
 import BackToPervious from '@/components/header/BackToPervious.vue';
 import MovieDetailSkeleton from '@/components/skeleton/MovieDetailSkeleton.vue';
 import VideoTrailer from '@/components/VideoTrailer.vue';
+import ToggleWatchlist from '@/components/utility/ToggleWatchlist.vue';
 
 export default {
     components: {
@@ -169,6 +166,7 @@ export default {
         BaseIcon,
         MovieDetailSkeleton,
         VideoTrailer,
+        ToggleWatchlist,
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
