@@ -39,10 +39,11 @@ export default {
     setup() {
         const router = useRouter();
         const searchText = ref(null);
-        const mobileSearch = () => router.push({ name: 'Search' });
+        // const mobileSearch = () => router.push({ name: 'Search' });
         const searchFor = () => {
+            console.log(searchText.value);
             router.push({
-                name: 'Search',
+                name: 'search',
                 query: {
                     q: searchText.value,
                 },
@@ -51,7 +52,7 @@ export default {
         };
         return {
             searchText,
-            mobileSearch,
+            // mobileSearch,
             searchFor,
         };
     },

@@ -21,22 +21,22 @@ export default {
     setup(props, { emit }) {
         const router = useRouter();
         const searchText = ref(null);
-        const mobileSearch = () => {
-            emit('showSearchInput');
-        };
-        const searchFor = () => {
-            router.push({
-                name: 'Search',
-                query: {
-                    q: searchText.value,
-                },
-            });
-            searchText.value = null;
-        };
+        // const mobileSearch = () => {
+        //     emit('showSearchInput');
+        // };
+        // const searchFor = () => {
+        //     router.push({
+        //         name: 'search',
+        //         query: {
+        //             q: searchText.value,
+        //         },
+        //     });
+        //     searchText.value = null;
+        // };
         return {
             searchText,
-            mobileSearch,
-            searchFor,
+            // mobileSearch,
+            // searchFor,
         };
     },
 };
