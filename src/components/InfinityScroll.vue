@@ -1,4 +1,5 @@
 <template>
+    <!-- NOT USED ANYMORE -->
     <BackToPervious :text="pageTitle" tool-bar search-bar />
     <div class="font-semibold md:text-lg mb-3">{{ pageTitle }}</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">

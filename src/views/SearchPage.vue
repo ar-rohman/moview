@@ -1,36 +1,113 @@
 <template>
-    <InfinityScroll :page-title="`Result for ${query}`" :service-url="serviceUrl" :query="params" />
+    <BackToPervious :text="searchFor" tool-bar search-bar />
+    <div class="font-semibold md:text-lg mb-3">{{ searchFor }}</div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+        <template v-if="searchMovie.isLoading">
+            <MainCardSkeleton v-for="i in 20" :key="i" />
+        </template>
+        <template v-else>
+            <template v-for="item in searchMovie.result" :key="item.id">
+                <MainCard
+                    :id="item.id"
+                    :title="item.title"
+                    :vote-average="item.vote_average"
+                    :vote-count="item.vote_count"
+                    :image="item.image"
+                    card-width="w-full" />
+            </template>
+        </template>
+    </div>
+    <BackToTop />
 </template>
 
 <script>
-import { ref, provide, reactive, watch } from 'vue';
+import { onMounted, provide, reactive, ref, onUpdated, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import InfinityScroll from '@/components/InfinityScroll.vue';
+import { useInfiniteScroll } from '@vueuse/core';
+import { mainCardResource } from '@/resources/card-resource';
+import MainCard from '@/components/MainCard.vue';
+import BackToTop from '@/components/BackToTop.vue';
+import BackToPervious from '@/components/header/BackToPervious.vue';
+import SearchService from '@/services/search-service';
+import MainCardSkeleton from '@/components/skeleton/MainCardSkeleton.vue';
 
 export default {
-    components: { InfinityScroll },
+    components: {
+        MainCard,
+        BackToTop,
+        BackToPervious,
+        MainCardSkeleton,
+    },
     setup() {
         const route = useRoute();
-        const serviceUrl = ref('search/movie');
-        const query = ref();
+        const searchMovie = reactive({ result: [], isLoading: true, isError: false });
+        const page = ref();
+        const totalPage = ref();
+        const searchQuery = ref(route.query.q);
+        const searchFor = ref();
+        const infinite = ref(document);
         provide('detailLink', '/movie/detail');
-        query.value = route.query.q;
-        const params = reactive({
-            query: query.value,
-            include_adult: false,
-        });
 
-        // TODO
+        const getSearchMovie = async () => {
+            const query = {
+                query: searchQuery.value,
+                include_adult: false,
+                page: page.value,
+            };
+            try {
+                const result = await SearchService.searchMovie(query);
+                const { results } = result.data;
+                page.value = result.data.page;
+                totalPage.value = result.data.total_pages;
+                const data = mainCardResource(results);
+                searchMovie.result = [...searchMovie.result, ...data];
+                searchMovie.isLoading = false;
+                searchMovie.isError = false;
+                searchFor.value = results.length
+                    ? `Result for ${searchQuery.value}`
+                    : `No result found for ${searchQuery.value}. Try another keyword`;
+            } catch {
+                searchMovie.isError = true;
+            }
+        };
+
+        const isScreenLargerThanContent = () => {
+            const target = document.documentElement;
+            const largeScreen = target.scrollHeight - target.scrollTop === target.clientHeight;
+            if (largeScreen && page.value < totalPage.value) {
+                page.value += 1;
+                getSearchMovie();
+            }
+        };
+
+        useInfiniteScroll(
+            infinite,
+            () => {
+                if (page.value < totalPage.value) {
+                    page.value += 1;
+                    getSearchMovie();
+                }
+            },
+            { distance: 500 }
+        );
+
         watch(
             () => route.query.q,
             (newQuery) => {
                 if (newQuery) {
-                    query.value = newQuery;
+                    searchMovie.result = [];
+                    searchMovie.isLoading = true;
+                    searchMovie.isError = false;
+                    searchQuery.value = newQuery;
+                    page.value = 1;
+                    getSearchMovie();
                 }
             }
         );
 
-        return { query, serviceUrl, params };
+        onMounted(getSearchMovie);
+        onUpdated(isScreenLargerThanContent);
+        return { searchMovie, searchFor };
     },
 };
 </script>
