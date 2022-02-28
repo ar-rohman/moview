@@ -78,7 +78,7 @@ const routes = [
         path: '/search',
         name: 'search',
         component: () => import('@/views/SearchPage.vue'),
-        meta: { pageName: 'Search', isShowHeader: false },
+        meta: { pageName: 'Search', isShowHeader: true },
     },
     {
         path: '/people/detail/:id',
