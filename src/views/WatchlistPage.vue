@@ -24,7 +24,7 @@ import { onMounted, reactive } from 'vue';
 import idb from '@/storage/service';
 import defaults from '@/utils/defaults';
 import MainCard from '@/components/MainCard.vue';
-import BackToTop from '@/components/BackToTop.vue';
+import BackToTop from '@/components/utility/BackToTop.vue';
 import MainCardSkeleton from '@/components/skeleton/MainCardSkeleton.vue';
 
 export default {

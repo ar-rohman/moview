@@ -21,7 +21,7 @@ import { onMounted, onUnmounted, watch, reactive, ref, toRefs } from 'vue';
 import API from '@/services/api';
 import { mainCardResource } from '@/resources/card-resource';
 import MainCard from '@/components/MainCard.vue';
-import BackToTop from '@/components/BackToTop.vue';
+import BackToTop from '@/components/utility/BackToTop.vue';
 import BackToPervious from './header/BackToPervious.vue';
 
 export default {

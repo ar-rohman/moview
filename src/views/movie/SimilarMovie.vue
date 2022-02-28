@@ -26,7 +26,7 @@ import { useInfiniteScroll } from '@vueuse/core';
 import { useRoute } from 'vue-router';
 import { mainCardResource } from '@/resources/card-resource';
 import MainCard from '@/components/MainCard.vue';
-import BackToTop from '@/components/BackToTop.vue';
+import BackToTop from '@/components/utility/BackToTop.vue';
 import BackToPervious from '@/components/header/BackToPervious.vue';
 import MovieService from '@/services/movie-service';
 import MainCardSkeleton from '@/components/skeleton/MainCardSkeleton.vue';
