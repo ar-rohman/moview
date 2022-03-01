@@ -134,9 +134,10 @@
     </div>
 </template>
 <script>
-import { onMounted, onUnmounted, reactive, watch } from 'vue';
+import { onMounted, onUnmounted, reactive, watch, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { emitter } from '@/utils/emitter';
+import { useHead } from '@vueuse/head';
 import MovieService from '@/services/movie-service';
 import { useGenreStore } from '@/stores';
 import { movieDetailResource } from '@/resources/movie-detail-resource';
@@ -304,6 +305,30 @@ export default {
             }
             return genreName.join(', ');
         };
+
+        useHead({
+            title: computed(() => `${movieDetail.result.title} - ${import.meta.env.VITE_APP_NAME}`),
+            meta: [
+                {
+                    name: `description`,
+                    content: computed(() => movieDetail.result.overview),
+                },
+                {
+                    property: 'og:title',
+                    content: computed(
+                        () => `${movieDetail.result.title} - ${import.meta.env.VITE_APP_NAME}`
+                    ),
+                },
+                {
+                    property: 'og:description',
+                    content: computed(() => movieDetail.result.overview),
+                },
+                {
+                    property: 'og:image',
+                    content: computed(() => movieDetail.result.poster),
+                },
+            ],
+        });
 
         const shareMovie = () => {
             navigator.share({

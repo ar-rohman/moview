@@ -56,12 +56,6 @@ const routes = [
         component: () => import('@/views/movie/SimilarMovie.vue'),
         meta: { pageName: 'Similar Movies', isShowHeader: false },
     },
-    // {
-    //     path: '/movie/free',
-    //     name: 'free-movie',
-    //     component: () => import('@/views/movie/FreeMovie.vue'),
-    //     meta: { pageName: 'Free Movies', isShowHeader: false },
-    // },
     {
         path: '/movie/genre/:genre/:id',
         name: 'movie-genre',
@@ -106,11 +100,6 @@ const router = createRouter({
     scrollBehavior(to, from, savedPosition) {
         return savedPosition || { top: 0 };
     },
-});
-
-const defaultTitle = 'Moview';
-router.afterEach((to) => {
-    document.title = to.name ? `${to.meta.pageName} - ${defaultTitle}` : defaultTitle;
 });
 
 export default router;
