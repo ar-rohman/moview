@@ -43,6 +43,7 @@ export default {
         const searchQuery = ref(route.query.q);
         const searchFor = ref();
         const infinite = ref(document);
+        route.meta.pageName = `Result for ${route.query.q}`;
         provide('detailLink', '/movie/detail');
 
         const getSearchMovie = async () => {

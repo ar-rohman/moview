@@ -1,5 +1,4 @@
 <template>
-    <BackToPervious text="Similar Movies" tool-bar search-bar />
     <div class="font-semibold md:text-lg mb-3">Similar Movies</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         <template v-if="similarMovie.isLoading">
@@ -27,7 +26,6 @@ import { useRoute } from 'vue-router';
 import { mainCardResource } from '@/resources/card-resource';
 import MainCard from '@/components/MainCard.vue';
 import BackToTop from '@/components/utility/BackToTop.vue';
-import BackToPervious from '@/components/header/BackToPervious.vue';
 import MovieService from '@/services/movie-service';
 import MainCardSkeleton from '@/components/skeleton/MainCardSkeleton.vue';
 
@@ -35,7 +33,6 @@ export default {
     components: {
         MainCard,
         BackToTop,
-        BackToPervious,
         MainCardSkeleton,
     },
     setup() {

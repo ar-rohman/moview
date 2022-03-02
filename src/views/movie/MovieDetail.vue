@@ -9,32 +9,14 @@
         </div>
     </template>
     <div v-else class="flex flex-col gap-y-10 relative">
-        <div class="relative -mt-4 -mx-4 sm:-mx-10">
+        <div class="relative -mt-[75px] -mx-4 sm:-mx-10">
             <img
                 :src="movieDetail.result.backdrop"
                 :alt="movieDetail.result.title"
                 class="aspect-video w-full object-cover object-top" />
             <div class="absolute inset-0 -bottom-px">
-                <div class="bg-gradient-to-b from-white/20 via-white/90 to-white w-full h-full">
-                    <div class="h-full flex flex-col justify-between p-4 sm:px-10">
-                        <div class="flex justify-between">
-                            <div>
-                                <back-to-pervious
-                                    display-text-after="230"
-                                    display-background-after="100"
-                                    :text="movieDetail.result.title"
-                                    styles="text-black"></back-to-pervious>
-                            </div>
-                            <div class="flex items-center mb-4">
-                                <button
-                                    class="text-gray-800 bg-white/50 rounded-full p-2 block hover:bg-white/70 focus:bg-white"
-                                    @click="shareMovie">
-                                    <BaseIcon name="shareOutline" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div
+                    class="bg-gradient-to-b from-white/20 via-white/90 to-white w-full h-full"></div>
             </div>
         </div>
         <div class="absolute top-3/4 md:top-1/2 lg:top-1/4 w-full">
@@ -151,7 +133,6 @@ import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import PeopleList from '@/components/PeopleList.vue';
-import BackToPervious from '@/components/header/BackToPervious.vue';
 import MovieDetailSkeleton from '@/components/skeleton/MovieDetailSkeleton.vue';
 import VideoTrailer from '@/components/VideoTrailer.vue';
 import ToggleWatchlist from '@/components/utility/ToggleWatchlist.vue';
@@ -163,7 +144,6 @@ export default {
         UserReview,
         RatingCount,
         PeopleList,
-        BackToPervious,
         BaseIcon,
         MovieDetailSkeleton,
         VideoTrailer,
@@ -205,6 +185,7 @@ export default {
                 movieDetail.result = movieDetailResource(data);
                 movieDetail.isLoading = false;
                 movieDetail.isError = false;
+                route.meta.pageName = data.title;
             } catch (error) {
                 movieDetail.isError = true;
                 movieDetail.isLoading = false;
@@ -330,14 +311,6 @@ export default {
             ],
         });
 
-        const shareMovie = () => {
-            navigator.share({
-                title: 'MOVIEW',
-                text: `Look ${movieDetail.result.title} movie at MOVIEW`,
-                url: `${route.path}`,
-            });
-        };
-
         const fetchData = () => {
             getMovieDetail();
             getRecomendation();
@@ -376,7 +349,6 @@ export default {
             video,
             showVideo,
             gotoMovieGenre,
-            shareMovie,
         };
     },
 };

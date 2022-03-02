@@ -1,9 +1,9 @@
 <template>
     <div class="flex gap-x-6 items-center">
-        <button>
+        <button class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white">
             <BaseIcon name="sunOutline" />
         </button>
-        <button>
+        <button class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white">
             <BaseIcon name="languageOutline" />
         </button>
     </div>

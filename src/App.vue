@@ -1,8 +1,8 @@
 <template>
     <div
         class="font-sans text-gray-700 bg-white dark:bg-dark-900 dark:text-dark-200 min-h-screen max-w-screen-xl mx-auto">
-        <HeaderSection v-if="route.meta.isShowHeader" />
-        <main class="pb-20 sm:pb-4 mx-4 sm:mx-10" :class="[route.meta.isShowHeader ? 'pt-4' : '']">
+        <HeaderSection :nav="route.meta.isShowNav" />
+        <main class="pb-20 sm:pb-4 mx-4 sm:mx-10 pt-[75px]">
             <router-view />
         </main>
     </div>
@@ -62,7 +62,6 @@ export default {
                 },
             ],
         });
-        console.log(route);
         return { route };
     },
 };

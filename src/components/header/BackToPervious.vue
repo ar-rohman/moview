@@ -1,4 +1,5 @@
-<template>
+<!-- <template>
+    <div>NOT USED ANYMORE</div>
     <div class="flex justify-between h-[60px] z-10 mb-4" :class="[styles, customClass]">
         <template v-if="!isShowSearch">
             <div class="flex gap-x-4 items-center">
@@ -23,9 +24,9 @@
             </div>
         </template>
     </div>
-</template>
+</template> -->
 
-<script>
+<!-- <script>
 import { onMounted, onUnmounted, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import BaseIcon from '@/components/icon/BaseIcon.vue';
@@ -101,4 +102,4 @@ export default {
         };
     },
 };
-</script>
+</script> -->

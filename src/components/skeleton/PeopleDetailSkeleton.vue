@@ -1,11 +1,6 @@
 <template>
-    <div class="relative">
-        <div class="absolute top-0">
-            <BackToPervious />
-        </div>
-    </div>
     <div class="flex flex-col lg:flex-row gap-10 lg:gap-20">
-        <div class="flex flex-col gap-y-8 w-full lg:w-3/4 xs:mt-[60px]">
+        <div class="flex flex-col gap-y-8 w-full lg:w-3/4 -mt-[75px] xs:mt-0">
             <div class="flex flex-col xs:flex-row gap-x-4 w-ful">
                 <div class="min-w-[192px] -mx-4 xs:mx-0 animate-pulse">
                     <div
@@ -56,9 +51,8 @@
 
 <script>
 import PeopleListSkeleton from './PeopleListSkeleton.vue';
-import BackToPervious from '@/components/header/BackToPervious.vue';
 
 export default {
-    components: { PeopleListSkeleton, BackToPervious },
+    components: { PeopleListSkeleton },
 };
 </script>
