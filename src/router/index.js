@@ -22,7 +22,7 @@ const routes = [
         meta: {
             pageName: 'Movie Detail',
             isShowNav: false,
-            showBackgroundAfter: 160,
+            showBackgroundAfter: 130,
             showTextAfter: 280,
             showSearch: false,
             showShare: true,

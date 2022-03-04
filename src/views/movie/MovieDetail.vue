@@ -16,22 +16,22 @@
                 class="aspect-video w-full object-cover object-top" />
             <div class="absolute inset-0 -bottom-px">
                 <div
-                    class="bg-gradient-to-b from-white/20 via-white/90 to-white w-full h-full"></div>
+                    class="bg-gradient-to-b from-white/20 dark:from-slate-50/20 via-white/90 dark:via-slate-900/80 to-white dark:to-slate-900 w-full h-full"></div>
             </div>
         </div>
-        <div class="absolute top-3/4 md:top-1/2 lg:top-1/4 w-full">
+        <div class="absolute top-3/4 md:top-1/2 lg:top-1/4 w-full ztranslate-y-3/4 zbg-slate-900">
             <div class="flex flex-col gap-y-10 mb-10">
                 <div class="flex justify-between pb-4 items-center">
                     <div>
                         <RatingCount
-                            text-class="text-sm font-semibold text-gray-700"
+                            text-class="text-sm font-semibold text-gray-700 dark:text-slate-300"
                             :vote-average="movieDetail.result.vote_average"
                             :vote-count="movieDetail.result.vote_count" />
                     </div>
                     <div>
                         <button
                             v-if="!video.isLoading && !video.isError && video.result"
-                            class="-translate-x-1/2 border-2 border-red-500 text-red-500 rounded-xl py-2 px-6 flex shadow-md hover:border-transparent hover:bg-red-600 hover:text-white focus:bg-red-700 focus:outline-none focus:border-transparent focus-visible:ring-red-400 focus-visible:ring-2 focus:text-white"
+                            class="-translate-x-1/2 border-2 border-red-500 dark:border-red-400 text-red-500 dark:text-red-400 rounded-xl py-2 px-6 flex shadow-md dark:shadow-none hover:border-transparent dark:hover:border-transparent hover:bg-red-600 dark:hover:bg-red-400 hover:text-white dark:hover:text-slate-300 focus:bg-red-700 dark:focus:bg-red-300 focus:outline-none dark:focus:outline-none focus:border-transparent dark:focus:border-transparent focus-visible:ring-red-400 focus-visible:ring-2 focus:text-white"
                             @click="showVideo">
                             <BaseIcon name="play" />
                         </button>
@@ -39,7 +39,7 @@
                     <div class="flex gap-x-4 sm:gap-x-8 items-center">
                         <div
                             v-if="movieDetail.result.adult"
-                            class="font-bold border-2 border-red-500 py-2 px-1.5 rounded-full text-red-500">
+                            class="font-bold border-2 border-red-500 dark:border-red-400 py-2 px-1.5 rounded-full text-red-500 dark:text-red-400">
                             18+
                         </div>
                         <ToggleWatchlist :data="movieDetail.result" />
@@ -58,7 +58,7 @@
                                         {{ movieDetail.result.title }}
                                     </div>
                                     <div
-                                        class="flex gap-x-4 divide-x divide-gray-700 text-gray-500 text-sm font-semibold">
+                                        class="flex gap-x-4 divide-x divide-gray-500 dark:divide-slate-400 text-gray-500 dark:text-slate-400 text-sm font-semibold">
                                         <div class="flex gap-x-2 items-center">
                                             <BaseIcon name="calendarOutline" size="w-5 h-5" />
                                             {{ movieDetail.result.release }}
@@ -74,7 +74,7 @@
                                         v-for="item in movieDetail.result.genres"
                                         :key="item.id">
                                         <button
-                                            class="px-4 py-1 border border-gray-500 rounded-full text-sm font-semibold hover:border-red-500 select-none hover:text-red-500 focus:text-white focus:bg-red-500 focus:border-transparent focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+                                            class="px-4 py-1 border border-gray-500 dark:border-slate-50/40 rounded-full text-sm font-semibold hover:border-red-500 dark:hover:border-red-400 select-none hover:text-red-500 dark:hover:text-red-400 focus:text-white dark:focus:text-slate-300 focus:bg-red-500 dark:focus:bg-red-400 focus:border-transparent dark:focus:border-transparent focus:outline-none focus-visible:ring-red-400 dark:focus-visible:ring-red-300 focus-visible:ring-2"
                                             @click="gotoMovieGenre(item.name, item.id)">
                                             {{ item.name }}
                                         </button>

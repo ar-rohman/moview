@@ -1,6 +1,6 @@
 <template>
     <button
-        class="flex items-center justify-center text-red-500 transform transition motion-safe:hover:scale-110 duration-500 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2 focus-visible:rounded-lg"
+        class="flex items-center justify-center text-red-500 dark:text-red-400 transform transition motion-safe:hover:scale-110 duration-500 focus:outline-none focus-visible:ring-red-400 dark:focus-visible:ring-red-300 focus-visible:ring-2 focus-visible:rounded-lg"
         :class="{ 'flex-col': showText === 'vertical' }"
         @click="reload">
         <BaseIcon name="reload" :size="size" :class="animate" />

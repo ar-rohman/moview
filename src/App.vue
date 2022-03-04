@@ -1,6 +1,6 @@
 <template>
     <div
-        class="font-sans text-gray-700 bg-white dark:bg-dark-900 dark:text-dark-200 min-h-screen max-w-screen-xl mx-auto">
+        class="font-sans text-gray-700 bg-white dark:bg-slate-900 dark:text-slate-300 min-h-screen max-w-screen-xl mx-auto">
         <HeaderSection :nav="route.meta.isShowNav" />
         <main class="pb-20 sm:pb-4 mx-4 sm:mx-10 pt-[75px]">
             <router-view />

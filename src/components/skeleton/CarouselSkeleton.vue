@@ -9,7 +9,7 @@
                 @reload="reload" />
         </div>
         <div
-            class="aspect-video w-full rounded-xl sm:rounded-3xl bg-gray-200"
+            class="aspect-video w-full rounded-xl sm:rounded-3xl bg-gray-200 dark:bg-slate-600"
             :class="{ 'animate-pulse': !error }"></div>
     </div>
 </template>

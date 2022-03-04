@@ -46,6 +46,8 @@ export default {
         const pageTitle = ref();
         const title = route.params.genre.replace(/-/g, ' ');
         pageTitle.value = `${titleCase(title)} Movies`;
+        route.meta.pageName = pageTitle.value;
+
         provide('detailLink', '/movie/detail');
 
         const getMovieByGenre = async () => {

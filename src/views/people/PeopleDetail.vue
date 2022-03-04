@@ -23,21 +23,27 @@
                             <div class="font-semibold sm:font-bold text-3xl">
                                 {{ detail.result.name }}
                             </div>
-                            <div class="text-gray-500">
+                            <div class="text-gray-500 dark:text-slate-400">
                                 {{ detail.result.known_for_department }}
                             </div>
                         </div>
                         <div>
                             <div class="font-semibold mb-1">Birthday</div>
-                            <p>{{ detail.result.birthday }}</p>
+                            <p class="text-gray-500 dark:text-slate-400">
+                                {{ detail.result.birthday }}
+                            </p>
                         </div>
                         <div>
                             <div class="font-semibold mb-1">Deathday</div>
-                            <p>{{ detail.result.deathday }}</p>
+                            <p class="text-gray-500 dark:text-slate-400">
+                                {{ detail.result.deathday }}
+                            </p>
                         </div>
                         <div>
                             <div class="font-semibold mb-1">Place of birth</div>
-                            <p>{{ detail.result.place_of_birth }}</p>
+                            <p class="text-gray-500 dark:text-slate-400">
+                                {{ detail.result.place_of_birth }}
+                            </p>
                         </div>
                     </div>
                 </div>

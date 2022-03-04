@@ -5,8 +5,8 @@
             <ReloadButton @reload="reload" />
         </div>
         <div v-else class="flex justify-between mb-4">
-            <div class="h-5 w-1/4 rounded-md bg-gray-200"></div>
-            <div class="self-end h-4 w-20 rounded-md bg-gray-200"></div>
+            <div class="h-5 w-1/4 rounded-md bg-gray-200 dark:bg-slate-600"></div>
+            <div class="self-end h-4 w-20 rounded-md bg-gray-200 dark:bg-slate-600"></div>
         </div>
         <div class="flex overflow-hidden">
             <div class="flex gap-4 m-[3px]">

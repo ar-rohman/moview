@@ -1,7 +1,7 @@
 <template>
     <router-link
         :to="`${detailLink}/${data.id}`"
-        class="flex gap-2 rounded-md h-[112px] w-full bg-black/5 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-500">
+        class="flex gap-2 rounded-md h-[112px] w-full bg-black/5 dark:bg-slate-600/30 cursor-pointer focus:outline-none focus-visible:ring focus-visible:ring-red-400">
         <img
             :src="data.image"
             class="h-full aspect-[2/3] rounded-lg object-cover object-center"
@@ -11,7 +11,7 @@
                 <div class="line-clamp-2 font-semibold">
                     {{ data.title }}
                 </div>
-                <div class="text-gray-600">{{ data.genre_name }}</div>
+                <div class="text-gray-600 dark:text-slate-400">{{ data.genre_name }}</div>
             </div>
             <RatingCount
                 :vote-average="data.vote_average"

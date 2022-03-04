@@ -9,7 +9,7 @@
             class="flex justify-end w-full max-w-screen-xl fixed bottom-4"
             data-test="back-to-top">
             <button
-                class="flex justify-center items-center bg-red-500 rounded-full p-3 mx-8 shadow-md sm:mx-20 text-white hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+                class="flex justify-center items-center bg-red-500 dark:bg-red-400 rounded-full p-3 mx-8 shadow-md sm:mx-20 text-white hover:bg-red-600 dark:hover:bg-red-300 focus:bg-red-700 dark:focus:bg-red-300/80 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                 data-test="back-to-top-button"
                 @click="toTop">
                 <BaseIcon name="arrowUp" size="w-5 h-5" />
