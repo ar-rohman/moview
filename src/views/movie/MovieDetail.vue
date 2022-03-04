@@ -9,7 +9,7 @@
         </div>
     </template>
     <div v-else class="flex flex-col gap-y-10 relative">
-        <div class="relative -mt-[75px] -mx-4 sm:-mx-10">
+        <div class="relative -mt-[75px] -mx-4 sm:-mx-10 -mb-[40%]">
             <img
                 :src="movieDetail.result.backdrop"
                 :alt="movieDetail.result.title"
@@ -19,7 +19,7 @@
                     class="bg-gradient-to-b from-white/20 dark:from-slate-50/20 via-white/90 dark:via-slate-900/80 to-white dark:to-slate-900 w-full h-full"></div>
             </div>
         </div>
-        <div class="absolute top-3/4 md:top-1/2 lg:top-1/4 w-full ztranslate-y-3/4 zbg-slate-900">
+        <div class="w-full z-10">
             <div class="flex flex-col gap-y-10 mb-10">
                 <div class="flex justify-between pb-4 items-center">
                     <div>

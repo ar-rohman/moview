@@ -32,10 +32,10 @@
             </div>
             <div class="flex flex-col lg:flex-row gap-10 mt-6">
                 <div class="w-full lg:w-2/3">
-                    <div class="h-6 w-32 rounded-md bg-gray-200 mb-2"></div>
-                    <div class="h-5 w-full rounded-md bg-gray-200 mb-1"></div>
-                    <div class="h-5 w-full rounded-md bg-gray-200 mb-1"></div>
-                    <div class="h-5 w-full rounded-md bg-gray-200 mb-1"></div>
+                    <div class="h-6 w-32 rounded-md bg-gray-200 dark:bg-slate-600 mb-2"></div>
+                    <div class="h-5 w-full rounded-md bg-gray-200 dark:bg-slate-600 mb-1"></div>
+                    <div class="h-5 w-full rounded-md bg-gray-200 dark:bg-slate-600 mb-1"></div>
+                    <div class="h-5 w-full rounded-md bg-gray-200 dark:bg-slate-600 mb-1"></div>
                     <div class="mt-10">
                         <UserReviewSkeleton />
                     </div>

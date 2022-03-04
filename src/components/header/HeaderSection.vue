@@ -1,6 +1,6 @@
 <template>
     <header
-        class="w-full fixed top-0 flex justify-between gap-x-4 md:gap-x-10 items-center h-[60px] px-4 sm:px-10 z-30"
+        class="w-full fixed top-0 flex justify-between gap-x-4 md:gap-x-10 items-center h-[60px] px-4 sm:px-10 max-w-screen-xl mx-auto z-30"
         :class="[
             { 'bg-white dark:bg-slate-900': route.meta.isShowNav },
             scrollY > route.meta.showBackgroundAfter

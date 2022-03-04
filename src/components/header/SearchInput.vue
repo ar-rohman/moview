@@ -11,6 +11,7 @@
                 placeholder="Search for anything..."
                 type="text"
                 name="search"
+                autocomplete="off"
                 :autofocus="autofocus"
                 @keydown.enter="searchFor" />
             <span

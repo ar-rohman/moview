@@ -16,7 +16,7 @@
             <RatingCount
                 :vote-average="data.vote_average"
                 icon-class="w-4 h-4 lg:h-5 lg:w-5 text-yellow-400"
-                text-class="text-sm text-gray-500" />
+                text-class="text-sm text-gray-500 dark:text-slate-300" />
         </div>
     </router-link>
 </template>
