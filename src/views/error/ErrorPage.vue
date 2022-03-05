@@ -1,3 +1,10 @@
 <template>
-    <h1>Error</h1>
+    <ErrorCard />
 </template>
+
+<script>
+import ErrorCard from '@/components/ErrorCard.vue';
+export default {
+    components: { ErrorCard },
+};
+</script>

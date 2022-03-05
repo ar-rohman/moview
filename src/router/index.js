@@ -197,6 +197,19 @@ const routes = [
             showShare: false,
         },
     },
+    {
+        path: '/:catchAll(.*)',
+        name: 'not-found',
+        component: () => import('@/views/error/ErrorPage.vue'),
+        meta: {
+            pageName: '404 Not Found',
+            isShowNav: false,
+            showBackgroundAfter: null,
+            showTextAfter: null,
+            showSearch: false,
+            showShare: false,
+        },
+    },
 ];
 
 const router = createRouter({

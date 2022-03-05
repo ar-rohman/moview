@@ -1,13 +1,9 @@
 <template>
     <MovieDetailSkeleton v-if="movieDetail.isLoading" />
-    <template v-else-if="movieDetail.isError">
-        <!-- TODO -->
-        <div class="text-center">
-            <h1 class="text-2xl font-semibold">ERROR</h1>
-            <p>{{ movieDetail.errorCode }}</p>
-            <p>{{ movieDetail.errorMessage }}</p>
-        </div>
-    </template>
+    <ErrorCard
+        v-else-if="movieDetail.isError"
+        :code="movieDetail.errorCode"
+        :message="movieDetail.errorMessage" />
     <div v-else class="flex flex-col gap-y-10 relative">
         <div class="relative -mt-[75px] -mx-4 sm:-mx-10 -mb-[40%]">
             <img
@@ -136,6 +132,7 @@ import PeopleList from '@/components/PeopleList.vue';
 import MovieDetailSkeleton from '@/components/skeleton/MovieDetailSkeleton.vue';
 import VideoTrailer from '@/components/VideoTrailer.vue';
 import ToggleWatchlist from '@/components/utility/ToggleWatchlist.vue';
+import ErrorCard from '@/components/ErrorCard.vue';
 
 export default {
     components: {
@@ -148,6 +145,7 @@ export default {
         MovieDetailSkeleton,
         VideoTrailer,
         ToggleWatchlist,
+        ErrorCard,
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
@@ -288,7 +286,12 @@ export default {
         };
 
         useHead({
-            title: computed(() => `${movieDetail.result.title} - ${import.meta.env.VITE_APP_NAME}`),
+            title: computed(
+                () =>
+                    `${movieDetail.result.title || 'Movie Detail'} - ${
+                        import.meta.env.VITE_APP_NAME
+                    }`
+            ),
             meta: [
                 {
                     name: `description`,
