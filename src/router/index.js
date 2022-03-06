@@ -198,7 +198,8 @@ const routes = [
         },
     },
     {
-        path: '/:catchAll(.*)',
+        // path: '/:catchAll(.*)',
+        path: '/:pathMatch(.*)*',
         name: 'not-found',
         component: () => import('@/views/error/ErrorPage.vue'),
         meta: {
