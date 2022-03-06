@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="w-full z-10">
-            <div class="flex flex-col gap-y-10 mb-10">
+            <div class="flex flex-col gap-y-10">
                 <div class="flex justify-between pb-4 items-center">
                     <div>
                         <RatingCount

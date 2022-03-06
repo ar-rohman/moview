@@ -16,7 +16,7 @@
                 <div class="items-center my-8">
                     <router-link
                         to="/"
-                        class="px-6 py-2 rounded-lg bg-red-500 dark:bg-red-400 hover:bg-red-600 dark:hover:bg-red-500/80 focus:bg-red-700 dark:focus:bg-red-600/80 focus-visible:ring-red-400 focus:outline-none focus-visible:ring-2 text-white">
+                        class="px-6 py-2 rounded-lg bg-red-500 dark:bg-red-400 hover:bg-red-600 dark:hover:bg-red-400/80 focus:bg-red-700 dark:focus:bg-red-500/80 focus-visible:ring-red-400 focus:outline-none focus-visible:ring-2 text-white">
                         Back to home
                     </router-link>
                 </div>
