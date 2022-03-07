@@ -34,10 +34,6 @@
                 <SearchBar v-if="route.meta.showSearch" @show-search-input="tiggerShowSearch" />
                 <ThemeSwitcher />
                 <button
-                    class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white dark:bg-slate-900/30 dark:hover:bg-slate-900/50 dark:focus:bg-slate-900/70">
-                    <BaseIcon name="languageOutline" />
-                </button>
-                <button
                     v-if="route.meta.showShare"
                     class="bg-white/50 rounded-full p-2 block hover:bg-white/70 focus:bg-white dark:bg-slate-900/30 dark:hover:bg-slate-900/50 dark:focus:bg-slate-900/70"
                     @click="shareMovie">
@@ -82,7 +78,6 @@ export default {
         const route = useRoute();
         const router = useRouter();
         const isShowSearch = ref(false);
-        const theme = ref('system');
         const appName = ref(import.meta.env.VITE_APP_NAME);
         const element = ref(document);
         const { y: scrollY } = useScroll(element);
@@ -105,7 +100,6 @@ export default {
             router,
             scrollY,
             appName,
-            theme,
         };
     },
 };

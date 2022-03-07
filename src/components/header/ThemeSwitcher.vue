@@ -2,7 +2,8 @@
     <button
         class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white dark:bg-slate-900/30 dark:hover:bg-slate-900/50 dark:focus:bg-slate-900/70"
         @click="showDropdown = !showDropdown">
-        <BaseIcon name="sunOutline" />
+        <BaseIcon v-if="isDark" name="moonOutline" />
+        <BaseIcon v-else name="sunOutline" />
     </button>
     <ul
         v-if="showDropdown"
@@ -38,7 +39,6 @@
 <script>
 import { onMounted, ref } from 'vue';
 import { useDark, usePreferredDark, useStorage, onClickOutside } from '@vueuse/core';
-
 import BaseIcon from '@/components/icon/BaseIcon.vue';
 
 export default {
@@ -69,9 +69,7 @@ export default {
         };
 
         onClickOutside(dropdownElement, () => (showDropdown.value = false));
-
         onMounted(loadTheme);
-
         return { isDark, setTheme, showDropdown, dropdownElement, storageTheme };
     },
 };
