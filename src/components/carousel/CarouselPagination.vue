@@ -6,7 +6,7 @@
         <button
             v-for="(item, index) in total"
             :key="index"
-            class="w-2 h-2 bg-white m-1 rounded-full cursor-pointer hover:bg-red-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            class="w-2 h-2 bg-white m-1 rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2 dark:bg-slate-900"
             :class="[currentIndex === index ? 'opacity-100' : 'opacity-50']"
             @click="$emit('switch', index)"></button>
     </div>

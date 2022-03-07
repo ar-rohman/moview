@@ -7,7 +7,7 @@
                 <router-link
                     v-if="data.isMore"
                     :to="seeMoreLink"
-                    class="self-end text-red-400 hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline">
+                    class="self-end text-red-400 hover:text-red-600 dark:hover:text-red-300 focus:text-red-600 dark:focus:text-red-300 focus-visible:outline-none focus-visible:underline">
                     See more
                 </router-link>
             </div>

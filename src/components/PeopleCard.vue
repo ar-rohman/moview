@@ -1,7 +1,7 @@
 <template>
     <router-link
         :to="`/people/detail/${id}`"
-        class="flex items-center flex-col lg:flex-row gap-3 focus:outline-none focus-visible:ring focus-visible:ring-red-500">
+        class="flex items-center flex-col lg:flex-row gap-3 focus:outline-none focus-visible:ring focus-visible:ring-red-400">
         <img
             :src="image"
             class="rounded-full object-cover object-center"
@@ -13,7 +13,7 @@
                 <div class="font-semibold">
                     {{ personName }}
                 </div>
-                <div class="text-gray-600">{{ knownFor }}</div>
+                <div class="text-gray-600 dark:text-slate-400">{{ knownFor }}</div>
             </div>
         </div>
     </router-link>

@@ -1,9 +1,11 @@
 <template>
-    <div class="">
-        <div class="hidden lg:block">
+    <div>
+        <div class="ml-2 hidden lg:block">
             <SearchInput />
         </div>
-        <button class="lg:hidden flex items-center" @click="$emit('showSearchInput')">
+        <button
+            class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white lg:hidden flex items-center dark:bg-slate-900/60 dark:hover:bg-slate-900/80 dark:focus:bg-slate-900"
+            @click="$emit('showSearchInput')">
             <BaseIcon name="searchOutline" />
         </button>
     </div>

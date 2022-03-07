@@ -1,5 +1,4 @@
 <template>
-    <BackToPervious :text="pageTitle" tool-bar search-bar />
     <div class="font-semibold md:text-lg mb-3">{{ pageTitle }}</div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         <template v-if="movieByGenre.isLoading">
@@ -28,7 +27,6 @@ import { mainCardResource } from '@/resources/card-resource';
 import { titleCase } from '@/utils/string';
 import MainCard from '@/components/MainCard.vue';
 import BackToTop from '@/components/utility/BackToTop.vue';
-import BackToPervious from '@/components/header/BackToPervious.vue';
 import MovieService from '@/services/movie-service';
 import MainCardSkeleton from '@/components/skeleton/MainCardSkeleton.vue';
 
@@ -36,7 +34,6 @@ export default {
     components: {
         MainCard,
         BackToTop,
-        BackToPervious,
         MainCardSkeleton,
     },
     setup() {
@@ -49,6 +46,8 @@ export default {
         const pageTitle = ref();
         const title = route.params.genre.replace(/-/g, ' ');
         pageTitle.value = `${titleCase(title)} Movies`;
+        route.meta.pageName = pageTitle.value;
+
         provide('detailLink', '/movie/detail');
 
         const getMovieByGenre = async () => {

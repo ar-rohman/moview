@@ -15,7 +15,7 @@
             @touchend="$emit('out')"
             @click="goTo">
             <img :src="slide" class="aspect-video w-full object-top object-cover" />
-            <div class="absolute inset-0 text-white flex items-end">
+            <div class="absolute inset-0 text-white flex items-end dark:text-slate-300">
                 <div class="backdrop-blur-sm bg-black/30 rounded-xl sm:rounded-3xl w-full">
                     <div class="py-4 px-8 lg:px-10 lg:py-8">
                         <div class="md:text-lg lg:text-2xl lg:font-semibold">

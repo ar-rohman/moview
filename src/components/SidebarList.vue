@@ -12,13 +12,13 @@
                 <router-link
                     v-if="data.isMore"
                     :to="seeMoreLink"
-                    class="block text-center bg-red-500 rounded-xl text-white px-6 py-2 w-full hover:bg-red-600 focus:bg-red-700 focus:outline-none focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2">
+                    class="block text-center bg-red-500 dark:bg-red-400 rounded-xl text-white px-6 py-2 w-full hover:bg-red-600 dark:hover:bg-red-300 focus:bg-red-700 dark:focus:bg-red-200 focus:outline-none focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2">
                     See more
                 </router-link>
             </div>
         </template>
         <template v-else>
-            <p class="text-gray-500">There is no {{ title.toLowerCase() }}</p>
+            <p class="text-gray-500 dark:text-slate-400">There is no {{ title.toLowerCase() }}</p>
         </template>
     </section>
 </template>

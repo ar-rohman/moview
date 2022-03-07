@@ -9,13 +9,8 @@
         </div>
     </template>
     <template v-else>
-        <div class="relative">
-            <div class="absolute top-0">
-                <BackToPervious :text="detail.result.name" />
-            </div>
-        </div>
         <div class="flex flex-col lg:flex-row gap-10 lg:gap-20">
-            <div class="flex flex-col gap-y-8 w-full lg:w-3/4 xs:mt-[60px]">
+            <div class="flex flex-col gap-y-8 w-full lg:w-3/4 -mt-[75px] xs:mt-0">
                 <div class="flex flex-col xs:flex-row gap-x-4 w-ful">
                     <div class="min-w-[192px] -mx-4 xs:mx-0">
                         <img
@@ -28,21 +23,27 @@
                             <div class="font-semibold sm:font-bold text-3xl">
                                 {{ detail.result.name }}
                             </div>
-                            <div class="text-gray-500">
+                            <div class="text-gray-500 dark:text-slate-400">
                                 {{ detail.result.known_for_department }}
                             </div>
                         </div>
                         <div>
                             <div class="font-semibold mb-1">Birthday</div>
-                            <p>{{ detail.result.birthday }}</p>
+                            <p class="text-gray-500 dark:text-slate-400">
+                                {{ detail.result.birthday }}
+                            </p>
                         </div>
                         <div>
                             <div class="font-semibold mb-1">Deathday</div>
-                            <p>{{ detail.result.deathday }}</p>
+                            <p class="text-gray-500 dark:text-slate-400">
+                                {{ detail.result.deathday }}
+                            </p>
                         </div>
                         <div>
                             <div class="font-semibold mb-1">Place of birth</div>
-                            <p>{{ detail.result.place_of_birth }}</p>
+                            <p class="text-gray-500 dark:text-slate-400">
+                                {{ detail.result.place_of_birth }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -74,13 +75,12 @@ import { onMounted, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import PeopleService from '@/services/people-service';
 import { peopleDetailResource, peopleListResource } from '@/resources/people-resource';
-import BackToPervious from '@/components/header/BackToPervious.vue';
 import ShowMore from '@/components/ShowMore.vue';
 import PeopleList from '@/components/PeopleList.vue';
 import PeopleDetailSkeleton from '@/components/skeleton/PeopleDetailSkeleton.vue';
 
 export default {
-    components: { BackToPervious, ShowMore, PeopleList, PeopleDetailSkeleton },
+    components: { ShowMore, PeopleList, PeopleDetailSkeleton },
     setup() {
         const route = useRoute();
         const detail = reactive({
@@ -100,6 +100,7 @@ export default {
                 detail.result = peopleDetailResource(data);
                 detail.isLoading = false;
                 detail.isError = false;
+                route.meta.pageName = data.name;
             } catch (error) {
                 detail.isLoading = false;
                 detail.isError = true;

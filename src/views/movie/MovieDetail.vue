@@ -1,55 +1,33 @@
 <template>
     <MovieDetailSkeleton v-if="movieDetail.isLoading" />
-    <template v-else-if="movieDetail.isError">
-        <!-- TODO -->
-        <div class="text-center">
-            <h1 class="text-2xl font-semibold">ERROR</h1>
-            <p>{{ movieDetail.errorCode }}</p>
-            <p>{{ movieDetail.errorMessage }}</p>
-        </div>
-    </template>
+    <ErrorCard
+        v-else-if="movieDetail.isError"
+        :code="movieDetail.errorCode"
+        :message="movieDetail.errorMessage" />
     <div v-else class="flex flex-col gap-y-10 relative">
-        <div class="relative -mt-4 -mx-4 sm:-mx-10">
+        <div class="relative -mt-[75px] -mx-4 sm:-mx-10 -mb-[40%]">
             <img
                 :src="movieDetail.result.backdrop"
                 :alt="movieDetail.result.title"
                 class="aspect-video w-full object-cover object-top" />
             <div class="absolute inset-0 -bottom-px">
-                <div class="bg-gradient-to-b from-white/20 via-white/90 to-white w-full h-full">
-                    <div class="h-full flex flex-col justify-between p-4 sm:px-10">
-                        <div class="flex justify-between">
-                            <div>
-                                <back-to-pervious
-                                    display-text-after="230"
-                                    display-background-after="100"
-                                    :text="movieDetail.result.title"
-                                    styles="text-black"></back-to-pervious>
-                            </div>
-                            <div class="flex items-center mb-4">
-                                <button
-                                    class="text-gray-800 bg-white/50 rounded-full p-2 block hover:bg-white/70 focus:bg-white"
-                                    @click="shareMovie">
-                                    <BaseIcon name="shareOutline" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div
+                    class="bg-gradient-to-b from-white/20 dark:from-slate-50/20 via-white/90 dark:via-slate-900/80 to-white dark:to-slate-900 w-full h-full"></div>
             </div>
         </div>
-        <div class="absolute top-3/4 md:top-1/2 lg:top-1/4 w-full">
-            <div class="flex flex-col gap-y-10 mb-10">
+        <div class="w-full z-10">
+            <div class="flex flex-col gap-y-10">
                 <div class="flex justify-between pb-4 items-center">
                     <div>
                         <RatingCount
-                            text-class="text-sm font-semibold text-gray-700"
+                            text-class="text-sm font-semibold text-gray-700 dark:text-slate-300"
                             :vote-average="movieDetail.result.vote_average"
                             :vote-count="movieDetail.result.vote_count" />
                     </div>
                     <div>
                         <button
                             v-if="!video.isLoading && !video.isError && video.result"
-                            class="-translate-x-1/2 border-2 border-red-500 text-red-500 rounded-xl py-2 px-6 flex shadow-md hover:border-transparent hover:bg-red-600 hover:text-white focus:bg-red-700 focus:outline-none focus:border-transparent focus-visible:ring-red-400 focus-visible:ring-2 focus:text-white"
+                            class="-translate-x-1/2 border-2 border-red-500 dark:border-red-400 text-red-500 dark:text-red-400 rounded-xl py-2 px-6 flex shadow-md dark:shadow-none hover:border-transparent dark:hover:border-transparent hover:bg-red-600 dark:hover:bg-red-400 hover:text-white dark:hover:text-slate-300 focus:bg-red-700 dark:focus:bg-red-300 focus:outline-none dark:focus:outline-none focus:border-transparent dark:focus:border-transparent focus-visible:ring-red-400 focus-visible:ring-2 focus:text-white"
                             @click="showVideo">
                             <BaseIcon name="play" />
                         </button>
@@ -57,7 +35,7 @@
                     <div class="flex gap-x-4 sm:gap-x-8 items-center">
                         <div
                             v-if="movieDetail.result.adult"
-                            class="font-bold border-2 border-red-500 py-2 px-1.5 rounded-full text-red-500">
+                            class="font-bold border-2 border-red-500 dark:border-red-400 py-2 px-1.5 rounded-full text-red-500 dark:text-red-400">
                             18+
                         </div>
                         <ToggleWatchlist :data="movieDetail.result" />
@@ -76,7 +54,7 @@
                                         {{ movieDetail.result.title }}
                                     </div>
                                     <div
-                                        class="flex gap-x-4 divide-x divide-gray-700 text-gray-500 text-sm font-semibold">
+                                        class="flex gap-x-4 divide-x divide-gray-500 dark:divide-slate-400 text-gray-500 dark:text-slate-400 text-sm font-semibold">
                                         <div class="flex gap-x-2 items-center">
                                             <BaseIcon name="calendarOutline" size="w-5 h-5" />
                                             {{ movieDetail.result.release }}
@@ -92,7 +70,7 @@
                                         v-for="item in movieDetail.result.genres"
                                         :key="item.id">
                                         <button
-                                            class="px-4 py-1 border border-gray-500 rounded-full text-sm font-semibold hover:border-red-500 select-none hover:text-red-500 focus:text-white focus:bg-red-500 focus:border-transparent focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+                                            class="px-4 py-1 border border-gray-500 dark:border-slate-50/40 rounded-full text-sm font-semibold hover:border-red-500 dark:hover:border-red-400 select-none hover:text-red-500 dark:hover:text-red-400 focus:text-white dark:focus:text-slate-300 focus:bg-red-500 dark:focus:bg-red-400 focus:border-transparent dark:focus:border-transparent focus:outline-none focus-visible:ring-red-400 dark:focus-visible:ring-red-300 focus-visible:ring-2"
                                             @click="gotoMovieGenre(item.name, item.id)">
                                             {{ item.name }}
                                         </button>
@@ -134,9 +112,10 @@
     </div>
 </template>
 <script>
-import { onMounted, onUnmounted, reactive, watch } from 'vue';
+import { onMounted, onUnmounted, reactive, watch, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { emitter } from '@/utils/emitter';
+import { useHead } from '@vueuse/head';
 import MovieService from '@/services/movie-service';
 import { useGenreStore } from '@/stores';
 import { movieDetailResource } from '@/resources/movie-detail-resource';
@@ -150,10 +129,10 @@ import UserReview from '@/components/UserReview.vue';
 import RatingCount from '@/components/RatingCount.vue';
 import SidebarList from '@/components/SidebarList.vue';
 import PeopleList from '@/components/PeopleList.vue';
-import BackToPervious from '@/components/header/BackToPervious.vue';
 import MovieDetailSkeleton from '@/components/skeleton/MovieDetailSkeleton.vue';
 import VideoTrailer from '@/components/VideoTrailer.vue';
 import ToggleWatchlist from '@/components/utility/ToggleWatchlist.vue';
+import ErrorCard from '@/components/ErrorCard.vue';
 
 export default {
     components: {
@@ -162,11 +141,11 @@ export default {
         UserReview,
         RatingCount,
         PeopleList,
-        BackToPervious,
         BaseIcon,
         MovieDetailSkeleton,
         VideoTrailer,
         ToggleWatchlist,
+        ErrorCard,
     },
     provide: { detailLink: '/movie/detail' },
     setup() {
@@ -204,6 +183,7 @@ export default {
                 movieDetail.result = movieDetailResource(data);
                 movieDetail.isLoading = false;
                 movieDetail.isError = false;
+                route.meta.pageName = data.title;
             } catch (error) {
                 movieDetail.isError = true;
                 movieDetail.isLoading = false;
@@ -305,13 +285,34 @@ export default {
             return genreName.join(', ');
         };
 
-        const shareMovie = () => {
-            navigator.share({
-                title: 'MOVIEW',
-                text: `Look ${movieDetail.result.title} movie at MOVIEW`,
-                url: `${route.path}`,
-            });
-        };
+        useHead({
+            title: computed(
+                () =>
+                    `${movieDetail.result.title || 'Movie Detail'} - ${
+                        import.meta.env.VITE_APP_NAME
+                    }`
+            ),
+            meta: [
+                {
+                    name: `description`,
+                    content: computed(() => movieDetail.result.overview),
+                },
+                {
+                    property: 'og:title',
+                    content: computed(
+                        () => `${movieDetail.result.title} - ${import.meta.env.VITE_APP_NAME}`
+                    ),
+                },
+                {
+                    property: 'og:description',
+                    content: computed(() => movieDetail.result.overview),
+                },
+                {
+                    property: 'og:image',
+                    content: computed(() => movieDetail.result.poster),
+                },
+            ],
+        });
 
         const fetchData = () => {
             getMovieDetail();
@@ -351,7 +352,6 @@ export default {
             video,
             showVideo,
             gotoMovieGenre,
-            shareMovie,
         };
     },
 };

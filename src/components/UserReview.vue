@@ -25,18 +25,21 @@
                                     <BaseIcon
                                         name="starHalf"
                                         size="h-4 w-4"
-                                        :color="['text-yellow-400', 'text-slate-300']" />
+                                        :color="[
+                                            'text-yellow-400',
+                                            'text-slate-300 dark:text-slate-400',
+                                        ]" />
                                 </template>
                                 <template v-if="item.star.zero_star">
                                     <div v-for="i in item.star.zero_star" :key="i">
                                         <BaseIcon
                                             name="star"
                                             size="h-4 w-4"
-                                            color="text-slate-300" />
+                                            color="text-slate-300 dark:text-slate-400" />
                                     </div>
                                 </template>
                             </div>
-                            <div class="text-sm text-gray-500">
+                            <div class="text-sm text-gray-500 dark:text-slate-400">
                                 {{ item.created_at }}
                             </div>
                         </div>
@@ -45,11 +48,11 @@
                 <ShowMore
                     :text="item.content.replace(/(?:\\[rn]|[\r\n]+)+/g, '<br />')"
                     length="150"
-                    text-class="mt-2 text-gray-500 text-sm" />
+                    text-class="mt-2 text-gray-500 dark:text-slate-400 text-sm" />
             </div>
             <button
                 v-if="data.result.length > 1"
-                class="text-left text-sm text-red-400 font-semibold hover:text-red-600 focus:text-red-600 focus-visible:outline-none focus-visible:underline"
+                class="text-left text-sm text-red-400 dark:text-red-400 font-semibold hover:text-red-600 dark:hover:text-red-300 focus:text-red-600 dark:focus:text-red-300 focus-visible:outline-none focus-visible:underline"
                 @click="showReview">
                 {{ showReviewText }}
             </button>

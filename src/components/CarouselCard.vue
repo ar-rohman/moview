@@ -3,7 +3,7 @@
         <button
             v-if="!arrivedLeft && !isTouchScreen()"
             data-test="carousel-card-button-left"
-            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer z-20 absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            class="border shadow-md bg-white p-2 rounded-full dark:bg-slate-900 dark:border-slate-50/20 dark:shadow-none cursor-pointer z-20 absolute top-1/2 -left-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
             @click="scrollTo('left')">
             <BaseIcon name="chevronLeft" />
         </button>
@@ -15,7 +15,7 @@
         <button
             v-if="!arrivedRight && !noOffset && !isTouchScreen()"
             data-test="carousel-card-button-right"
-            class="border shadow-md bg-white p-2 rounded-full text-gray-700 cursor-pointer absolute top-1/2 -right-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
+            class="border shadow-md bg-white p-2 rounded-full dark:bg-slate-900 dark:border-slate-50/20 dark:shadow-none cursor-pointer absolute top-1/2 -right-5 -translate-y-1/2 transform transition motion-safe:hover:scale-110 duration-500 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
             @click="scrollTo('right')">
             <BaseIcon name="chevronRight" />
         </button>
