@@ -52,7 +52,7 @@
             </div>
             <button
                 v-if="data.result.length > 1"
-                class="text-left text-sm text-red-400 dark:text-red-400 font-semibold hover:text-red-600 dark:hover:text-red-300 focus:text-red-600 dark:focus:text-red-300 focus-visible:outline-none focus-visible:underline"
+                class="text-left text-sm text-red-500 dark:text-red-600 font-semibold hover:text-red-600 dark:hover:text-red-500 focus-visible:outline-none focus-visible:underline"
                 @click="showReview">
                 {{ showReviewText }}
             </button>

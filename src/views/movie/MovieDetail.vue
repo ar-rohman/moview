@@ -27,7 +27,7 @@
                     <div>
                         <button
                             v-if="!video.isLoading && !video.isError && video.result"
-                            class="-translate-x-1/2 border-2 border-red-500 dark:border-red-400 text-red-500 dark:text-red-400 rounded-xl py-2 px-6 flex shadow-md dark:shadow-none hover:border-transparent dark:hover:border-transparent hover:bg-red-600 dark:hover:bg-red-400 hover:text-white dark:hover:text-slate-300 focus:bg-red-700 dark:focus:bg-red-300 focus:outline-none dark:focus:outline-none focus:border-transparent dark:focus:border-transparent focus-visible:ring-red-400 focus-visible:ring-2 focus:text-white"
+                            class="-translate-x-1/2 border-2 border-red-500 dark:border-red-600 text-red-500 dark:text-red-600 rounded-xl py-2 px-6 flex shadow-md dark:shadow-none hover:border-transparent dark:hover:border-transparent hover:bg-red-600 hover:text-white dark:hover:text-slate-300 focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                             @click="showVideo">
                             <BaseIcon name="play" />
                         </button>
@@ -35,7 +35,7 @@
                     <div class="flex gap-x-4 sm:gap-x-8 items-center">
                         <div
                             v-if="movieDetail.result.adult"
-                            class="font-bold border-2 border-red-500 dark:border-red-400 py-2 px-1.5 rounded-full text-red-500 dark:text-red-400">
+                            class="font-bold border-2 border-red-500 dark:border-red-600 py-2 px-1.5 rounded-full text-red-500 dark:text-red-600">
                             18+
                         </div>
                         <ToggleWatchlist :data="movieDetail.result" />
@@ -70,7 +70,7 @@
                                         v-for="item in movieDetail.result.genres"
                                         :key="item.id">
                                         <button
-                                            class="px-4 py-1 border border-gray-500 dark:border-slate-50/40 rounded-full text-sm font-semibold hover:border-red-500 dark:hover:border-red-400 select-none hover:text-red-500 dark:hover:text-red-400 focus:text-white dark:focus:text-slate-300 focus:bg-red-500 dark:focus:bg-red-400 focus:border-transparent dark:focus:border-transparent focus:outline-none focus-visible:ring-red-400 dark:focus-visible:ring-red-300 focus-visible:ring-2"
+                                            class="px-4 py-1 border border-gray-500 dark:border-slate-50/40 rounded-full text-sm font-semibold hover:text-white dark:hover:text-slate-300 hover:bg-red-500 dark:hover:bg-red-600 hover:border-transparent dark:hover:border-transparent focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
                                             @click="gotoMovieGenre(item.name, item.id)">
                                             {{ item.name }}
                                         </button>

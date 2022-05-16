@@ -7,8 +7,8 @@
             </span>
             <input
                 v-model="searchText"
-                class="placeholder:italic placeholder:text-gray-400 dark:placeholder:text-slate-500 block bg-white dark:bg-slate-900 w-full lg:border lg:border-slate-300 dark:lg:border-slate-50/20 lg:rounded-full py-2 pl-9 pr-9 lg:shadow-sm dark:lg:shadow-none focus:outline-none lg:focus:border-red-500 dark:lg:focus:border-red-400 lg:focus:ring-red-500 dark:lg:focus:ring-red-400 lg:focus:ring-1 text-base"
-                placeholder="Search for anything..."
+                class="placeholder:italic placeholder:text-gray-400 dark:placeholder:text-slate-500 block bg-white dark:bg-slate-900 w-full lg:border lg:border-slate-300 dark:lg:border-slate-50/20 lg:rounded-full py-2 pl-9 pr-9 lg:shadow-sm dark:lg:shadow-none focus:outline-none lg:focus:border-red-400 dark:lg:focus:border-red-400 lg:focus:ring-red-400 dark:lg:focus:ring-red-400 lg:focus:ring-1 text-base"
+                placeholder="Search for movie..."
                 type="text"
                 name="search"
                 autocomplete="off"

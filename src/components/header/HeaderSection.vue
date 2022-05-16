@@ -11,7 +11,7 @@
             <div v-if="nav" class="flex items-center">
                 <img :src="logo" :alt="appName" class="h-10 w-10" />
                 <p
-                    class="font-bold text-red-500 dark:text-red-400 text-xl tracking-tighter ml-4 uppercase">
+                    class="font-bold text-red-500 dark:text-red-600 text-xl tracking-tighter ml-4 uppercase">
                     {{ appName }}
                 </p>
                 <div class="md:ml-20 sm:ml-8">
@@ -20,7 +20,7 @@
             </div>
             <div v-else class="flex gap-x-4 items-center">
                 <button
-                    class="bg-white/50 rounded-full p-2 hover:bg-white/70 focus:bg-white dark:bg-slate-900/30 dark:hover:bg-slate-900/50 dark:focus:bg-slate-900/70"
+                    class="bg-white/50 rounded-full p-2 hover:bg-white/70 dark:bg-slate-900/30 dark:hover:bg-slate-900/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
                     @click="router.back()">
                     <BaseIcon name="arrowBack" />
                 </button>
@@ -35,7 +35,7 @@
                 <ThemeSwitcher />
                 <button
                     v-if="route.meta.showShare"
-                    class="bg-white/50 rounded-full p-2 block hover:bg-white/70 focus:bg-white dark:bg-slate-900/30 dark:hover:bg-slate-900/50 dark:focus:bg-slate-900/70"
+                    class="bg-white/50 rounded-full p-2 block hover:bg-white/70 dark:bg-slate-900/30 dark:hover:bg-slate-900/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
                     @click="shareMovie">
                     <BaseIcon name="shareOutline" />
                 </button>

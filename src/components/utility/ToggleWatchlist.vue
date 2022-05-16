@@ -1,14 +1,14 @@
 <template>
     <button
         v-if="isSaved"
-        class="bg-red-500 dark:bg-red-400 rounded-xl p-3 flex shadow-md dark:shadow-none hover:bg-red-600 dark:hover:bg-red-300 focus:bg-red-700 dark:focus:bg-red-300/80 focus:outline-none focus-visible:ring-red-400 dark:focus-visible:ring-red-300 focus-visible:ring-2"
+        class="bg-red-500 dark:bg-red-600 rounded-xl p-3 flex shadow-md dark:shadow-none hover:bg-red-600 dark:hover:bg-red-500 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
         title="Remove from watchlist"
         @click="removeFromWatchlist()">
         <BaseIcon name="bookmark" color="text-white" />
     </button>
     <button
         v-else
-        class="bg-red-500 dark:bg-red-400 rounded-xl p-3 flex shadow-md dark:shadow-none hover:bg-red-600 dark:hover:bg-red-300 focus:bg-red-700 dark:focus:bg-red-300/80 focus:outline-none focus-visible:ring-red-400 dark:focus-visible:ring-red-300 focus-visible:ring-2"
+        class="bg-red-500 dark:bg-red-600 rounded-xl p-3 flex shadow-md dark:shadow-none hover:bg-red-600 dark:hover:bg-red-500 focus:outline-none focus-visible:ring-red-400 focus-visible:ring-2"
         title="Add to watchlist"
         @click="addToWatchlist()">
         <BaseIcon name="bookmarkOutline" color="text-white" />

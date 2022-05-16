@@ -12,7 +12,7 @@
                     href="https://www.themoviedb.org/"
                     target="_blank"
                     rel="noopener"
-                    class="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-400/80 focus:text-red-700 dark:focus:text-red-500/80">
+                    class="text-red-500 dark:text-red-600 hover:text-red-600 dark:hover:text-red-500">
                     TMDB
                 </a>
             </p>
@@ -24,7 +24,7 @@
             href="https://github.com/ar-rohman"
             target="_blank"
             rel="noopener"
-            class="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-400/80 focus:text-red-700 dark:focus:text-red-500/80">
+            class="text-red-500 dark:text-red-600 hover:text-red-600 dark:hover:text-red-500">
             Rohman
         </a>
     </div>

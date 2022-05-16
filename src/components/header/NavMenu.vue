@@ -6,10 +6,10 @@
                 :to="menu.to"
                 :class="[
                     route.path === menu.to
-                        ? `text-red-500 dark:text-red-400`
+                        ? `text-red-500 dark:text-red-600`
                         : 'text-gray-600 dark:text-slate-400',
                 ]"
-                class="flex flex-col items-center justify-center min-w-[40px] min-h-[40px] sm:h-[60px] sm:hover:text-red-500 dark:sm:hover:text-red-400 sm:focus:text-red-500 dark:sm:focus:text-red-300 focus:outline-none">
+                class="flex flex-col items-center justify-center min-w-[40px] min-h-[40px] sm:h-[60px] sm:hover:text-red-500 dark:sm:hover:text-red-500 focus:outline-none focus-visible:text-red-500 dark:focus-visible:text-red-600">
                 <div class="sm:hidden">
                     <BaseIcon :name="route.path === menu.to ? menu.activeIcon : menu.icon" />
                 </div>

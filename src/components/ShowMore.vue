@@ -3,7 +3,7 @@
         <!-- {{ content }} -->
         <p class="inline" v-html="content"></p>
         <span
-            class="text-red-500 dark:text-red-400 font-semibold hover:text-red-600 dark:hover:text-red-300 cursor-pointer whitespace-nowrap select-none"
+            class="text-red-500 dark:text-red-600 font-semibold hover:text-red-600 dark:hover:text-red-500 cursor-pointer whitespace-nowrap select-none"
             @click="toggleString">
             {{ toggleMoreLess }}
         </span>
