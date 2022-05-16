@@ -6,7 +6,7 @@
                 v-for="item in data.hero"
                 :key="item.id"
                 :to="`${detailLink}/${item.id}`"
-                class="focus:outline-none focus-visible:outline-none">
+                class="focus-visible:outline-none focus-visible:ring-red-400 focus-visible:ring-2 rounded-xl sm:rounded-2xl">
                 <div class="relative">
                     <img
                         :src="item.image"
