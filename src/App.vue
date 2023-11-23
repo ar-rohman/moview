@@ -1,12 +1,13 @@
 <template>
-    <div
-        class="font-sans text-gray-700 bg-white dark:bg-slate-900 dark:text-slate-300 min-h-screen max-w-screen-xl mx-auto">
-        <HeaderSection :nav="route.meta.isShowNav" />
-        <main
-            class="mx-4 sm:mx-10 pt-[75px]"
-            :class="[route.meta.isShowNav ? 'pb-20 sm:pb-10' : 'pb-10']">
-            <router-view />
-        </main>
+    <div class="font-sans text-gray-700 bg-white dark:bg-slate-900 dark:text-slate-300">
+        <div class="min-h-screen max-w-screen-xl mx-auto">
+            <HeaderSection :nav="route.meta.isShowNav" />
+            <main
+                class="mx-4 sm:mx-10 pt-[75px]"
+                :class="[route.meta.isShowNav ? 'pb-20 sm:pb-10' : 'pb-10']">
+                <router-view />
+            </main>
+        </div>
     </div>
 </template>
 
