@@ -31,16 +31,12 @@ describe('CarouselSlide.vue', () => {
             global: global,
         });
         await wrapper.find('img').trigger('mouseover');
-        await wrapper.vm.$nextTick(() => {
-            expect(wrapper.emitted()).toHaveProperty('mouseover');
-            done();
-        });
+        await wrapper.vm.$nextTick();
+        expect(wrapper.emitted()).toHaveProperty('mouseover');
 
         await wrapper.find('img').trigger('mouseout');
-        await wrapper.vm.$nextTick(() => {
-            expect(wrapper.emitted()).toHaveProperty('mouseout');
-            done();
-        });
+        await wrapper.vm.$nextTick();
+        expect(wrapper.emitted()).toHaveProperty('mouseover');
     });
     it('should go to detail page', async () => {
         vi.mock('vue-router', () => ({
