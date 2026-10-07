@@ -16,7 +16,12 @@
                     TMDB
                 </a>
             </p>
-        </div>
+            <div class="w-full mt-12">
+                <p class="text-sm text-muted-foreground">
+                    Last updated: {{ lastUpdated }}
+                </p>
+            </div>
+         </div>
     </div>
     <div class="fixed bottom-20 sm:bottom-4 text-sm">
         Copyright © 2022
@@ -35,8 +40,23 @@ import aboutImage from '@/assets/images/about.svg';
 
 export default {
     setup() {
+        const buildDate = new Date(__LAST_UPDATED__)
+        const datePart = new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        }).format(buildDate)
+        const timePart = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).format(buildDate)
+        const lastUpdated = `${datePart} ${timePart}`
+
         return {
             aboutImage,
+            lastUpdated: lastUpdated,
         };
     },
 };
