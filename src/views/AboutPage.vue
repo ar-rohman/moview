@@ -24,7 +24,7 @@
          </div>
     </div>
     <div class="fixed bottom-20 sm:bottom-4 text-sm">
-        Copyright © 2022
+        Copyright © 2022 - {{ thisYear }}
         <a
             href="https://github.com/ar-rohman"
             target="_blank"
@@ -40,6 +40,8 @@ import aboutImage from '@/assets/images/about.svg';
 
 export default {
     setup() {
+        const now = new Date();
+        const thisYear = now.getFullYear();
         const buildDate = new Date(__LAST_UPDATED__)
         const datePart = new Intl.DateTimeFormat('en-GB', {
             day: '2-digit',
@@ -57,6 +59,7 @@ export default {
         return {
             aboutImage,
             lastUpdated: lastUpdated,
+            thisYear,
         };
     },
 };
